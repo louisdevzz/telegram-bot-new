@@ -1,0 +1,432 @@
+2024-05-06T17:09:38.764Z | info | Start cluster with 1 workers
+2024-05-06T17:09:38.768Z | info | Worker 13753 started.
+2024-05-06T17:09:38.841Z | info | Worker initializing
+2024-05-06T17:09:38.842Z | error | unhandledRejection: memorySession is not a function
+2024-05-06T17:09:38.843Z | error | TypeError: memorySession is not a function
+    at new BotTest (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:23:22)
+    at run (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-06T17:10:39.035Z | info | Start cluster with 1 workers
+2024-05-06T17:10:39.039Z | info | Worker 13855 started.
+2024-05-06T17:10:39.122Z | info | Worker initializing
+2024-05-06T17:10:39.126Z | error | unhandledRejection: store is not defined
+2024-05-06T17:10:39.126Z | error | ReferenceError: store is not defined
+    at new BotTest (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:32:17)
+    at run (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-06T17:11:05.002Z | info | Start cluster with 1 workers
+2024-05-06T17:11:05.005Z | info | Worker 13904 started.
+2024-05-06T17:11:05.078Z | info | Worker initializing
+2024-05-06T17:11:05.081Z | error | unhandledRejection: store is not defined
+2024-05-06T17:11:05.082Z | error | ReferenceError: store is not defined
+    at new BotTest (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:24:15)
+    at run (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-06T17:12:05.538Z | info | Start cluster with 1 workers
+2024-05-06T17:12:05.542Z | info | Worker 13952 started.
+2024-05-06T17:12:05.615Z | info | Worker initializing
+2024-05-06T17:12:05.618Z | error | unhandledRejection: storeSession is not defined
+2024-05-06T17:12:05.618Z | error | ReferenceError: storeSession is not defined
+    at new BotTest (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:30:22)
+    at run (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-06T17:15:42.152Z | info | Start cluster with 1 workers
+2024-05-06T17:15:42.155Z | info | Worker 14200 started.
+2024-05-06T17:15:42.227Z | info | Worker initializing
+2024-05-06T17:15:42.229Z | error | unhandledRejection: Class constructor RedisSession cannot be invoked without 'new'
+2024-05-06T17:15:42.229Z | error | TypeError: Class constructor RedisSession cannot be invoked without 'new'
+    at new BotTest (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:24:13)
+    at run (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-06T17:16:47.018Z | info | Start cluster with 1 workers
+2024-05-06T17:16:47.022Z | info | Worker 14275 started.
+2024-05-06T17:16:47.092Z | info | Worker initializing
+2024-05-06T17:16:47.096Z | error | unhandledRejection: Cannot read properties of undefined (reading 'interceptors')
+2024-05-06T17:16:47.096Z | error | TypeError: Cannot read properties of undefined (reading 'interceptors')
+    at new BotTest (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:31:20)
+    at run (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-06T17:17:15.157Z | info | Start cluster with 1 workers
+2024-05-06T17:17:15.160Z | info | Worker 14317 started.
+2024-05-06T17:17:15.238Z | info | Worker initializing
+2024-05-06T17:17:15.240Z | error | unhandledRejection: Cannot read properties of undefined (reading 'interceptors')
+2024-05-06T17:17:15.240Z | error | TypeError: Cannot read properties of undefined (reading 'interceptors')
+    at new BotTest (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:32:20)
+    at run (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/github-releases-notify-bot/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-06T17:17:58.783Z | info | Start cluster with 1 workers
+2024-05-06T17:17:58.787Z | info | Worker 14397 started.
+2024-05-06T17:17:58.866Z | info | Worker initializing
+2024-05-06T17:17:58.867Z | info | Bot listen
+2024-05-06T17:17:58.868Z | info | Worker ready
+2024-05-06T17:18:34.032Z | error | uncaughtException: keyboards is not defined
+2024-05-06T17:18:34.032Z | error | ReferenceError: keyboards is not defined
+    at BotTest.actions (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:121:46)
+    at /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:111:33
+    at /home/louisdevzz/Documents/github-releases-notify-bot/node_modules/telegraf/composer.js:143:56
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 0)
+2024-05-06T17:19:20.816Z | info | Start cluster with 1 workers
+2024-05-06T17:19:20.819Z | info | Worker 14546 started.
+2024-05-06T17:19:20.890Z | info | Worker initializing
+2024-05-06T17:19:20.891Z | info | Bot listen
+2024-05-06T17:19:20.891Z | info | Worker ready
+2024-05-06T17:19:25.616Z | error | uncaughtException: Cannot read properties of undefined (reading 'next')
+2024-05-06T17:19:25.616Z | error | TypeError: Cannot read properties of undefined (reading 'next')
+    at BotTest.checkbalance (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:216:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:112:20
+    at async Promise.all (index 0)
+2024-05-06T17:39:55.426Z | info | Start cluster with 1 workers
+2024-05-06T17:39:55.429Z | info | Worker 16275 started.
+2024-05-06T17:39:55.518Z | info | Worker initializing
+2024-05-06T17:39:55.519Z | info | Bot listen
+2024-05-06T17:39:55.520Z | info | Worker ready
+2024-05-06T17:40:01.757Z | error | uncaughtException: Cannot read properties of undefined (reading 'next')
+2024-05-06T17:40:01.757Z | error | TypeError: Cannot read properties of undefined (reading 'next')
+    at BotTest.helper (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:257:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:112:20
+    at async Promise.all (index 0)
+2024-05-06T17:40:08.207Z | error | uncaughtException: Cannot read properties of undefined (reading 'next')
+2024-05-06T17:40:08.208Z | error | TypeError: Cannot read properties of undefined (reading 'next')
+    at BotTest.checkbalance (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:216:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:112:20
+    at async Promise.all (index 0)
+2024-05-06T17:41:46.872Z | info | Start cluster with 1 workers
+2024-05-06T17:41:46.876Z | info | Worker 16428 started.
+2024-05-06T17:41:46.955Z | info | Worker initializing
+2024-05-06T17:41:46.956Z | info | Bot listen
+2024-05-06T17:41:46.956Z | info | Worker ready
+2024-05-06T22:17:01.401Z | info | Start cluster with 1 workers
+2024-05-06T22:17:01.405Z | info | Worker 18729 started.
+2024-05-06T22:17:01.489Z | info | Worker initializing
+2024-05-06T22:17:01.490Z | info | Bot listen
+2024-05-06T22:17:01.490Z | info | Worker ready
+2024-05-06T22:17:06.788Z | error | uncaughtException: Markup.button.callback is not a function
+2024-05-06T22:17:06.788Z | error | TypeError: Markup.button.callback is not a function
+    at BotTest.start (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:131:19)
+    at /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:115:33
+    at /home/louisdevzz/Documents/github-releases-notify-bot/node_modules/telegraf/composer.js:143:56
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 0)
+2024-05-06T22:17:36.806Z | info | Start cluster with 1 workers
+2024-05-06T22:17:36.810Z | info | Worker 18790 started.
+2024-05-06T22:17:36.895Z | info | Worker initializing
+2024-05-06T22:17:36.896Z | info | Bot listen
+2024-05-06T22:17:36.897Z | info | Worker ready
+2024-05-06T22:20:29.047Z | info | Start cluster with 1 workers
+2024-05-06T22:20:29.050Z | info | Worker 18902 started.
+2024-05-06T22:20:29.128Z | info | Worker initializing
+2024-05-06T22:20:29.129Z | info | Bot listen
+2024-05-06T22:20:29.129Z | info | Worker ready
+2024-05-06T22:20:42.113Z | error | uncaughtException: any is not defined
+2024-05-06T22:20:42.113Z | error | ReferenceError: any is not defined
+    at BotTest.createwallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:173:42)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:115:20
+    at async Promise.all (index 0)
+2024-05-06T22:23:47.097Z | info | Start cluster with 1 workers
+2024-05-06T22:23:47.100Z | info | Worker 19064 started.
+2024-05-06T22:23:47.179Z | info | Worker initializing
+2024-05-06T22:23:47.180Z | info | Bot listen
+2024-05-06T22:23:47.181Z | info | Worker ready
+2024-05-06T22:23:56.289Z | error | uncaughtException: connect ECONNREFUSED 127.0.0.1:3000
+2024-05-06T22:23:56.289Z | error | Error: connect ECONNREFUSED 127.0.0.1:3000
+    at AxiosError.from (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:836:14)
+    at RedirectableRequest.handleRequestError (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3086:25)
+    at RedirectableRequest.emit (node:events:531:35)
+    at eventHandlers.<computed> (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at Socket.socketErrorListener (node:_http_client:500:9)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:176:25)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:115:20
+    at async Promise.all (index 0)
+2024-05-06T22:31:02.633Z | info | Start cluster with 1 workers
+2024-05-06T22:31:02.636Z | info | Worker 19260 started.
+2024-05-06T22:31:02.716Z | info | Worker initializing
+2024-05-06T22:31:02.718Z | info | Bot listen
+2024-05-06T22:31:02.718Z | info | Worker ready
+2024-05-06T22:32:04.738Z | info | Start cluster with 1 workers
+2024-05-06T22:32:04.742Z | info | Worker 19342 started.
+2024-05-06T22:32:04.826Z | info | Worker initializing
+2024-05-06T22:32:04.827Z | info | Bot listen
+2024-05-06T22:32:04.828Z | info | Worker ready
+2024-05-06T22:32:39.125Z | info | Start cluster with 1 workers
+2024-05-06T22:32:39.128Z | info | Worker 19405 started.
+2024-05-06T22:32:39.211Z | info | Worker initializing
+2024-05-06T22:32:39.212Z | info | Bot listen
+2024-05-06T22:32:39.212Z | info | Worker ready
+2024-05-06T22:33:38.331Z | info | Start cluster with 1 workers
+2024-05-06T22:33:38.335Z | info | Worker 19460 started.
+2024-05-06T22:33:38.417Z | info | Worker initializing
+2024-05-06T22:33:38.419Z | info | Bot listen
+2024-05-06T22:33:38.419Z | info | Worker ready
+2024-05-06T22:34:37.406Z | info | Start cluster with 1 workers
+2024-05-06T22:34:37.410Z | info | Worker 19529 started.
+2024-05-06T22:34:37.512Z | info | Worker initializing
+2024-05-06T22:34:37.513Z | info | Bot listen
+2024-05-06T22:34:37.514Z | info | Worker ready
+2024-05-06T22:38:50.307Z | info | Start cluster with 1 workers
+2024-05-06T22:38:50.311Z | info | Worker 19881 started.
+2024-05-06T22:38:50.399Z | info | Worker initializing
+2024-05-06T22:38:50.400Z | info | Bot listen
+2024-05-06T22:38:50.400Z | info | Worker ready
+2024-05-06T22:39:48.570Z | info | Start cluster with 1 workers
+2024-05-06T22:39:48.573Z | info | Worker 19992 started.
+2024-05-06T22:39:48.658Z | info | Worker initializing
+2024-05-06T22:39:48.659Z | info | Bot listen
+2024-05-06T22:39:48.659Z | info | Worker ready
+2024-05-06T22:42:35.644Z | info | Start cluster with 1 workers
+2024-05-06T22:42:35.648Z | info | Worker 20109 started.
+2024-05-06T22:42:35.729Z | info | Worker initializing
+2024-05-06T22:42:35.732Z | info | Bot listen
+2024-05-06T22:42:35.732Z | info | Worker ready
+2024-05-06T22:48:20.497Z | info | Start cluster with 1 workers
+2024-05-06T22:48:20.501Z | info | Worker 20312 started.
+2024-05-06T22:48:20.580Z | info | Worker initializing
+2024-05-06T22:48:20.582Z | info | Bot listen
+2024-05-06T22:48:20.582Z | info | Worker ready
+2024-05-06T22:48:38.038Z | info | Start cluster with 1 workers
+2024-05-06T22:48:38.041Z | info | Worker 20358 started.
+2024-05-06T22:48:38.128Z | info | Worker initializing
+2024-05-06T22:48:38.130Z | info | Bot listen
+2024-05-06T22:48:38.130Z | info | Worker ready
+2024-05-06T22:48:42.957Z | error | uncaughtException: keyboards is not defined
+2024-05-06T22:48:42.957Z | error | ReferenceError: keyboards is not defined
+    at BotTest.create_wallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:148:113)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:116:20
+    at async Promise.all (index 0)
+2024-05-06T22:49:13.279Z | info | Start cluster with 1 workers
+2024-05-06T22:49:13.283Z | info | Worker 20432 started.
+2024-05-06T22:49:13.362Z | info | Worker initializing
+2024-05-06T22:49:13.363Z | info | Bot listen
+2024-05-06T22:49:13.364Z | info | Worker ready
+2024-05-06T22:52:06.777Z | info | Start cluster with 1 workers
+2024-05-06T22:52:06.781Z | info | Worker 20530 started.
+2024-05-06T22:52:06.859Z | info | Worker initializing
+2024-05-06T22:52:06.860Z | info | Bot listen
+2024-05-06T22:52:06.860Z | info | Worker ready
+2024-05-06T22:52:31.816Z | info | Start cluster with 1 workers
+2024-05-06T22:52:31.820Z | info | Worker 20604 started.
+2024-05-06T22:52:31.904Z | info | Worker initializing
+2024-05-06T22:52:31.906Z | info | Bot listen
+2024-05-06T22:52:31.906Z | info | Worker ready
+2024-05-06T22:52:40.674Z | error | uncaughtException: connect ECONNREFUSED 127.0.0.1:3000
+2024-05-06T22:52:40.674Z | error | Error: connect ECONNREFUSED 127.0.0.1:3000
+    at AxiosError.from (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:836:14)
+    at RedirectableRequest.handleRequestError (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3086:25)
+    at RedirectableRequest.emit (node:events:531:35)
+    at eventHandlers.<computed> (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at Socket.socketErrorListener (node:_http_client:500:9)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:180:25)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:116:20
+    at async Promise.all (index 0)
+2024-05-06T22:57:16.408Z | info | Start cluster with 1 workers
+2024-05-06T22:57:16.411Z | info | Worker 20800 started.
+2024-05-06T22:57:16.491Z | info | Worker initializing
+2024-05-06T22:57:16.493Z | info | Bot listen
+2024-05-06T22:57:16.493Z | info | Worker ready
+2024-05-06T22:57:25.346Z | error | uncaughtException: connect ECONNREFUSED 127.0.0.1:3000
+2024-05-06T22:57:25.346Z | error | Error: connect ECONNREFUSED 127.0.0.1:3000
+    at AxiosError.from (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:836:14)
+    at RedirectableRequest.handleRequestError (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3086:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at eventHandlers.<computed> (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at Socket.socketErrorListener (node:_http_client:500:9)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:178:25)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:103:20
+    at async Promise.all (index 0)
+2024-05-06T23:05:54.067Z | info | Start cluster with 1 workers
+2024-05-06T23:05:54.071Z | info | Worker 21148 started.
+2024-05-06T23:05:54.155Z | info | Worker initializing
+2024-05-06T23:05:54.157Z | info | Bot listen
+2024-05-06T23:05:54.157Z | info | Worker ready
+2024-05-06T23:06:03.251Z | error | uncaughtException: connect ECONNREFUSED 127.0.0.1:3000
+2024-05-06T23:06:03.251Z | error | Error: connect ECONNREFUSED 127.0.0.1:3000
+    at AxiosError.from (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:836:14)
+    at RedirectableRequest.handleRequestError (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3086:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at eventHandlers.<computed> (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at Socket.socketErrorListener (node:_http_client:500:9)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:176:25)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:103:20
+    at async Promise.all (index 0)
+2024-05-06T23:09:26.021Z | info | Start cluster with 1 workers
+2024-05-06T23:09:26.027Z | info | Worker 21332 started.
+2024-05-06T23:09:26.114Z | info | Worker initializing
+2024-05-06T23:09:26.115Z | info | Bot listen
+2024-05-06T23:09:26.115Z | info | Worker ready
+2024-05-06T23:09:58.515Z | info | Start cluster with 1 workers
+2024-05-06T23:09:58.518Z | info | Worker 21383 started.
+2024-05-06T23:09:58.612Z | info | Worker initializing
+2024-05-06T23:09:58.613Z | info | Bot listen
+2024-05-06T23:09:58.613Z | info | Worker ready
+2024-05-06T23:10:31.341Z | info | Start cluster with 1 workers
+2024-05-06T23:10:31.346Z | info | Worker 21433 started.
+2024-05-06T23:10:31.433Z | info | Worker initializing
+2024-05-06T23:10:31.435Z | info | Bot listen
+2024-05-06T23:10:31.435Z | info | Worker ready
+2024-05-06T23:11:07.602Z | info | Start cluster with 1 workers
+2024-05-06T23:11:07.606Z | info | Worker 21487 started.
+2024-05-06T23:11:07.693Z | info | Worker initializing
+2024-05-06T23:11:07.694Z | info | Bot listen
+2024-05-06T23:11:07.694Z | info | Worker ready
+2024-05-06T23:12:07.209Z | info | Start cluster with 1 workers
+2024-05-06T23:12:07.212Z | info | Worker 21531 started.
+2024-05-06T23:12:07.294Z | info | Worker initializing
+2024-05-06T23:12:07.295Z | info | Bot listen
+2024-05-06T23:12:07.296Z | info | Worker ready
+2024-05-06T23:12:19.511Z | error | unhandledRejection: connect ECONNREFUSED 127.0.0.1:3000
+2024-05-06T23:12:19.511Z | error | Error: connect ECONNREFUSED 127.0.0.1:3000
+    at AxiosError.from (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:836:14)
+    at RedirectableRequest.handleRequestError (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3086:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at eventHandlers.<computed> (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at Socket.socketErrorListener (node:_http_client:500:9)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:177:25)
+2024-05-06T23:14:53.795Z | info | Start cluster with 1 workers
+2024-05-06T23:14:53.799Z | info | Worker 22027 started.
+2024-05-06T23:14:53.878Z | info | Worker initializing
+2024-05-06T23:14:53.879Z | info | Bot listen
+2024-05-06T23:14:53.879Z | info | Worker ready
+2024-05-06T23:15:05.514Z | error | unhandledRejection: connect ECONNREFUSED 127.0.0.1:3000
+2024-05-06T23:15:05.514Z | error | Error: connect ECONNREFUSED 127.0.0.1:3000
+    at AxiosError.from (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:836:14)
+    at RedirectableRequest.handleRequestError (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3086:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at eventHandlers.<computed> (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at Socket.socketErrorListener (node:_http_client:500:9)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/github-releases-notify-bot/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:176:25)
+2024-05-06T23:15:48.293Z | info | Start cluster with 1 workers
+2024-05-06T23:15:48.296Z | info | Worker 22146 started.
+2024-05-06T23:15:48.386Z | info | Worker initializing
+2024-05-06T23:15:48.388Z | info | Bot listen
+2024-05-06T23:15:48.388Z | info | Worker ready
+2024-05-06T23:22:48.853Z | info | Start cluster with 1 workers
+2024-05-06T23:22:48.857Z | info | Worker 23391 started.
+2024-05-06T23:22:48.948Z | info | Worker initializing
+2024-05-06T23:22:48.950Z | info | Bot listen
+2024-05-06T23:22:48.951Z | info | Worker ready
+2024-05-08T16:27:31.996Z | info | Start cluster with 1 workers
+2024-05-08T16:27:31.999Z | info | Worker 44893 started.
+2024-05-08T16:27:32.071Z | info | Worker initializing
+2024-05-08T16:27:32.073Z | info | Bot listen
+2024-05-08T16:27:32.073Z | info | Worker ready
+2024-05-08T16:28:18.682Z | error | uncaughtException: ctx.helper is not a function
+2024-05-08T16:28:18.683Z | error | TypeError: ctx.helper is not a function
+    at BotTest.back (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:150:7)
+    at /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:105:33
+    at /home/louisdevzz/Documents/github-releases-notify-bot/node_modules/telegraf/composer.js:143:56
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 0)
+2024-05-08T16:28:45.056Z | info | Start cluster with 1 workers
+2024-05-08T16:28:45.059Z | info | Worker 45509 started.
+2024-05-08T16:28:45.139Z | info | Worker initializing
+2024-05-08T16:28:45.141Z | info | Bot listen
+2024-05-08T16:28:45.141Z | info | Worker ready
+2024-05-08T16:29:00.639Z | error | unhandledRejection: next is not a function
+2024-05-08T16:29:00.640Z | error | TypeError: next is not a function
+    at BotTest.helper (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:444:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-08T16:30:14.201Z | info | Start cluster with 1 workers
+2024-05-08T16:30:14.205Z | info | Worker 45643 started.
+2024-05-08T16:30:14.288Z | info | Worker initializing
+2024-05-08T16:30:14.290Z | info | Bot listen
+2024-05-08T16:30:14.290Z | info | Worker ready
+2024-05-08T16:35:30.674Z | info | Start cluster with 1 workers
+2024-05-08T16:35:30.677Z | info | Worker 45907 started.
+2024-05-08T16:35:30.757Z | info | Worker initializing
+2024-05-08T16:35:30.758Z | info | Bot listen
+2024-05-08T16:35:30.758Z | info | Worker ready
+2024-05-08T16:35:52.419Z | error | uncaughtException: next is not a function
+2024-05-08T16:35:52.420Z | error | TypeError: next is not a function
+    at BotTest.helper (/home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:452:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/github-releases-notify-bot/src/bot-test.js:105:20
+    at async Promise.all (index 0)
