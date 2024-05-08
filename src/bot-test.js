@@ -73,20 +73,22 @@ class BotTest{
         const actions = [
             ['createwallet', this.createwallet],
             ['create_wallet', this.create_wallet],
+            ['mint_vibe', this.mint_vibe],
             ['checkbalance', this.checkbalance],
             ['transfer', this.transfer],
 			['back', this.back],
 			['max', this.max],
 			[/^selecttoken_(.+)$/, this.getselecttoken],
-			['transfertoken',this.transfertoken]
+			['transfertoken',this.transfertoken],
 			['blank',this.blank],
 			['logout',this.logout],
-			['action_logout',this.action_logout],
+			['actionLogout',this.actionLogout]
         ]
         commands.forEach(([command, fn]) => this.bot.command(command, this.wrapAction(fn)));
         actions.forEach(([action, fn]) => this.bot.action(action, this.wrapAction(fn)));
 
         this.bot.hears(/.+/, this.wrapAction(this.handleBot));
+		this.bot.on('photo',this.wrapAction(this.handleBot))
 
         this.bot.startPolling();
     }
@@ -138,38 +140,46 @@ class BotTest{
 		return next();
 	}
     async handleBot(ctx, next) {
+        console.log("photo",ctx.update?.message?.photo?.file_id)
         console.log("text",ctx.update?.message?.text)
-        if (ctx.session.action) {
-            switch (ctx.session.action) {
-                case 'createwallet':
-                    this.createwallet(ctx);
-				case 'mint-vibe':
-					this.mintvibe(ctx);
-                default:
-                    ctx.session.action = null;
-                    
-            }
-        }
+        if(ctx.update?.message?.text){
+			if(!ctx.match[0].startsWith("/")){
+				if (ctx.session.action) {
+					switch (ctx.session.action) {
+						case 'createwallet':
+							this.createwallet(ctx);
+						case 'mintvibe':
+							this.mintvibe(ctx);
+						default:
+							ctx.session.action = null;
+							
+					}
+				}
+			}
+		}else{
+			if(ctx.update?.message?.photo){
+				if (ctx.session.action) {
+					switch (ctx.session.action) {
+						case 'mintvibe':
+							this.mintvibe(ctx);
+						default:
+							ctx.session.action = null;
+							
+					}
+				}
+			}
+		}
     }
     create_wallet(ctx){
         ctx.session.action = 'createwallet';
+		ctx.answerCbQuery('');
         return this.editMessageText(ctx, "<b>Choose a username</b>\nType your human readable address username in the chatbot.");
     }
-	async mint_vibe(ctx){
-		return await ctx.replyWithHTML(
-			"<b>Upload IRL Vibe(a picture)\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>", {
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "⏪ Back",
-						callback_data: "back",
-					},],
-				],
-			},
-		}
-		);
+	mint_vibe(ctx){
+		ctx.session.action = 'mintvibe';
+		return this.messageText(ctx,"<b>Upload IRL Vibe(a picture)\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>")
 	}
-	async mint_nft(ctx){
+	async mintNFT(ctx){
 		await ctx.replyWithHTML(
 			"<b>Mint a single NFT on genadrop contract\n(we pay minting cost).\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>", {
 			reply_markup: {
@@ -183,7 +193,7 @@ class BotTest{
 		}
 		);
 	}
-	async post_near_social(ctx){
+	async postnearsocial(ctx){
 		await ctx.replyWithHTML(
 			"<b>Send message to create a post on NEAR SOCIAL (hyperlinking + formatting supported)</b>", {
 			reply_markup: {
@@ -197,7 +207,7 @@ class BotTest{
 		}
 		);
 	}
-	async proof_of_sesh(ctx,next){
+	async proofofsesh(ctx,next){
 		if (ctx?.update?.message?.text == process.env.PROOF_OF_SESH) {
 
 			await ctx.replyWithHTML("<b>✅ Correct Password. Watchu smoking on???</b>", {
@@ -259,8 +269,7 @@ class BotTest{
 			});
 		}
 	}
-	async back(ctx){
-		await ctx.leave();
+	back(ctx){
 		return this.helper(ctx);
 	}
     async createwallet(ctx){
@@ -531,7 +540,7 @@ class BotTest{
 						},],
 						[{
 							text: "🖼️ Mint NFT",
-							callback_data: "mintnft",
+							callback_data: "mint_nft",
 						},
 						{
 							text: "💬 Post Social",
@@ -544,7 +553,7 @@ class BotTest{
 						},],
 						[{
 							text: "😀 Mint a Vibe",
-							callback_data: "mintvibe",
+							callback_data: "mint_vibe",
 						},],
 						[{
 							text: "❓ Help",
@@ -560,11 +569,10 @@ class BotTest{
 			);
 			return next();
 		} else {
-			await ctx.leave();
 			return this.createwallet(ctx);
 		}
 	}
-	async action_logout(ctx){
+	async actionLogout(ctx){
 		await ctx.replyWithHTML(
 			`<b>✅ you are logout</b>\n\nif you did not export your key than we cannot make you a new wallet`, {
 			disable_web_page_preview: true,
@@ -1107,7 +1115,7 @@ class BotTest{
 	}
 	async mintvibe(ctx,next){
 		try {
-			if (ctx.update.message?.photo) {
+			if (ctx.update?.message?.photo) {
 				const {
 					file_id
 				} =
@@ -1116,7 +1124,7 @@ class BotTest{
 				ctx.session.fileUrl = fileUrl;
 				const {
 					data
-				} = await axios.post<CidResonse>(
+				} = await axios.post(
 					"http://localhost:3000/api/nft/upload-ipfs/", {
 					headers: {
 						Accept: "application/json",
@@ -1163,7 +1171,7 @@ class BotTest{
 				);
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
+			await ctx.replyWithHTML("<b>❌ Error</b> "+error, {
 				reply_markup: {
 					inline_keyboard: [
 						[{
@@ -2644,6 +2652,24 @@ class BotTest{
 		try {
 			return await ctx.replyWithHTML(...message);
 		} catch (err) {
+			return null;
+		}
+	}
+	async messageText(ctx,...message){
+		try{
+			return await ctx.replyWithHTML(
+				...message, {
+				reply_markup: {
+					inline_keyboard: [
+						[{
+							text: "⏪ Back",
+							callback_data: "back",
+						},],
+					],
+				},
+			}
+			);
+		}catch(err){
 			return null;
 		}
 	}
