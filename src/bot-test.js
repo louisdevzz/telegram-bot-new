@@ -9,6 +9,7 @@ const Telegraf = require("telegraf");
 const axios =require("axios");
 const dotenv=require("dotenv");
 const RedisSession = require('telegraf-session-redis');
+const keyboards = require("./keyboards");
 
 dotenv.config();
 const API_TOKEN = process.env.BOT_TOKEN;
@@ -74,15 +75,19 @@ class BotTest{
             ['createwallet', this.createwallet],
             ['create_wallet', this.create_wallet],
             ['mint_vibe', this.mint_vibe],
+            ['mint_nft', this.mint_nft],
+			['mintNFTblank',this.mintNFTBlank],
+			['mintNFTautogenerate',this.mintNFTAutogeneration],
+			['mintNFTmyself',this.mintNFTMyself],
             ['checkbalance', this.checkbalance],
             ['transfer', this.transfer],
-			['back', this.back],
 			['max', this.max],
 			[/^selecttoken_(.+)$/, this.getselecttoken],
 			['transfertoken',this.transfertoken],
 			['blank',this.blank],
 			['logout',this.logout],
-			['actionLogout',this.actionLogout]
+			['actionLogout',this.actionLogout],
+			['helper', this.helper]
         ]
         commands.forEach(([command, fn]) => this.bot.command(command, this.wrapAction(fn)));
         actions.forEach(([action, fn]) => this.bot.action(action, this.wrapAction(fn)));
@@ -148,8 +153,20 @@ class BotTest{
 					switch (ctx.session.action) {
 						case 'createwallet':
 							this.createwallet(ctx);
+							ctx.session.action = null;
+							break;
 						case 'mintvibe':
 							this.mintvibe(ctx);
+							ctx.session.action = null;
+							break;
+						case 'minft_nft':
+							this.uploadIPFS(ctx);
+							ctx.session.action = null;
+							break;	
+						case 'uploadipfs':
+							this.mintnft(ctx);
+							ctx.session.action = null;
+							break;	
 						default:
 							ctx.session.action = null;
 							
@@ -162,6 +179,8 @@ class BotTest{
 					switch (ctx.session.action) {
 						case 'mintvibe':
 							this.mintvibe(ctx);
+							ctx.session.action = null;
+							break;
 						default:
 							ctx.session.action = null;
 							
@@ -179,112 +198,34 @@ class BotTest{
 		ctx.session.action = 'mintvibe';
 		return this.messageText(ctx,"<b>Upload IRL Vibe(a picture)\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>")
 	}
-	async mintNFT(ctx){
-		await ctx.replyWithHTML(
-			"<b>Mint a single NFT on genadrop contract\n(we pay minting cost).\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>", {
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "⏪ Back",
-						callback_data: "back",
-					},],
-				],
-			},
-		}
-		);
+	mint_nft(ctx){
+		ctx.session.action = 'mint_nft';
+		return this.messageText(ctx,"<b>Mint a single NFT on genadrop contract\n(we pay minting cost).\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>")
 	}
 	async postnearsocial(ctx){
 		await ctx.replyWithHTML(
-			"<b>Send message to create a post on NEAR SOCIAL (hyperlinking + formatting supported)</b>", {
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "⏪ Back",
-						callback_data: "back",
-					},],
-				],
-			},
-		}
+			"<b>Send message to create a post on NEAR SOCIAL (hyperlinking + formatting supported)</b>", keyboards.back()
 		);
 	}
 	async proofofsesh(ctx,next){
 		if (ctx?.update?.message?.text == process.env.PROOF_OF_SESH) {
 
-			await ctx.replyWithHTML("<b>✅ Correct Password. Watchu smoking on???</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "🔥 BLUNT",
-							callback_data: "blunt",
-						},],
-						[{
-							text: "🤙 JOINT",
-							callback_data: "joint",
-						},],
-						[{
-							text: "👽 SPLIFF",
-							callback_data: "spliff",
-						},],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>✅ Correct Password. Watchu smoking on???</b>", keyboards.proofofsesh());
 			return next();
 		}
 		if (ctx.session.proofofsesh) {
-			await ctx.replyWithHTML("<b>✅ YOU ALREADY IN BLUNT DAO SILLY.Learn more at bluntdao.org</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
-			await ctx.replyWithHTML(`<b>📸Take a picture of the smoking stick</b>`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "🏠 Home",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
-			return ctx.wizard.next();
+			await ctx.replyWithHTML("<b>✅ YOU ALREADY IN BLUNT DAO SILLY.Learn more at bluntdao.org</b>", keyboards.back());
+			await ctx.replyWithHTML(`<b>📸Take a picture of the smoking stick</b>`, keyboards.home());
+			return next();
 		} else {
-			await ctx.replyWithHTML("<b>What's the password????</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>What's the password????</b>", keyboards.back());
 		}
 	}
-	back(ctx){
-		return this.helper(ctx);
-	}
+	
     async createwallet(ctx){
 		var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
 		if (!format.test(ctx.update?.message?.text.toLowerCase())) {
-			await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, keyboards.back());
 		} else {
 			let newAccount = "";
 			if (!ctx.update?.message?.text.includes(".near")) {
@@ -331,24 +272,13 @@ class BotTest{
 						await ctx.replyWithHTML(
 							`<b>✅ you are ${newAccount.toLowerCase()}</b>\n✔️going to wallet home page`
 						);
-
-						await ctx.leave();
 						return this.helper(ctx);
 					}
 				} catch (error) {
 					if (error.response?.data?.error?.type == "NotEnoughBalance") {
 						await ctx.deleteMessage(message_id);
 						await ctx.replyWithHTML(
-							`<b>❌${newAccount.toLowerCase()} is not able to be created now </b>\nsend another address`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "⏪ Back",
-										callback_data: "back",
-									},],
-								],
-							},
-						}
+							`<b>❌${newAccount.toLowerCase()} is not able to be created now </b>\nsend another address`, keyboards.back()
 						);
 					}
 					if (
@@ -357,46 +287,17 @@ class BotTest{
 					) {
 						await ctx.deleteMessage(message_id);
 						await ctx.replyWithHTML(
-							`<b>❌${newAccount.toLowerCase()} is not valid</b>\nsend another address`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "⏪ Back",
-										callback_data: "back",
-									},],
-								],
-							},
-						}
+							`<b>❌${newAccount.toLowerCase()} is not valid</b>\nsend another address`,keyboards.back()
 						);
 					}
 					if (error.response?.data?.error?.type == "AccountAlreadyExists") {
 						await ctx.deleteMessage(message_id);
-						await ctx.replyWithHTML(
-							`<b>❌${newAccount.toLowerCase()} is taken</b>\nsend another address`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "⏪ Back",
-										callback_data: "back",
-									},],
-								],
-							},
-						}
-						);
+						return this.editMessageText(`<b>❌${newAccount.toLowerCase()} is taken!</b>\nsend another address`, keyboards.back())
 					}
 					if (error.response?.data?.error?.type == "CreateAccountNotAllowed") {
 						await ctx.deleteMessage(message_id);
 						await ctx.replyWithHTML(
-							`<b>❌${newAccount.toLowerCase()} can't be created</b>\nsend another address`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "⏪ Back",
-										callback_data: "back",
-									},],
-								],
-							},
-						}
+							`<b>❌${newAccount.toLowerCase()} can't be created</b>\nsend another address`, keyboards.back()
 						);
 					}
 				}
@@ -404,32 +305,14 @@ class BotTest{
 				if (stateAccount.data?.response?.type == "REQUEST_VALIDATION_ERROR") {
 					await ctx.deleteMessage(message_id);
 					await ctx.replyWithHTML(
-						`<b>❌${newAccount.toLowerCase()} is not valid!</b>\nsend another address`, {
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					}
+						`<b>❌${newAccount.toLowerCase()} is not valid!</b>\nsend another address`, keyboards.back()
 					);
 				}
 			}
 			if (stateAccount.data?.response.amount) {
 				await ctx.deleteMessage(message_id);
 				await ctx.replyWithHTML(
-					`<b>❌${newAccount.toLowerCase()} is taken!</b>\nsend another address`, {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					`<b>❌${newAccount.toLowerCase()} is taken!</b>\nsend another address`, keyboards.back()
 				);
 			}
 		}
@@ -528,48 +411,11 @@ class BotTest{
         }
         return next();
     }
-    async helper(ctx,next){
-		if (!ctx.session.privateKey && !ctx.session.accountId) {
-			await ctx.replyWithHTML(
-				`<b>${ctx.session.accountId}</b>\nyou are logged in. Click button to use your wallet`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "💰 Check Balance",
-							callback_data: "checkbalance",
-						},],
-						[{
-							text: "🖼️ Mint NFT",
-							callback_data: "mint_nft",
-						},
-						{
-							text: "💬 Post Social",
-							callback_data: "postnearsocial",
-						},
-						],
-						[{
-							text: "Transfer",
-							callback_data: "transfer",
-						},],
-						[{
-							text: "😀 Mint a Vibe",
-							callback_data: "mint_vibe",
-						},],
-						[{
-							text: "❓ Help",
-							url: "https://t.me/+8yc5jSm3ObcwZjZh",
-						},],
-						[{
-							text: "⚙️ Settings",
-							callback_data: "setting",
-						},],
-					],
-				},
-			}
-			);
-			return next();
+    async helper(ctx){
+		if (ctx.session.privateKey && ctx.session.accountId) {
+			return this.editMessageText(ctx,`<b>${ctx.session.accountId}</b>\nyou are logged in. Click button to use your wallet`, keyboards.helper())
 		} else {
-			return this.createwallet(ctx);
+			return this.create_wallet(ctx);
 		}
 	}
 	async actionLogout(ctx){
@@ -1709,7 +1555,7 @@ class BotTest{
 					}
 					);
 					ctx.session.cid = data.cid;
-					return next();
+					return ctx.session.action = "uploadipfs";
 				} else {
 					await ctx.replyWithHTML("<b>❌Error upload to IPFS failed</b>");
 				}
@@ -1795,11 +1641,11 @@ class BotTest{
 						inline_keyboard: [
 							[{
 								text: "🤖 Autogenerate Description",
-								callback_data: "autogenerate",
+								callback_data: "mintNFTautogenerate",
 							},],
 							[{
 								text: "😐 Leave Blank",
-								callback_data: "blank",
+								callback_data: "mintNFTblank",
 							},],
 							[{
 								text: "⏪ Back",
@@ -1810,7 +1656,7 @@ class BotTest{
 				}
 				);
 				ctx.session.titleNFT = ctx.update?.message?.text;
-				return next();
+				return this.mintNFTSuccess(ctx,next);
 			}
 		}
 	}
@@ -1842,7 +1688,7 @@ class BotTest{
 						inline_keyboard: [
 							[{
 								text: "Myself",
-								callback_data: "myself",
+								callback_data: "mintNFTmyself",
 							},],
 							[{
 								text: "⏪ Back",
@@ -1852,7 +1698,7 @@ class BotTest{
 					},
 				}
 				);
-				return ctx.wizard.next();
+				return ctx.next();
 			}
 		} catch (error) {
 			console.log(error)
@@ -1861,7 +1707,7 @@ class BotTest{
 					inline_keyboard: [
 						[{
 							text: "Myself",
-							callback_data: "myself",
+							callback_data: "mintNFTmyself",
 						},],
 						[{
 							text: "⏪ Back",
@@ -1880,7 +1726,7 @@ class BotTest{
 					inline_keyboard: [
 						[{
 							text: "Myself",
-							callback_data: "myself",
+							callback_data: "mintNFTmyself",
 						},],
 						[{
 							text: "⏪ Back",
@@ -1892,18 +1738,18 @@ class BotTest{
 			);
 			return next();
 	}
-	async mintNFTError(ctx,next){
+	async mintNFTError(ctx){
 		await ctx.replyWithHTML(
 			"<b>❌ Error description title too long\n\n Add description, max 200 characters.Links allowed.</b>", {
 			reply_markup: {
 				inline_keyboard: [
 					[{
 						text: "🤖 Autogenerate Description",
-						callback_data: "autogenerate",
+						callback_data: "mintNFTautogenerate",
 					},],
 					[{
 						text: "😐 Leave Blank",
-						callback_data: "blank",
+						callback_data: "mintNFTblank",
 					},],
 					[{
 						text: "⏪ Back",
@@ -1915,33 +1761,32 @@ class BotTest{
 		);
 	}
 	async mintNFTSuccess(ctx,next){
+		if(ctx.update?.message?.text.length > 200){
+			this.mintNFTError(ctx)
+		}
 		ctx.session.descriptionNFT = ctx.update?.message?.text;
-			await ctx.replyWithHTML(
-				`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "Myself",
-							callback_data: "myself",
-						},],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
-			);
-			return next();
+		await ctx.replyWithHTML(
+			`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, {
+			reply_markup: {
+				inline_keyboard: [
+					[{
+						text: "Myself",
+						callback_data: "mintNFTmyself",
+					},],
+					[{
+						text: "⏪ Back",
+						callback_data: "back",
+					},],
+				],
+			},
+		}
+		);
+		return next();
 	}
 	async mintNFTMyself(ctx,next){
 		let receiverNFT = null;
-		if (ctx.update?.callback_query?.data == "myself") {
-			ctx.session.receiverNFT = ctx.session.accountId;
-			receiverNFT = ctx.session.accountId;
-		} else {
-			receiverNFT = ctx.update?.message?.text?.toLowerCase();
-		}
+		ctx.session.receiverNFT = ctx.session.accountId;
+		receiverNFT = ctx.session.accountId;
 
 		try {
 			var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
@@ -1952,7 +1797,7 @@ class BotTest{
 						inline_keyboard: [
 							[{
 								text: "Myself",
-								callback_data: "myself",
+								callback_data: "mintNFTmyself",
 							},],
 							[{
 								text: "⏪ Back",
@@ -2009,13 +1854,13 @@ class BotTest{
 								inline_keyboard: [
 									[{
 										text: "🏠 Home",
-										callback_data: "back",
+										callback_data: this.back(ctx),
 									},],
 								],
 							},
 						}
 						);
-						return await ctx.scene.leave();
+						return await ctx.leave();
 					}
 				}
 				if (
@@ -2028,7 +1873,7 @@ class BotTest{
 							inline_keyboard: [
 								[{
 									text: "Myself",
-									callback_data: "myself",
+									callback_data: "mintNFTmyself",
 								},],
 								[{
 									text: "⏪ Back",

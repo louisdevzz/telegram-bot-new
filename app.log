@@ -1030,3 +1030,468 @@
 2024-05-08T21:29:23.355Z | info | Worker initializing
 2024-05-08T21:29:23.358Z | info | Bot listen
 2024-05-08T21:29:23.358Z | info | Worker ready
+2024-05-09T16:40:26.297Z | info | Start cluster with 1 workers
+2024-05-09T16:40:26.300Z | info | Worker 8238 started.
+2024-05-09T16:40:26.379Z | info | Worker initializing
+2024-05-09T16:40:26.381Z | info | Bot listen
+2024-05-09T16:40:26.381Z | info | Worker ready
+2024-05-09T16:44:33.763Z | info | Start cluster with 1 workers
+2024-05-09T16:44:33.765Z | info | Worker 8658 started.
+2024-05-09T16:44:33.882Z | info | Worker initializing
+2024-05-09T16:44:33.885Z | info | Bot listen
+2024-05-09T16:44:33.885Z | info | Worker ready
+2024-05-09T17:03:40.594Z | info | Start cluster with 1 workers
+2024-05-09T17:03:40.598Z | info | Worker 11023 started.
+2024-05-09T17:03:40.689Z | info | Worker initializing
+2024-05-09T17:03:40.691Z | info | Bot listen
+2024-05-09T17:03:40.691Z | info | Worker ready
+2024-05-09T17:03:43.864Z | info | Start cluster with 1 workers
+2024-05-09T17:03:43.867Z | info | Worker 11055 started.
+2024-05-09T17:03:43.953Z | info | Worker initializing
+2024-05-09T17:03:43.955Z | info | Bot listen
+2024-05-09T17:03:43.955Z | info | Worker ready
+2024-05-09T17:03:44.648Z | info | Start cluster with 1 workers
+2024-05-09T17:03:44.653Z | info | Worker 11078 started.
+2024-05-09T17:03:44.738Z | info | Worker initializing
+2024-05-09T17:03:44.739Z | info | Bot listen
+2024-05-09T17:03:44.740Z | info | Worker ready
+2024-05-09T17:03:56.782Z | info | Start cluster with 1 workers
+2024-05-09T17:03:56.785Z | info | Worker 11109 started.
+2024-05-09T17:03:56.879Z | info | Worker initializing
+2024-05-09T17:03:56.880Z | info | Bot listen
+2024-05-09T17:03:56.880Z | info | Worker ready
+2024-05-09T17:04:09.771Z | info | Start cluster with 1 workers
+2024-05-09T17:04:09.775Z | info | Worker 11169 started.
+2024-05-09T17:04:09.867Z | info | Worker initializing
+2024-05-09T17:04:09.868Z | info | Bot listen
+2024-05-09T17:04:09.868Z | info | Worker ready
+2024-05-09T17:04:53.834Z | info | Start cluster with 1 workers
+2024-05-09T17:04:53.839Z | info | Worker 11254 started.
+2024-05-09T17:04:53.966Z | info | Worker initializing
+2024-05-09T17:04:53.968Z | info | Bot listen
+2024-05-09T17:04:53.968Z | info | Worker ready
+2024-05-09T17:05:32.498Z | info | Start cluster with 1 workers
+2024-05-09T17:05:32.502Z | info | Worker 11298 started.
+2024-05-09T17:05:32.595Z | info | Worker initializing
+2024-05-09T17:05:32.597Z | info | Bot listen
+2024-05-09T17:05:32.598Z | info | Worker ready
+2024-05-09T17:08:38.684Z | error | unhandledRejection: next is not a function
+2024-05-09T17:08:38.684Z | error | TypeError: next is not a function
+    at BotTest.helper (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:574:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-09T17:11:59.035Z | info | Start cluster with 1 workers
+2024-05-09T17:11:59.039Z | info | Worker 11891 started.
+2024-05-09T17:11:59.137Z | info | Worker initializing
+2024-05-09T17:11:59.140Z | info | Bot listen
+2024-05-09T17:11:59.140Z | info | Worker ready
+2024-05-09T17:26:57.754Z | info | Start cluster with 1 workers
+2024-05-09T17:26:57.758Z | info | Worker 13546 started.
+2024-05-09T17:26:57.861Z | info | Worker initializing
+2024-05-09T17:26:57.863Z | info | Bot listen
+2024-05-09T17:26:57.864Z | info | Worker ready
+2024-05-09T17:27:13.877Z | info | Start cluster with 1 workers
+2024-05-09T17:27:13.883Z | info | Worker 13606 started.
+2024-05-09T17:27:13.982Z | info | Worker initializing
+2024-05-09T17:27:13.985Z | info | Bot listen
+2024-05-09T17:27:13.985Z | info | Worker ready
+2024-05-09T17:28:23.605Z | info | Start cluster with 1 workers
+2024-05-09T17:28:23.609Z | info | Worker 13685 started.
+2024-05-09T17:28:23.769Z | info | Worker initializing
+2024-05-09T17:28:23.774Z | info | Bot listen
+2024-05-09T17:28:23.775Z | info | Worker ready
+2024-05-09T17:35:47.695Z | info | Start cluster with 1 workers
+2024-05-09T17:35:47.700Z | info | Worker 14009 started.
+2024-05-09T17:35:47.797Z | info | Worker initializing
+2024-05-09T17:35:47.799Z | info | Bot listen
+2024-05-09T17:35:47.799Z | info | Worker ready
+2024-05-09T17:39:49.409Z | info | Start cluster with 1 workers
+2024-05-09T17:39:49.414Z | info | Worker 14376 started.
+2024-05-09T17:39:49.541Z | info | Worker initializing
+2024-05-09T17:39:49.543Z | info | Bot listen
+2024-05-09T17:39:49.544Z | info | Worker ready
+2024-05-09T17:40:12.546Z | info | Start cluster with 1 workers
+2024-05-09T17:40:12.550Z | info | Worker 14417 started.
+2024-05-09T17:40:12.644Z | info | Worker initializing
+2024-05-09T17:40:12.646Z | info | Bot listen
+2024-05-09T17:40:12.646Z | info | Worker ready
+2024-05-09T17:40:24.852Z | info | Start cluster with 1 workers
+2024-05-09T17:40:24.858Z | info | Worker 14453 started.
+2024-05-09T17:40:24.956Z | info | Worker initializing
+2024-05-09T17:40:24.957Z | info | Bot listen
+2024-05-09T17:40:24.957Z | info | Worker ready
+2024-05-09T17:41:19.431Z | info | Start cluster with 1 workers
+2024-05-09T17:41:19.435Z | info | Worker 14492 started.
+2024-05-09T17:41:19.527Z | info | Worker initializing
+2024-05-09T17:41:19.529Z | info | Bot listen
+2024-05-09T17:41:19.530Z | info | Worker ready
+2024-05-09T17:47:55.784Z | info | Start cluster with 1 workers
+2024-05-09T17:47:55.789Z | info | Worker 15141 started.
+2024-05-09T17:47:55.897Z | info | Worker initializing
+2024-05-09T17:47:55.899Z | info | Bot listen
+2024-05-09T17:47:55.899Z | info | Worker ready
+2024-05-09T17:48:07.721Z | info | Start cluster with 1 workers
+2024-05-09T17:48:07.726Z | info | Worker 15216 started.
+2024-05-09T17:48:07.830Z | info | Worker initializing
+2024-05-09T17:48:07.832Z | info | Bot listen
+2024-05-09T17:48:07.833Z | info | Worker ready
+2024-05-09T17:48:15.486Z | info | Start cluster with 1 workers
+2024-05-09T17:48:15.495Z | info | Worker 15249 started.
+2024-05-09T17:48:15.621Z | info | Worker initializing
+2024-05-09T17:48:15.624Z | info | Bot listen
+2024-05-09T17:48:15.624Z | info | Worker ready
+2024-05-09T17:49:52.360Z | info | Start cluster with 1 workers
+2024-05-09T17:49:52.365Z | info | Worker 15516 started.
+2024-05-09T17:49:52.466Z | info | Worker initializing
+2024-05-09T17:49:52.468Z | info | Bot listen
+2024-05-09T17:49:52.468Z | info | Worker ready
+2024-05-09T17:49:55.111Z | info | Start cluster with 1 workers
+2024-05-09T17:49:55.117Z | info | Worker 15550 started.
+2024-05-09T17:49:55.201Z | info | Worker initializing
+2024-05-09T17:49:55.203Z | info | Bot listen
+2024-05-09T17:49:55.203Z | info | Worker ready
+2024-05-09T17:50:31.904Z | info | Start cluster with 1 workers
+2024-05-09T17:50:31.909Z | info | Worker 15594 started.
+2024-05-09T17:50:32.002Z | info | Worker initializing
+2024-05-09T17:50:32.004Z | info | Bot listen
+2024-05-09T17:50:32.005Z | info | Worker ready
+2024-05-09T17:52:28.487Z | info | Start cluster with 1 workers
+2024-05-09T17:52:28.490Z | info | Worker 15893 started.
+2024-05-09T17:52:28.583Z | info | Worker initializing
+2024-05-09T17:52:28.584Z | info | Bot listen
+2024-05-09T17:52:28.585Z | info | Worker ready
+2024-05-09T17:52:39.460Z | info | Start cluster with 1 workers
+2024-05-09T17:52:39.465Z | info | Worker 15930 started.
+2024-05-09T17:52:39.561Z | info | Worker initializing
+2024-05-09T17:52:39.563Z | info | Bot listen
+2024-05-09T17:52:39.563Z | info | Worker ready
+2024-05-09T17:53:04.850Z | info | Start cluster with 1 workers
+2024-05-09T17:53:04.858Z | info | Worker 15973 started.
+2024-05-09T17:53:04.998Z | info | Worker initializing
+2024-05-09T17:53:05.002Z | info | Bot listen
+2024-05-09T17:53:05.004Z | info | Worker ready
+2024-05-09T17:56:10.050Z | info | Start cluster with 1 workers
+2024-05-09T17:56:10.053Z | info | Worker 16237 started.
+2024-05-09T17:56:10.150Z | info | Worker initializing
+2024-05-09T17:56:10.151Z | info | Bot listen
+2024-05-09T17:56:10.152Z | info | Worker ready
+2024-05-09T17:57:29.561Z | info | Start cluster with 1 workers
+2024-05-09T17:57:29.566Z | info | Worker 16427 started.
+2024-05-09T17:57:29.666Z | info | Worker initializing
+2024-05-09T17:57:29.668Z | info | Bot listen
+2024-05-09T17:57:29.668Z | info | Worker ready
+2024-05-09T17:57:53.706Z | info | Start cluster with 1 workers
+2024-05-09T17:57:53.709Z | info | Worker 16493 started.
+2024-05-09T17:57:53.801Z | info | Worker initializing
+2024-05-09T17:57:53.803Z | info | Bot listen
+2024-05-09T17:57:53.804Z | info | Worker ready
+2024-05-09T17:58:04.980Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:04.980Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:06.444Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:06.444Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:06.748Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:06.749Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:08.028Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:08.029Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:09.453Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:09.454Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:10.738Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:10.739Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:12.204Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:12.204Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:13.497Z | error | unhandledRejection: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+2024-05-09T17:58:13.497Z | error | Error: 400: Bad Request: can't parse inline keyboard button: Field "callback_data" must be of type String
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:425:5)
+2024-05-09T17:58:13.889Z | error | unhandledRejection: connect ECONNREFUSED 127.0.0.1:3000
+2024-05-09T17:58:13.890Z | error | Error: connect ECONNREFUSED 127.0.0.1:3000
+    at AxiosError.from (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/axios/dist/node/axios.cjs:836:14)
+    at RedirectableRequest.handleRequestError (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/axios/dist/node/axios.cjs:3086:25)
+    at RedirectableRequest.emit (node:events:519:28)
+    at eventHandlers.<computed> (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/follow-redirects/index.js:38:24)
+    at ClientRequest.emit (node:events:519:28)
+    at Socket.socketErrorListener (node:_http_client:500:9)
+    at Socket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async BotTest.createwallet (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:305:25)
+2024-05-09T17:58:52.676Z | info | Start cluster with 1 workers
+2024-05-09T17:58:52.682Z | info | Worker 16735 started.
+2024-05-09T17:58:52.778Z | info | Worker initializing
+2024-05-09T17:58:52.781Z | info | Bot listen
+2024-05-09T17:58:52.781Z | info | Worker ready
+2024-05-09T17:59:22.851Z | info | Start cluster with 1 workers
+2024-05-09T17:59:22.854Z | info | Worker 16803 started.
+2024-05-09T17:59:22.956Z | info | Worker initializing
+2024-05-09T17:59:22.958Z | info | Bot listen
+2024-05-09T17:59:22.958Z | info | Worker ready
+2024-05-09T17:59:32.832Z | info | Start cluster with 1 workers
+2024-05-09T17:59:32.835Z | info | Worker 16863 started.
+2024-05-09T17:59:32.919Z | info | Worker initializing
+2024-05-09T17:59:32.921Z | info | Bot listen
+2024-05-09T17:59:32.921Z | info | Worker ready
+2024-05-09T18:00:26.613Z | info | Start cluster with 1 workers
+2024-05-09T18:00:26.618Z | info | Worker 16926 started.
+2024-05-09T18:00:26.775Z | info | Worker initializing
+2024-05-09T18:00:26.781Z | info | Bot listen
+2024-05-09T18:00:26.782Z | info | Worker ready
+2024-05-09T18:02:07.117Z | info | Start cluster with 1 workers
+2024-05-09T18:02:07.121Z | info | Worker 17018 started.
+2024-05-09T18:02:07.226Z | info | Worker initializing
+2024-05-09T18:02:07.228Z | info | Bot listen
+2024-05-09T18:02:07.228Z | info | Worker ready
+2024-05-09T18:04:27.384Z | info | Start cluster with 1 workers
+2024-05-09T18:04:27.388Z | info | Worker 17268 started.
+2024-05-09T18:04:27.487Z | info | Worker initializing
+2024-05-09T18:04:27.489Z | info | Bot listen
+2024-05-09T18:04:27.489Z | info | Worker ready
+2024-05-09T18:06:04.635Z | info | Start cluster with 1 workers
+2024-05-09T18:06:04.638Z | info | Worker 17409 started.
+2024-05-09T18:06:04.726Z | info | Worker initializing
+2024-05-09T18:06:04.728Z | info | Bot listen
+2024-05-09T18:06:04.728Z | info | Worker ready
+2024-05-09T18:06:15.631Z | info | Start cluster with 1 workers
+2024-05-09T18:06:15.635Z | info | Worker 17443 started.
+2024-05-09T18:06:15.767Z | info | Worker initializing
+2024-05-09T18:06:15.769Z | info | Bot listen
+2024-05-09T18:06:15.769Z | info | Worker ready
+2024-05-09T18:06:19.065Z | error | uncaughtException: newAccount is not defined
+2024-05-09T18:06:19.067Z | error | ReferenceError: newAccount is not defined
+    at BotTest.test (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:282:38)
+    at /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:119:33
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/composer.js:143:56
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 0)
+2024-05-09T18:06:50.343Z | info | Start cluster with 1 workers
+2024-05-09T18:06:50.346Z | info | Worker 17523 started.
+2024-05-09T18:06:50.434Z | info | Worker initializing
+2024-05-09T18:06:50.436Z | info | Bot listen
+2024-05-09T18:06:50.437Z | info | Worker ready
+2024-05-09T18:07:21.386Z | info | Start cluster with 1 workers
+2024-05-09T18:07:21.390Z | info | Worker 17566 started.
+2024-05-09T18:07:21.486Z | info | Worker initializing
+2024-05-09T18:07:21.487Z | info | Bot listen
+2024-05-09T18:07:21.488Z | info | Worker ready
+2024-05-09T18:07:27.673Z | error | uncaughtException: ctx is not defined
+2024-05-09T18:07:27.674Z | error | ReferenceError: ctx is not defined
+    at BotTest.test (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:193:31)
+    at /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:119:33
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/composer.js:143:56
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 0)
+2024-05-09T18:07:32.263Z | info | Start cluster with 1 workers
+2024-05-09T18:07:32.266Z | info | Worker 17626 started.
+2024-05-09T18:07:32.365Z | info | Worker initializing
+2024-05-09T18:07:32.367Z | info | Bot listen
+2024-05-09T18:07:32.367Z | info | Worker ready
+2024-05-09T18:09:15.310Z | info | Start cluster with 1 workers
+2024-05-09T18:09:15.314Z | info | Worker 17861 started.
+2024-05-09T18:09:15.402Z | info | Worker initializing
+2024-05-09T18:09:15.405Z | info | Bot listen
+2024-05-09T18:09:15.406Z | info | Worker ready
+2024-05-09T18:10:14.501Z | info | Start cluster with 1 workers
+2024-05-09T18:10:14.504Z | info | Worker 18003 started.
+2024-05-09T18:10:14.585Z | info | Worker initializing
+2024-05-09T18:10:14.587Z | info | Bot listen
+2024-05-09T18:10:14.588Z | info | Worker ready
+2024-05-09T18:33:53.003Z | info | Start cluster with 1 workers
+2024-05-09T18:33:53.009Z | info | Worker 19978 started.
+2024-05-09T18:33:53.118Z | info | Worker initializing
+2024-05-09T18:33:53.119Z | info | Bot listen
+2024-05-09T18:33:53.120Z | info | Worker ready
+2024-05-09T18:34:12.352Z | info | Start cluster with 1 workers
+2024-05-09T18:34:12.358Z | info | Worker 20039 started.
+2024-05-09T18:34:12.457Z | info | Worker initializing
+2024-05-09T18:34:12.459Z | info | Bot listen
+2024-05-09T18:34:12.460Z | info | Worker ready
+2024-05-09T18:36:37.698Z | info | Start cluster with 1 workers
+2024-05-09T18:36:37.701Z | info | Worker 20110 started.
+2024-05-09T18:36:37.793Z | info | Worker initializing
+2024-05-09T18:36:37.794Z | info | Bot listen
+2024-05-09T18:36:37.794Z | info | Worker ready
+2024-05-09T18:36:55.186Z | info | Start cluster with 1 workers
+2024-05-09T18:36:55.189Z | info | Worker 20144 started.
+2024-05-09T18:36:55.292Z | info | Worker initializing
+2024-05-09T18:36:55.295Z | info | Bot listen
+2024-05-09T18:36:55.295Z | info | Worker ready
+2024-05-09T18:37:21.696Z | info | Start cluster with 1 workers
+2024-05-09T18:37:21.702Z | info | Worker 20185 started.
+2024-05-09T18:37:21.791Z | info | Worker initializing
+2024-05-09T18:37:21.792Z | info | Bot listen
+2024-05-09T18:37:21.792Z | info | Worker ready
+2024-05-09T18:37:23.202Z | info | Start cluster with 1 workers
+2024-05-09T18:37:23.208Z | info | Worker 20215 started.
+2024-05-09T18:37:23.393Z | info | Worker initializing
+2024-05-09T18:37:23.396Z | info | Bot listen
+2024-05-09T18:37:23.396Z | info | Worker ready
+2024-05-09T18:38:38.916Z | info | Start cluster with 1 workers
+2024-05-09T18:38:38.919Z | info | Worker 20305 started.
+2024-05-09T18:38:39.002Z | info | Worker initializing
+2024-05-09T18:38:39.004Z | info | Bot listen
+2024-05-09T18:38:39.004Z | info | Worker ready
+2024-05-09T18:39:12.020Z | info | Start cluster with 1 workers
+2024-05-09T18:39:12.025Z | info | Worker 20440 started.
+2024-05-09T18:39:12.121Z | info | Worker initializing
+2024-05-09T18:39:12.123Z | info | Bot listen
+2024-05-09T18:39:12.123Z | info | Worker ready
+2024-05-09T18:39:28.866Z | info | Start cluster with 1 workers
+2024-05-09T18:39:28.869Z | info | Worker 20476 started.
+2024-05-09T18:39:28.955Z | info | Worker initializing
+2024-05-09T18:39:28.957Z | info | Bot listen
+2024-05-09T18:39:28.957Z | info | Worker ready
+2024-05-09T18:40:49.076Z | info | Start cluster with 1 workers
+2024-05-09T18:40:49.079Z | info | Worker 20569 started.
+2024-05-09T18:40:49.163Z | info | Worker initializing
+2024-05-09T18:40:49.165Z | info | Bot listen
+2024-05-09T18:40:49.165Z | info | Worker ready
+2024-05-09T18:40:58.697Z | info | Start cluster with 1 workers
+2024-05-09T18:40:58.706Z | info | Worker 20602 started.
+2024-05-09T18:40:58.822Z | info | Worker initializing
+2024-05-09T18:40:58.824Z | info | Bot listen
+2024-05-09T18:40:58.824Z | info | Worker ready
+2024-05-09T18:41:11.384Z | info | Start cluster with 1 workers
+2024-05-09T18:41:11.388Z | info | Worker 20634 started.
+2024-05-09T18:41:11.471Z | info | Worker initializing
+2024-05-09T18:41:11.472Z | info | Bot listen
+2024-05-09T18:41:11.473Z | info | Worker ready
+2024-05-09T18:42:35.391Z | info | Start cluster with 1 workers
+2024-05-09T18:42:35.394Z | info | Worker 20801 started.
+2024-05-09T18:42:35.490Z | info | Worker initializing
+2024-05-09T18:42:35.492Z | info | Bot listen
+2024-05-09T18:42:35.492Z | info | Worker ready
+2024-05-09T18:42:44.349Z | info | Start cluster with 1 workers
+2024-05-09T18:42:44.352Z | info | Worker 20835 started.
+2024-05-09T18:42:44.458Z | info | Worker initializing
+2024-05-09T18:42:44.461Z | info | Bot listen
+2024-05-09T18:42:44.462Z | info | Worker ready
+2024-05-09T18:42:55.139Z | info | Start cluster with 1 workers
+2024-05-09T18:42:55.142Z | info | Worker 20902 started.
+2024-05-09T18:42:55.238Z | info | Worker initializing
+2024-05-09T18:42:55.240Z | info | Bot listen
+2024-05-09T18:42:55.240Z | info | Worker ready
+2024-05-09T18:44:05.254Z | info | Start cluster with 1 workers
+2024-05-09T18:44:05.259Z | info | Worker 20960 started.
+2024-05-09T18:44:05.373Z | info | Worker initializing
+2024-05-09T18:44:05.377Z | info | Bot listen
+2024-05-09T18:44:05.377Z | info | Worker ready
+2024-05-09T18:44:15.959Z | info | Start cluster with 1 workers
+2024-05-09T18:44:15.962Z | info | Worker 20987 started.
+2024-05-09T18:44:16.060Z | info | Worker initializing
+2024-05-09T18:44:16.064Z | info | Bot listen
+2024-05-09T18:44:16.064Z | info | Worker ready
+2024-05-09T18:48:38.477Z | info | Start cluster with 1 workers
+2024-05-09T18:48:38.481Z | info | Worker 21498 started.
+2024-05-09T18:48:38.575Z | info | Worker initializing
+2024-05-09T18:48:38.576Z | info | Bot listen
+2024-05-09T18:48:38.576Z | info | Worker ready
+2024-05-09T18:48:50.783Z | info | Start cluster with 1 workers
+2024-05-09T18:48:50.788Z | info | Worker 21533 started.
+2024-05-09T18:48:50.897Z | info | Worker initializing
+2024-05-09T18:48:50.898Z | info | Bot listen
+2024-05-09T18:48:50.899Z | info | Worker ready
+2024-05-09T18:48:59.468Z | info | Start cluster with 1 workers
+2024-05-09T18:48:59.473Z | info | Worker 21596 started.
+2024-05-09T18:48:59.576Z | info | Worker initializing
+2024-05-09T18:48:59.578Z | info | Bot listen
+2024-05-09T18:48:59.578Z | info | Worker ready
+2024-05-09T18:49:43.319Z | info | Start cluster with 1 workers
+2024-05-09T18:49:43.323Z | info | Worker 21678 started.
+2024-05-09T18:49:43.456Z | info | Worker initializing
+2024-05-09T18:49:43.460Z | info | Bot listen
+2024-05-09T18:49:43.460Z | info | Worker ready
+2024-05-09T18:50:10.927Z | info | Start cluster with 1 workers
+2024-05-09T18:50:10.930Z | info | Worker 21761 started.
+2024-05-09T18:50:11.010Z | info | Worker initializing
+2024-05-09T18:50:11.012Z | info | Bot listen
+2024-05-09T18:50:11.012Z | info | Worker ready
+2024-05-09T18:51:50.682Z | info | Start cluster with 1 workers
+2024-05-09T18:51:50.688Z | info | Worker 21819 started.
+2024-05-09T18:51:50.815Z | info | Worker initializing
+2024-05-09T18:51:50.818Z | info | Bot listen
+2024-05-09T18:51:50.818Z | info | Worker ready
+2024-05-09T18:53:05.152Z | info | Start cluster with 1 workers
+2024-05-09T18:53:05.154Z | info | Worker 21884 started.
+2024-05-09T18:53:05.230Z | info | Worker initializing
+2024-05-09T18:53:05.232Z | info | Bot listen
+2024-05-09T18:53:05.233Z | info | Worker ready
+2024-05-09T18:53:08.462Z | info | Start cluster with 1 workers
+2024-05-09T18:53:08.465Z | info | Worker 21916 started.
+2024-05-09T18:53:08.544Z | info | Worker initializing
+2024-05-09T18:53:08.545Z | info | Bot listen
+2024-05-09T18:53:08.546Z | info | Worker ready
+2024-05-09T18:54:16.179Z | info | Start cluster with 1 workers
+2024-05-09T18:54:16.182Z | info | Worker 22039 started.
+2024-05-09T18:54:16.275Z | info | Worker initializing
+2024-05-09T18:54:16.277Z | info | Bot listen
+2024-05-09T18:54:16.277Z | info | Worker ready
+2024-05-09T18:54:20.998Z | error | uncaughtException: row.filter is not a function
+2024-05-09T18:54:21.000Z | error | TypeError: row.filter is not a function
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/markup.js:285:35
+    at Array.map (<anonymous>)
+    at buildKeyboard (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/markup.js:285:20)
+    at Markup.inlineKeyboard (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/markup.js:48:22)
+    at Markup.inlineKeyboard (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/markup.js:112:25)
+    at Object.helper (/home/louisdevzz/Documents/telegram-bot-refactor/src/keyboards.js:68:12)
+    at BotTest.helper (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:416:133)
+    at /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:119:33
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/composer.js:143:56
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-09T18:54:51.955Z | info | Start cluster with 1 workers
+2024-05-09T18:54:51.957Z | info | Worker 22091 started.
+2024-05-09T18:54:52.038Z | info | Worker initializing
+2024-05-09T18:54:52.039Z | info | Bot listen
+2024-05-09T18:54:52.039Z | info | Worker ready
+2024-05-09T18:55:33.395Z | info | Start cluster with 1 workers
+2024-05-09T18:55:33.398Z | info | Worker 22141 started.
+2024-05-09T18:55:33.486Z | info | Worker initializing
+2024-05-09T18:55:33.487Z | info | Bot listen
+2024-05-09T18:55:33.488Z | info | Worker ready
+2024-05-09T18:55:48.627Z | info | Start cluster with 1 workers
+2024-05-09T18:55:48.630Z | info | Worker 22178 started.
+2024-05-09T18:55:48.718Z | info | Worker initializing
+2024-05-09T18:55:48.719Z | info | Bot listen
+2024-05-09T18:55:48.720Z | info | Worker ready
+2024-05-09T18:55:50.669Z | info | Start cluster with 1 workers
+2024-05-09T18:55:50.673Z | info | Worker 22208 started.
+2024-05-09T18:55:50.750Z | info | Worker initializing
+2024-05-09T18:55:50.751Z | info | Bot listen
+2024-05-09T18:55:50.752Z | info | Worker ready
+2024-05-09T18:56:59.322Z | info | Start cluster with 1 workers
+2024-05-09T18:56:59.325Z | info | Worker 22277 started.
+2024-05-09T18:56:59.407Z | info | Worker initializing
+2024-05-09T18:56:59.409Z | info | Bot listen
+2024-05-09T18:56:59.409Z | info | Worker ready
+2024-05-09T18:58:31.972Z | info | Start cluster with 1 workers
+2024-05-09T18:58:31.976Z | info | Worker 22339 started.
+2024-05-09T18:58:32.103Z | info | Worker initializing
+2024-05-09T18:58:32.104Z | info | Bot listen
+2024-05-09T18:58:32.104Z | info | Worker ready
+2024-05-09T18:59:05.019Z | info | Start cluster with 1 workers
+2024-05-09T18:59:05.023Z | info | Worker 22428 started.
+2024-05-09T18:59:05.119Z | info | Worker initializing
+2024-05-09T18:59:05.121Z | info | Bot listen
+2024-05-09T18:59:05.121Z | info | Worker ready
