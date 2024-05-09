@@ -420,17 +420,7 @@ class BotTest{
 	}
 	async actionLogout(ctx){
 		await ctx.replyWithHTML(
-			`<b>✅ you are logout</b>\n\nif you did not export your key than we cannot make you a new wallet`, {
-			disable_web_page_preview: true,
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "🏠 Home",
-						callback_data: "back",
-					},],
-				],
-			},
-		}
+			`<b>✅ you are logout</b>\n\nif you did not export your key than we cannot make you a new wallet`, keyboards.home()	
 		);
 		ctx.session.privateKey = null;
 		ctx.session.accountId = null;
@@ -458,20 +448,7 @@ class BotTest{
 	}
 	async logout(ctx,next){
 		await ctx.replyWithHTML(
-			"<b> After you logout you cannot log in again </b>", {
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "🔐 Logout",
-						callback_data: "action_logout",
-					},],
-					[{
-						text: "⏪ Back",
-						callback_data: "back",
-					},]
-				],
-			},
-		}
+			"<b> After you logout you cannot log in again </b>", keyboards.logout()
 		);
 	}
 	async transfer(ctx){
@@ -540,29 +517,7 @@ class BotTest{
 					"\n🖼️ NFTs (" + totalNft + " NFT)\n----------------------------------\n";
 				balanceMes += nftList;
 				ctx.deleteMessage(message_id);
-				await ctx.replyWithHTML(balanceMes, {
-					disable_web_page_preview: true,
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "Transfer NEAR / Token",
-								callback_data: "transfertoken",
-							},],
-							[{
-								text: "Transfer NFT",
-								callback_data: "transfernft",
-							},],
-							[{
-								text: "❓Help",
-								url: "https://t.me/+8yc5jSm3ObcwZjZh",
-							},],
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				});
+				await ctx.replyWithHTML(balanceMes,keyboards.transfer());
 			} catch (error) {
 				if (error.response?.data.error?.message) {
 					await ctx.reply(error.response?.data?.error?.message);
@@ -948,7 +903,7 @@ class BotTest{
 						},],
 						[{
 							text: "⏪ Back",
-							callback_data: "back",
+							callback_data: "helper",
 						},],
 					],
 				},

@@ -242,4 +242,27 @@ module.exports={
       Markup.callbackButton("⏪ Back","helper")
     ]
   ]).extra(),
+  logout:()=>Markup.inlineKeyboard([
+    [
+      Markup.callbackButton("🔐 Logout","action_logout")
+    ],
+    [
+      Markup.callbackButton("⏪ Back","helper")
+    ]
+  ]).extra(),
+  transfer:()=>Markup.inlineKeyboard([
+    [
+      Markup.callbackButton("Transfer NEAR / Token","transfertoken")
+    ],
+    [
+      Markup.callbackButton("Transfer NFT","transfernft")
+    ],
+    [
+      Markup.urlButton("❓Help","https://t.me/+8yc5jSm3ObcwZjZh")
+    ],
+    [
+      Markup.callbackButton("⏪ Back","helper")
+    ]
+  ]).extra(),
+  
 }
