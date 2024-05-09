@@ -196,11 +196,11 @@ class BotTest{
     }
 	mint_vibe(ctx){
 		ctx.session.action = 'mintvibe';
-		return this.messageText(ctx,"<b>Upload IRL Vibe(a picture)\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>")
+		return this.editMessageText(ctx,"<b>Upload IRL Vibe(a picture)\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>",keyboards.back())
 	}
 	mint_nft(ctx){
 		ctx.session.action = 'mint_nft';
-		return this.messageText(ctx,"<b>Mint a single NFT on genadrop contract\n(we pay minting cost).\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>")
+		return this.editMessageText(ctx,"<b>Mint a single NFT on genadrop contract\n(we pay minting cost).\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>",keyboards.back())
 	}
 	async postnearsocial(ctx){
 		await ctx.replyWithHTML(
@@ -610,16 +610,7 @@ class BotTest{
 			);
 			return next();
 		} catch (error) {
-			await ctx.replyWithHTML(`<b>❌ Error.</b>`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML(`<b>❌ Error.</b>`, keyboards.back());
 		}
 	
 	}
@@ -648,29 +639,11 @@ class BotTest{
 			});
 			await ctx.deleteMessage(message_id);
 			await ctx.replyWithHTML(
-				`🔂 <b>Sending ${ctx.session.amountTransfertoken} ${ctx.session.selecttoken}</b>.\n\nType in a NEAR address to send FT token`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				`🔂 <b>Sending ${ctx.session.amountTransfertoken} ${ctx.session.selecttoken}</b>.\n\nType in a NEAR address to send FT token`, keyboards.back()
 			);
 			return next();
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
 	async getselecttoken(ctx,next){
@@ -713,32 +686,10 @@ class BotTest{
 				}
 			});
 			ctx.deleteMessage(message_id);
-			await ctx.replyWithHTML(balanceMes, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "Max",
-							callback_data: "max",
-						},],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML(balanceMes, keyboards.checkbalance());
 			return next();
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
 	async transfertoken(ctx,next){
@@ -749,7 +700,7 @@ class BotTest{
 				} = await ctx.replyWithHTML(
 					`<b>Loading...</b>`
 				);
-				const tokenList = await axios.post<TokenListResponse>(
+				const tokenList = await axios.post(
 					"http://localhost:3000/api/account/balance", {
 					accountId: ctx.session.accountId,
 				}, {
@@ -790,7 +741,7 @@ class BotTest{
 				});
 				tokenListSend.push([{
 					text: " Back",
-					callback_data: "back",
+					callback_data: "helper",
 				},]);
 				ctx.deleteMessage(message_id);
 				await ctx.replyWithHTML(balanceMes, Markup.inlineKeyboard(tokenListSend));
@@ -803,16 +754,7 @@ class BotTest{
 			try {
 				var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
 				if (!format.test(ctx.update?.message?.text.toLowerCase())) {
-					await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, {
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					});
+					await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, keyboards.back());
 	
 				} else {
 					const stateAccount = await axios.post<any>(
@@ -830,16 +772,7 @@ class BotTest{
 						stateAccount.data?.response.type == "REQUEST_VALIDATION_ERROR"
 					) {
 						await ctx.replyWithHTML(
-							`<b>❌ this address does not exist. try again</b>`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "⏪ Back",
-										callback_data: "back",
-									},],
-								],
-							},
-						}
+							`<b>❌ this address does not exist. try again</b>`, keyboards.back()
 						);
 					}
 	
@@ -874,29 +807,9 @@ class BotTest{
 						);
 						await ctx.deleteMessage(message_id);
 						if (data.status) {
-	
-							await ctx.replyWithHTML(`<b>✅ Success </b>`, {
-								reply_markup: {
-									inline_keyboard: [
-										[{
-											text: "🏠 Home",
-											callback_data: "back",
-										},],
-									],
-								},
-							});
-							return await ctx.leave();
+							return await ctx.replyWithHTML(`<b>✅ Success </b>`, keyboards.home());
 						} else {
-							await ctx.replyWithHTML(`<b>❌ Error cannt transfer. try again</b>`, {
-								reply_markup: {
-									inline_keyboard: [
-										[{
-											text: "🏠 Home",
-											callback_data: "back",
-										},],
-									],
-								},
-							});
+							await ctx.replyWithHTML(`<b>❌ Error cannt transfer. try again</b>`, keyboards.home());
 						}
 					}
 	
@@ -905,29 +818,9 @@ class BotTest{
 			} catch (error) {
 				const err = await error;
 				if (err?.response?.data?.error?.type == "NotEnoughBalance") {
-					await ctx.replyWithHTML("<b>❌ You do not have enough balance to transfer.\n\nPlease enter a smaller transfer amount</b>", {
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					});
-					await ctx.leave();
-					return this.helper(ctx);
+					return await ctx.replyWithHTML("<b>❌ You do not have enough balance to transfer.\n\nPlease enter a smaller transfer amount</b>", keyboards.back());
 				} else {
-					await ctx.replyWithHTML("<b>❌ Error</b>", {
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					});
+					await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 				}
 	
 			}
@@ -952,7 +845,7 @@ class BotTest{
 					},],
 					[{
 						text: "⏪ Back",
-						callback_data: "back",
+						callback_data: "helper",
 					},],
 				],
 			},
@@ -991,7 +884,7 @@ class BotTest{
 								},],
 								[{
 									text: "⏪ Back",
-									callback_data: "back",
+									callback_data: "helper",
 								},],
 							],
 						},
@@ -1004,90 +897,17 @@ class BotTest{
 				}
 			} else {
 				await ctx.replyWithHTML(
-					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>", {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>", keyboards.back()
 				);
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b> "+error, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b> "+error, keyboards.back());
 		}
 	}
 	async blank(ctx,next){
 		ctx.session.content = "";
 		await ctx.replyWithHTML(
-				`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, {
-				disable_web_page_preview: true,
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "1",
-							callback_data: "rateEnegery_1",
-						},
-						{
-							text: "2",
-							callback_data: "rateEnegery_2",
-						},
-						],
-						[{
-							text: "3",
-							callback_data: "rateEnegery_3",
-						},
-						{
-							text: "4",
-							callback_data: "rateEnegery_4",
-						},
-						],
-						[{
-							text: "5",
-							callback_data: "rateEnegery_5",
-						},
-						{
-							text: "6",
-							callback_data: "rateEnegery_6",
-						},
-						],
-						[{
-							text: "7",
-							callback_data: "rateEnegery_7",
-						},
-						{
-							text: "8",
-							callback_data: "rateEnegery_8",
-						},
-						],
-						[{
-							text: "9",
-							callback_data: "rateEnegery_9",
-						},
-						{
-							text: "10",
-							callback_data: "rateEnegery_10",
-						},
-						],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, keyboards.mintvibeBlank()
 		);
 		return next();
 	}
@@ -1114,62 +934,7 @@ class BotTest{
 				ctx.session.content = content.data.choices[0].message.content;
 
 				await ctx.replyWithHTML(
-					`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, {
-					disable_web_page_preview: true,
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "1",
-								callback_data: "rateEnegery_1",
-							},
-							{
-								text: "2",
-								callback_data: "rateEnegery_2",
-							},
-							],
-							[{
-								text: "3",
-								callback_data: "rateEnegery_3",
-							},
-							{
-								text: "4",
-								callback_data: "rateEnegery_4",
-							},
-							],
-							[{
-								text: "5",
-								callback_data: "rateEnegery_5",
-							},
-							{
-								text: "6",
-								callback_data: "rateEnegery_6",
-							},
-							],
-							[{
-								text: "7",
-								callback_data: "rateEnegery_7",
-							},
-							{
-								text: "8",
-								callback_data: "rateEnegery_8",
-							},
-							],
-							[{
-								text: "9",
-								callback_data: "rateEnegery_9",
-							},
-							{
-								text: "10",
-								callback_data: "rateEnegery_10",
-							},
-							],
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, keyboards.mintvibeBlank()
 				);
 				return next();
 			}
@@ -1194,62 +959,7 @@ class BotTest{
 		ctx.session.content = ctx.update?.message?.text;
 
 			await ctx.replyWithHTML(
-				`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, {
-				disable_web_page_preview: true,
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "1",
-							callback_data: "rateEnegery_1",
-						},
-						{
-							text: "2",
-							callback_data: "rateEnegery_2",
-						},
-						],
-						[{
-							text: "3",
-							callback_data: "rateEnegery_3",
-						},
-						{
-							text: "4",
-							callback_data: "rateEnegery_4",
-						},
-						],
-						[{
-							text: "5",
-							callback_data: "rateEnegery_5",
-						},
-						{
-							text: "6",
-							callback_data: "rateEnegery_6",
-						},
-						],
-						[{
-							text: "7",
-							callback_data: "rateEnegery_7",
-						},
-						{
-							text: "8",
-							callback_data: "rateEnegery_8",
-						},
-						],
-						[{
-							text: "9",
-							callback_data: "rateEnegery_9",
-						},
-						{
-							text: "10",
-							callback_data: "rateEnegery_10",
-						},
-						],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, keyboards.mintvibeBlank()
 			);
 			return next();
 	}
@@ -1260,62 +970,7 @@ class BotTest{
 				`You selected <b>${rate}</b>⚡️for energy`
 			);
 			await ctx.replyWithHTML(
-				`<b>Rate the ❤️ friendliness (how friendly was people) with 10 being the most friendly</b>`, {
-				disable_web_page_preview: true,
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "1",
-							callback_data: "rateFriendliness_1",
-						},
-						{
-							text: "2",
-							callback_data: "rateFriendliness_2",
-						},
-						],
-						[{
-							text: "3",
-							callback_data: "rateFriendliness_3",
-						},
-						{
-							text: "4",
-							callback_data: "rateFriendliness_4",
-						},
-						],
-						[{
-							text: "5",
-							callback_data: "rateFriendliness_5",
-						},
-						{
-							text: "6",
-							callback_data: "rateFriendliness_6",
-						},
-						],
-						[{
-							text: "7",
-							callback_data: "rateFriendliness_7",
-						},
-						{
-							text: "8",
-							callback_data: "rateFriendliness_8",
-						},
-						],
-						[{
-							text: "9",
-							callback_data: "rateFriendliness_9",
-						},
-						{
-							text: "10",
-							callback_data: "rateFriendliness_10",
-						},
-						],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				`<b>Rate the ❤️ friendliness (how friendly was people) with 10 being the most friendly</b>`, keyboards.getRateEnegery()
 		);
 			return next();
 	}
@@ -1326,62 +981,7 @@ class BotTest{
 				`You selected <b>${rate}</b> ❤️ for friendliness`
 			);
 			await ctx.replyWithHTML(
-				`<b>Rate the 🧊 density (were you were alone or was the vibe packed) with 10 being the most backed</b>`, {
-				disable_web_page_preview: true,
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "1",
-							callback_data: "rateDensity_1",
-						},
-						{
-							text: "2",
-							callback_data: "rateDensity_2",
-						},
-						],
-						[{
-							text: "3",
-							callback_data: "rateDensity_3",
-						},
-						{
-							text: "4",
-							callback_data: "rateDensity_4",
-						},
-						],
-						[{
-							text: "5",
-							callback_data: "rateDensity_5",
-						},
-						{
-							text: "6",
-							callback_data: "rateDensity_6",
-						},
-						],
-						[{
-							text: "7",
-							callback_data: "rateDensity_7",
-						},
-						{
-							text: "8",
-							callback_data: "rateDensity_8",
-						},
-						],
-						[{
-							text: "9",
-							callback_data: "rateDensity_9",
-						},
-						{
-							text: "10",
-							callback_data: "rateDensity_10",
-						},
-						],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				`<b>Rate the 🧊 density (were you were alone or was the vibe packed) with 10 being the most backed</b>`, keyboards.getRateFriendliness()
 			);
 			return next();
 	}
@@ -1392,62 +992,7 @@ class BotTest{
 				`You selected <b>${rate}</b> 🧊 for density`
 			);
 			await ctx.replyWithHTML(
-				`<b>Rate the 🌈 diversity (was the vibe full of the same type of people or was the culture diverse) with 10 being the most diverse</b>`, {
-				disable_web_page_preview: true,
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "1",
-							callback_data: "rateDiversity_1",
-						},
-						{
-							text: "2",
-							callback_data: "rateDiversity_2",
-						},
-						],
-						[{
-							text: "3",
-							callback_data: "rateDiversity_3",
-						},
-						{
-							text: "4",
-							callback_data: "rateDiversity_4",
-						},
-						],
-						[{
-							text: "5",
-							callback_data: "rateDiversity_5",
-						},
-						{
-							text: "6",
-							callback_data: "rateDiversity_6",
-						},
-						],
-						[{
-							text: "7",
-							callback_data: "rateDiversity_7",
-						},
-						{
-							text: "8",
-							callback_data: "rateDiversity_8",
-						},
-						],
-						[{
-							text: "9",
-							callback_data: "rateDiversity_9",
-						},
-						{
-							text: "10",
-							callback_data: "rateDiversity_10",
-						},
-						],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				`<b>Rate the 🌈 diversity (was the vibe full of the same type of people or was the culture diverse) with 10 being the most diverse</b>`, keyboards.getRateDensity()
 			);
 			return next();
 	}
@@ -1486,19 +1031,10 @@ class BotTest{
 			await ctx.deleteMessage(message_id);
 			if (res.data.result?.transaction_outcome?.outcome?.status) {
 				await ctx.replyWithHTML(
-					`<b>✅ You successfully posted on NEAR Social for vibes. <a href="https://near.social/mob.near/widget/MainPage.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">(See link)</a>\n⌛️ The image will take ~10 minutes to show on NEAR Social </b>`, {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "🏠 Home",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					`<b>✅ You successfully posted on NEAR Social for vibes. <a href="https://near.social/mob.near/widget/MainPage.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">(See link)</a>\n⌛️ The image will take ~10 minutes to show on NEAR Social </b>`, keyboards.home()
 				);
 				const tokenId = Date.now() + "";
-				await axios.post<any>(
+				await axios.post(
 					"http://localhost:3000/api/nft/mint", {
 					title: `${ctx.session.accountId.replace(".near", "")} ${new Date().toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}`,
 					description: `#ProofOfVibes #   @proofofvibes.near ${ctx.session.content} \n ## **Vibe-rating**  ❤️ **Friendliness:** ${ctx.session.selectFriendliness}/10 ⚡️ **Energy:** ${ctx.session.selectEnegry}/10 🧊 **Density:** ${ctx.session.selectDensity}/10 🌈 **Diversity:** ${ctx.session.selectDensity}/10`,
@@ -1515,8 +1051,6 @@ class BotTest{
 				}
 				);
 			}
-
-			return await ctx.leave()
 		}
 	}
 	async uploadIPFS(ctx,next){
@@ -1542,17 +1076,7 @@ class BotTest{
 				);
 				if (data.cid) {
 					await ctx.replyWithHTML(
-						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\n Type in Your title for your NFT (Max 20 character), no links or special characters</b>`, {
-						disable_web_page_preview: true,
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					}
+						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\n Type in Your title for your NFT (Max 20 character), no links or special characters</b>`, keyboards.back()
 					);
 					ctx.session.cid = data.cid;
 					return ctx.session.action = "uploadipfs";
@@ -1561,29 +1085,11 @@ class BotTest{
 				}
 			} else {
 				await ctx.replyWithHTML(
-					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>", {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>", keyboards.back()
 				);
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
 	async mintnft(ctx,next){
@@ -1591,44 +1097,17 @@ class BotTest{
 
 		if (regex.test(ctx.update?.message?.text)) {
 			await ctx.replyWithHTML(
-				"<b>❌ Error NFT title cannot contain special characters\n\nType in Your title for your NFT (min 4 character),no links or special characters</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				"<b>❌ Error NFT title cannot contain special characters\n\nType in Your title for your NFT (min 4 character),no links or special characters</b>",keyboards.back()
 			);
 		} else {
 			if (ctx.update?.message?.text?.length < 4) {
 				await ctx.replyWithHTML(
-					"<b>❌ Error NFT title too short\n\nType in Your title for your NFT (min 4 character),no links or special characters</b>", {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					"<b>❌ Error NFT title too short\n\nType in Your title for your NFT (min 4 character),no links or special characters</b>", keyboards.back()
 				);
 			}
 			if (ctx.update?.message?.text?.length > 20) {
 				await ctx.replyWithHTML(
-					"<b>❌ Error NFT title too long\n\nType in Your title for your NFT (min 4 character),no links or special characters</b>", {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					"<b>❌ Error NFT title too long\n\nType in Your title for your NFT (min 4 character),no links or special characters</b>", keyboards.back()
 				);
 			}
 			if (
@@ -1636,24 +1115,7 @@ class BotTest{
 				ctx.update?.message?.text.length < 20
 			) {
 				await ctx.replyWithHTML(
-					`<b>✅ Successfully titled NFT "${ctx.update?.message?.text}"\n\nAdd description,max 200 characters.Links allowed.</b>`, {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "🤖 Autogenerate Description",
-								callback_data: "mintNFTautogenerate",
-							},],
-							[{
-								text: "😐 Leave Blank",
-								callback_data: "mintNFTblank",
-							},],
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					`<b>✅ Successfully titled NFT "${ctx.update?.message?.text}"\n\nAdd description,max 200 characters.Links allowed.</b>`, keyboards.mintnft()
 				);
 				ctx.session.titleNFT = ctx.update?.message?.text;
 				return this.mintNFTSuccess(ctx,next);
@@ -1683,81 +1145,25 @@ class BotTest{
 				ctx.session.descriptionNFT =
 					description.data.choices[0].message.content;
 				await ctx.replyWithHTML(
-					`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "Myself",
-								callback_data: "mintNFTmyself",
-							},],
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`,keyboards.mintNFTmyself()
 				);
 				return ctx.next();
 			}
 		} catch (error) {
 			console.log(error)
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "Myself",
-							callback_data: "mintNFTmyself",
-						},],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.mintNFTmyself());
 		}
 	}
 	async mintNFTBlank(ctx,next){
 		ctx.session.descriptionNFT = "";
 			await ctx.replyWithHTML(
-				`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "Myself",
-							callback_data: "mintNFTmyself",
-						},],
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
+				`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 			);
 			return next();
 	}
 	async mintNFTError(ctx){
 		await ctx.replyWithHTML(
-			"<b>❌ Error description title too long\n\n Add description, max 200 characters.Links allowed.</b>", {
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "🤖 Autogenerate Description",
-						callback_data: "mintNFTautogenerate",
-					},],
-					[{
-						text: "😐 Leave Blank",
-						callback_data: "mintNFTblank",
-					},],
-					[{
-						text: "⏪ Back",
-						callback_data: "back",
-					},],
-				],
-			},
-		}
+			"<b>❌ Error description title too long\n\n Add description, max 200 characters.Links allowed.</b>", keyboards.mintnft()
 		);
 	}
 	async mintNFTSuccess(ctx,next){
@@ -1766,20 +1172,7 @@ class BotTest{
 		}
 		ctx.session.descriptionNFT = ctx.update?.message?.text;
 		await ctx.replyWithHTML(
-			`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, {
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "Myself",
-						callback_data: "mintNFTmyself",
-					},],
-					[{
-						text: "⏪ Back",
-						callback_data: "back",
-					},],
-				],
-			},
-		}
+			`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 		);
 		return next();
 	}
@@ -1792,20 +1185,7 @@ class BotTest{
 			var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
 			if (!format.test(ctx.callback_query?.message?.text.toLowerCase())) {
 				await ctx.replyWithHTML(
-					`<b>❌ Error not a valid Near address.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "Myself",
-								callback_data: "mintNFTmyself",
-							},],
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					`<b>❌ Error not a valid Near address.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 				);
 			} else {
 				const stateAccount = await axios.post<any>(
@@ -1848,19 +1228,9 @@ class BotTest{
 							?.SuccessReceiptId
 					) {
 						await ctx.deleteMessage(message_id);
-						await ctx.replyWithHTML(
-							`<b>✅You successfully minted "${ctx.session.titleNFT}" NFT to user <a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=nft.genadrop.near&tokenId=${tokenId}&chainState=near">(Open)</a></b>`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "🏠 Home",
-										callback_data: this.back(ctx),
-									},],
-								],
-							},
-						}
+						return await ctx.replyWithHTML(
+							`<b>✅You successfully minted "${ctx.session.titleNFT}" NFT to user <a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=nft.genadrop.near&tokenId=${tokenId}&chainState=near">(Open)</a></b>`, keyboards.home()
 						);
-						return await ctx.leave();
 					}
 				}
 				if (
@@ -1868,52 +1238,17 @@ class BotTest{
 					stateAccount.data?.response?.type == "REQUEST_VALIDATION_ERROR"
 				) {
 					await ctx.replyWithHTML(
-						`<b>❌ Error this near doesnt exists.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, {
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "Myself",
-									callback_data: "mintNFTmyself",
-								},],
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					}
+						`<b>❌ Error this near doesnt exists.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 					);
 				}
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>",keyboards.back());
 		}
 	}
 	async postNearSocial(ctx,next){
 		ctx.session.postContent = ctx?.update?.message?.text;
-			await ctx.replyWithHTML("<b>Upload Image to Post . Supported file types;png;gif;jpeg (max 10mb) Send a picture</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "🆙 Post Now!",
-							callback_data: "post",
-						},],
-						[{
-							text: "Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>Upload Image to Post . Supported file types;png;gif;jpeg (max 10mb) Send a picture</b>",keyboards.postnearsoical());
 	}
 	async post(ctx,next){
 		const {
@@ -1936,18 +1271,7 @@ class BotTest{
 		);
 		await ctx.deleteMessage(message_id);
 		if (res.data.result?.transaction_outcome?.outcome?.status) {
-			await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`, {
-				disable_web_page_preview: true,
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "🏠 Home",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
-			return ctx.leave();
+			return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`,keyboards.home());
 		}
 	}
 	async postNearSocialFinal(ctx,next){
@@ -1990,73 +1314,26 @@ class BotTest{
 					);
 					await ctx.deleteMessage(message_id);
 					if (res.data.result?.transaction_outcome?.outcome?.status) {
-						await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`, {
-
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "🏠 Home",
-										callback_data: "back",
-									},],
-								],
-							},
-						});
-						return ctx.leave();
+						return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`,keyboards.home());
 					}
 				} else {
 					await ctx.replyWithHTML(
-						"<b>❌ Error upload image/file.</b>\n\nRepost with suppored image", {
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					}
+						"<b>❌ Error upload image/file.</b>\n\nRepost with suppored image",keyboards.back()
 					);
 				}
 			} else {
 				await ctx.replyWithHTML(
-					"<b>❌ Error image/file not supported.</b>\nExceeds limit or wrong type.(Jpg, gif,png up to 20mb supported)\n\nRepost with suppored image", {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					"<b>❌ Error image/file not supported.</b>\nExceeds limit or wrong type.(Jpg, gif,png up to 20mb supported)\n\nRepost with suppored image",keyboards.back()
 				);
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
 	async proofOfSesh(ctx,next){
 		ctx.session.selectStick = ctx.update?.callback_query?.data;
 			await ctx.replyWithHTML(`<b>YOU HAVE CHOSEN ${ctx.session.selectStick.toUpperCase()}</b>`);
-			await ctx.replyWithHTML(`<b>📸Take a picture of the smoking stick</b>`, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML(`<b>📸Take a picture of the smoking stick</b>`, keyboards.back());
 		return next();
 	}
 	async proofOfSeshFinal(ctx,next){
@@ -2082,59 +1359,18 @@ class BotTest{
 				);
 				if (data.cid) {
 					await ctx.replyWithHTML(
-						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\nSend a message to say what you feel</b>`, {
-						disable_web_page_preview: true,
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					}
+						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\nSend a message to say what you feel</b>`, keyboards.back()
 					);
 
 					ctx.session.cid = data.cid;
 					if (ctx.session.proofofsesh) {
-						await ctx.replyWithHTML("<b> Watchu smoking on???</b>", {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "🔥 BLUNT",
-										callback_data: "select_blunt",
-									},],
-									[{
-										text: "🤙 JOINT",
-										callback_data: "select_joint",
-									},],
-									[{
-										text: "👽 SPLIFF",
-										callback_data: "select_spliff",
-									},],
-									[{
-										text: "⏪ Back",
-										callback_data: "back",
-									},],
-								],
-							},
-						});
+						await ctx.replyWithHTML("<b> Watchu smoking on???</b>", keyboards.proofofseshfinal());
 						return next();
 
 					} else {
 						await ctx.replyWithHTML(
-							`<b>WHO REFERED YOU. PUT THEIR .NEAR handle / telegram handle or name</b>`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "⏪ Back",
-										callback_data: "back",
-									},],
-								],
-							},
-						}
+							`<b>WHO REFERED YOU. PUT THEIR .NEAR handle / telegram handle or name</b>`, keyboards.back()
 						);
-
 						return next();
 					}
 
@@ -2143,46 +1379,17 @@ class BotTest{
 				}
 			} else {
 				await ctx.replyWithHTML(
-					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>", {
-
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>",keyboards.back()
 				);
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
 	async getSelect(ctx,next){
 		ctx.session.selectStick = ctx.update?.callback_query?.data.split("_")[1];
 		await ctx.replyWithHTML(
-			`<b>✅ YOU HAVE CHOSEN ${ctx.session.selectStick.toUpperCase()}\n\nSend a message to say what you feel</b>`, {
-			disable_web_page_preview: true,
-			reply_markup: {
-				inline_keyboard: [
-					[{
-						text: "⏪ Back",
-						callback_data: "back",
-					},],
-				],
-			},
-		}
+			`<b>✅ YOU HAVE CHOSEN ${ctx.session.selectStick.toUpperCase()}\n\nSend a message to say what you feel</b>`, keyboards.back()
 		);
 		return next();
 	}
@@ -2210,17 +1417,7 @@ class BotTest{
 				if (data.cid) {
 
 					await ctx.replyWithHTML(
-						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\nSend a message to say what you feel</b>`, {
-						disable_web_page_preview: true,
-						reply_markup: {
-							inline_keyboard: [
-								[{
-									text: "⏪ Back",
-									callback_data: "back",
-								},],
-							],
-						},
-					}
+						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\nSend a message to say what you feel</b>`,keyboards.back()
 					);
 					ctx.session.cid = data.cid;
 					if (ctx.session.proofofsesh) {
@@ -2228,18 +1425,8 @@ class BotTest{
 						return ctx.wizard.next();
 					} else {
 						await ctx.replyWithHTML(
-							`<b>WHO REFERED YOU. PUT THEIR .NEAR handle / telegram handle or name</b>`, {
-							reply_markup: {
-								inline_keyboard: [
-									[{
-										text: "🏠 Home",
-										callback_data: "back",
-									},],
-								],
-							},
-						}
+							`<b>WHO REFERED YOU. PUT THEIR .NEAR handle / telegram handle or name</b>`,keyboards.home()
 						);
-
 						return next();
 					}
 
@@ -2248,29 +1435,11 @@ class BotTest{
 				}
 			} else {
 				await ctx.replyWithHTML(
-					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>", {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					"<b>❌ Error unsupported file type.\n\nSupported file types;png,gif,jpeg (max 10mb)\n\nResend a picture</b>", keyboards.back()
 				);
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML("<b>❌ Error</b>",keyboards.back());
 		}
 	}
 	async getSelectFinal(ctx,next){
@@ -2294,19 +1463,9 @@ class BotTest{
 		);
 		await ctx.deleteMessage(message_id);
 		if (res.data.result?.transaction_outcome?.outcome?.status) {
-			await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`, {
-				disable_web_page_preview: true,
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			});
+			await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`, keyboards.back());
 			const tokenId = Date.now() + ""
-			const resNFT = await axios.post(
+			await axios.post(
 				"http://localhost:3000/api/nft/mint", {
 				title: `BluntDao NFT #${ctx.session.selectStick}`,
 				description: `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${ctx.session.selectStick}`,
@@ -2322,7 +1481,6 @@ class BotTest{
 				},
 			}
 			);
-			return ctx.leave();
 		}
 
 	}
@@ -2429,16 +1587,7 @@ class BotTest{
 						console.log("data", JSON.stringify(data))
 						if (data?.nft["nft.bluntdao.near"]?.length > 0) {
 							await ctx.replyWithHTML(
-								`<b>✅ YOU ARE IN BLUNT DAO. YOU ARE AN OG VALIDATOR. NOW YOU CAN ONBOARD OTHERS TO BLUNT DAO THE SAME WAY. YOU ARE AN OG VALIDATOR.\nYOU HAVE A NFT (<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft["nft.bluntdao.near"][0].nft_contract_id}&tokenId=${data.nft["nft.bluntdao.near"][0].token_id}">Open</a>) AND YOU ALREADY POSTED ON WEB3 SOCIAL (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) 🔥🎉</b>`, {
-								reply_markup: {
-									inline_keyboard: [
-										[{
-											text: "⏪ Back",
-											callback_data: "back",
-										},],
-									],
-								},
-							}
+								`<b>✅ YOU ARE IN BLUNT DAO. YOU ARE AN OG VALIDATOR. NOW YOU CAN ONBOARD OTHERS TO BLUNT DAO THE SAME WAY. YOU ARE AN OG VALIDATOR.\nYOU HAVE A NFT (<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft["nft.bluntdao.near"][0].nft_contract_id}&tokenId=${data.nft["nft.bluntdao.near"][0].token_id}">Open</a>) AND YOU ALREADY POSTED ON WEB3 SOCIAL (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) 🔥🎉</b>`,keyboards.back()
 							);
 						}
 
@@ -2468,27 +1617,13 @@ class BotTest{
 						},
 					}
 					);
-
-					return ctx.scene.leave();
 				}
-
-				return ctx.wizard.next();
+				return next();
 			} else {
 				await ctx.replyWithHTML(
-					`<b>❌ AN OG WITH THIS WALLET DOESNT EXIST.\n\nPLEASE TYPE AGAIN</b>`, {
-					reply_markup: {
-						inline_keyboard: [
-							[{
-								text: "⏪ Back",
-								callback_data: "back",
-							},],
-						],
-					},
-				}
+					`<b>❌ AN OG WITH THIS WALLET DOESNT EXIST.\n\nPLEASE TYPE AGAIN</b>`, keyboards.back()
 				);
 			}
-
-
 		} catch (error) {
 			console.log(error)
 		}
@@ -2497,24 +1632,6 @@ class BotTest{
 		try {
 			return await ctx.replyWithHTML(...message);
 		} catch (err) {
-			return null;
-		}
-	}
-	async messageText(ctx,...message){
-		try{
-			return await ctx.replyWithHTML(
-				...message, {
-				reply_markup: {
-					inline_keyboard: [
-						[{
-							text: "⏪ Back",
-							callback_data: "back",
-						},],
-					],
-				},
-			}
-			);
-		}catch(err){
 			return null;
 		}
 	}
