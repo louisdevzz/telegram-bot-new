@@ -5,11 +5,30 @@ const {
 	Scenes,
     memorySession
 }=require("telegraf");
+const { serialize, deserialize }=require('borsh');
 const Telegraf = require("telegraf");
 const axios =require("axios");
 const dotenv=require("dotenv");
 const RedisSession = require('telegraf-session-redis');
 const keyboards = require("./keyboards");
+const { encodeSignedDelegate, SignedDelegate } = require("@near-js/transactions");
+const { 
+	CreateAccount, 
+	getState,
+	CheckBalance, 
+	getNFT, 
+	uploadIPFS, 
+	syncProfile, 
+	transferToken, 
+	getVibe, mintNFT, 
+	postSocial, 
+	getNFTBlunt, 
+	mintBlunt, 
+	addBlunt,
+	submitTransaction,
+	followBlunt
+} = require("../utils/SDK");
+
 
 dotenv.config();
 const API_TOKEN = process.env.BOT_TOKEN;
@@ -68,7 +87,6 @@ class BotTest{
         const commands = [
             ['start',this.start],
             ['createwallet', this.createwallet],
-            ['actions', this.actions],
             ['helper', this.helper]
         ];
         const actions = [
@@ -86,8 +104,9 @@ class BotTest{
 			['transfertoken',this.transfertoken],
 			['blank',this.blank],
 			['logout',this.logout],
-			['actionLogout',this.actionLogout],
-			['helper', this.helper]
+			['action_logout',this.actionLogout],
+			['helper', this.helper],
+            ['setting', this.setting]
         ]
         commands.forEach(([command, fn]) => this.bot.command(command, this.wrapAction(fn)));
         actions.forEach(([action, fn]) => this.bot.action(action, this.wrapAction(fn)));
@@ -123,11 +142,6 @@ class BotTest{
             }
         }
     }
-    async actions(ctx) {
-        ctx.session.action = null;
-
-        return ctx.reply('Select an action', keyboards.actionsList());
-    }
     async start(ctx,next){
 		await ctx.replyWithHTML(
 			`<b> 👋 Welcome to Drop Wallet</b>\nDrop Wallet creates you a wallet on the NEAR Blockchain directly through telegram. We pay for transactions within the wallet like posting on Near Social. \n <b> - You can check</b> :\n👉 Balance  \n👉 Transfer Tokens/NFTs \n👉 Mint NFT \n👉 Export your keys`,
@@ -144,7 +158,7 @@ class BotTest{
 		);
 		return next();
 	}
-    async handleBot(ctx, next) {
+    async handleBot(ctx) {
         console.log("photo",ctx.update?.message?.photo?.file_id)
         console.log("text",ctx.update?.message?.text)
         if(ctx.update?.message?.text){
@@ -238,33 +252,26 @@ class BotTest{
 			} = await ctx.replyWithHTML(
 				`<b>Loading...</b>`
 			);
-			const stateAccount = await axios.post(
-				"http://localhost:3000/api/account/state", {
-				accountId: newAccount,
-			}, {
-				headers: {
-					"Content-Type": "application/json",
-					Accept: "application/json",
-				},
-			}
-			);
-			if (stateAccount.data?.response?.type == "AccountDoesNotExist") {
+			const stateAccount = await getState(newAccount);
+			//console.log(stateAccount)
+			if (stateAccount.response?.type == "AccountDoesNotExist") {
+				const {signedDelegates,privateKey,seed} = await CreateAccount(newAccount.toLowerCase())
+				//console.log(signedDelegates)
 				try {
-
-					const {
-						data
-					} = await axios.post(
-						"http://localhost:3000/api/account/create", {
-						accountId: newAccount.toLowerCase(),
-					}, {
-						headers: {
-							"Content-Type": "application/json",
-							Accept: "application/json",
-						},
-					}
+					
+					const {data} = await axios.post(
+							"http://localhost:5000/relay", {
+							delegate: JSON.stringify(Array.from(encodeSignedDelegate(signedDelegates))),
+						}, {
+							headers: {
+								"Content-Type": "application/json",
+								Accept: "application/json",
+							},
+						}
 					);
-					if (data?.privateKey) {
-						ctx.session.privateKey = data.privateKey;
+					console.log(data)
+					if (data.final_execution_status == "FINAL") {
+						ctx.session.privateKey = privateKey;
 						ctx.session.user_telegram = ctx.update?.message?.chat?.username;
 						ctx.session.accountId = newAccount.toLowerCase();
 
@@ -302,14 +309,14 @@ class BotTest{
 					}
 				}
 			} else {
-				if (stateAccount.data?.response?.type == "REQUEST_VALIDATION_ERROR") {
+				if (stateAccount.response?.type == "REQUEST_VALIDATION_ERROR") {
 					await ctx.deleteMessage(message_id);
 					await ctx.replyWithHTML(
 						`<b>❌${newAccount.toLowerCase()} is not valid!</b>\nsend another address`, keyboards.back()
 					);
 				}
 			}
-			if (stateAccount.data?.response.amount) {
+			if (stateAccount.response.amount) {
 				await ctx.deleteMessage(message_id);
 				await ctx.replyWithHTML(
 					`<b>❌${newAccount.toLowerCase()} is taken!</b>\nsend another address`, keyboards.back()
@@ -324,16 +331,8 @@ class BotTest{
             `<b>Loading...</b>`
         );
         try {
-            const tokenList = await axios.post(
-                "http://localhost:3000/api/account/balance", {
-                accountId: ctx.session.accountId,
-            }, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-            }
-            );
+            const tokenList = await CheckBalance(ctx.session.accountId);
+			//console.log(tokenList);
             let totalUSD = 0;
             tokenList.data.token.forEach((item) => {
                 totalUSD += parseFloat(item.balanceInUsd);
@@ -356,16 +355,7 @@ class BotTest{
             });
             const {
                 data
-            } = await axios.post(
-                "http://localhost:3000/api/account/nft", {
-                accountId: ctx.session.accountId,
-            }, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-            }
-            );
+            } = await getNFT(ctx.session.accountId);
             let totalNft = 0;
     
             const contractOwnedList = Object.keys(data.nft);
@@ -443,10 +433,9 @@ class BotTest{
 		ctx.session.selectStick = null;
 		ctx.session.blunt_ref = null;
 		ctx.session.cid = null;
-		await ctx.leave();
 		return this.helper(ctx);
 	}
-	async logout(ctx,next){
+	async logout(ctx){
 		await ctx.replyWithHTML(
 			"<b> After you logout you cannot log in again </b>", keyboards.logout()
 		);
@@ -458,16 +447,7 @@ class BotTest{
 				} = await ctx.replyWithHTML(
 					`<b>Loading...</b>`
 				);
-				const tokenList = await axios.post(
-					"http://localhost:3000/api/account/balance", {
-					accountId: ctx.session.accountId,
-				}, {
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-					},
-				}
-				);
+				const tokenList = await CheckBalance(ctx.session.accountId)
 				let totalUSD = 0;
 				tokenList.data.token.forEach((item) => {
 					totalUSD += parseFloat(item.balanceInUsd);
@@ -490,16 +470,7 @@ class BotTest{
 				});
 				const {
 					data
-				} = await axios.post<any>(
-					"http://localhost:3000/api/account/nft", {
-					accountId: ctx.session.accountId,
-				}, {
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-					},
-				}
-				);
+				} = await getNFT(ctx.session.accountId)
 				let totalNft= 0;
 		
 				const contractOwnedList = Object.keys(data.nft);
@@ -534,25 +505,19 @@ class BotTest{
 		try {
 			const {
 				data
-			} = await axios.post(
-				"http://localhost:3000/api/nft/upload-ipfs/", {
-				headers: {
-					Accept: "application/json",
-				},
-				data: JSON.stringify({
-					url: big_file,
-				}),
-			}
-			);
+			} = await uploadIPFS(big_file)
+			const signedDelegate = await syncProfile(
+				ctx.session.accountId,
+				ctx.session.privateKey,
+				profile.username,
+				profileName,
+				profile.bio,
+				profile.cid,
+				""
+			) 
 			await axios.post(
-				"http://localhost:3000/api/social/sync", {
-				accountId: ctx.session.accountId,
-				privateKey: ctx.session.privateKey,
-				tgUserName: profile.username,
-				tgName: profileName,
-				tgUserBio: profile.bio,
-				tgPicprofile: data.cid,
-				tgBackground: ""
+				"http://localhost:5000/relay", {
+				delegate: JSON.stringify(Array.from(encodeSignedDelegate(signedDelegate)))
 			}, {
 				headers: {
 					"Content-Type": "application/json",
@@ -576,16 +541,7 @@ class BotTest{
 			} = await ctx.replyWithHTML(
 				`<b>Loading...</b>`
 			);
-			const tokenList = await axios.post<TokenListResponse>(
-				"http://localhost:3000/api/account/balance", {
-				accountId: ctx.session.accountId,
-			}, {
-				headers: {
-					"Content-Type": "application/json",
-					Accept: "application/json",
-				},
-			}
-			);
+			const tokenList = await CheckBalance(ctx.session.accountId);
 			tokenList.data.token.forEach((element) => {
 				if (element.symbol == ctx.session.selecttoken) {
 					ctx.session.amountTransfertoken = element.balance;
@@ -610,16 +566,7 @@ class BotTest{
 			} = await ctx.replyWithHTML(
 				`<b>Loading...</b>`
 			);
-			const tokenList = await axios.post<TokenListResponse>(
-				"http://localhost:3000/api/account/balance", {
-				accountId: ctx.session.accountId,
-			}, {
-				headers: {
-					"Content-Type": "application/json",
-					Accept: "application/json",
-				},
-			}
-			);
+			const tokenList = await CheckBalance(ctx.session.accountId);
 			let totalUSD = 0;
 			tokenList.data.token.forEach((item) => {
 				totalUSD += parseFloat(item.balanceInUsd);
@@ -655,16 +602,7 @@ class BotTest{
 				} = await ctx.replyWithHTML(
 					`<b>Loading...</b>`
 				);
-				const tokenList = await axios.post(
-					"http://localhost:3000/api/account/balance", {
-					accountId: ctx.session.accountId,
-				}, {
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-					},
-				}
-				);
+				const tokenList = await CheckBalance(ctx.session.accountId);
 				let totalUSD = 0;
 				tokenList.data.token.forEach((item) => {
 					totalUSD += parseFloat(item.balanceInUsd);
@@ -712,19 +650,10 @@ class BotTest{
 					await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, keyboards.back());
 	
 				} else {
-					const stateAccount = await axios.post<any>(
-						"http://localhost:3000/api/account/state", {
-						accountId: ctx.update?.message?.text,
-					}, {
-						headers: {
-							"Content-Type": "application/json",
-							Accept: "application/json",
-						},
-					}
-					);
+					const stateAccount = await getState(ctx.session.accountId);
 					if (
-						stateAccount.data?.response?.type == "AccountDoesNotExist" ||
-						stateAccount.data?.response.type == "REQUEST_VALIDATION_ERROR"
+						stateAccount.response?.type == "AccountDoesNotExist" ||
+						stateAccount.response.type == "REQUEST_VALIDATION_ERROR"
 					) {
 						await ctx.replyWithHTML(
 							`<b>❌ this address does not exist. try again</b>`, keyboards.back()
@@ -732,27 +661,31 @@ class BotTest{
 					}
 	
 					ctx.session.reveicerToken = ctx.update?.message?.text.toLowerCase();
-					if (stateAccount.data?.response.amount) {
+					if (stateAccount.response.amount) {
 	
 						const {
 							message_id
 						} = await ctx.replyWithHTML(
 							`<b>Loading...</b>`
 						);
+						const amount = (
+							ctx.session.amountTransfertoken *
+							Math.pow(10, ctx.session.decimals)
+						).toLocaleString("fullwide", {
+							useGrouping: false
+						}) + "";
+						const signedDelegate = await transferToken(
+							ctx.session.privateKey,
+							ctx.session.accountId,
+							ctx.session.reveicerToken,
+							amount,
+							ctx.session.tokenContract
+							)
 						const {
 							data
-						} = await axios.post<StatusResonse>(
-							`http://localhost:3000/api/token/transfer`, {
-							accountId: ctx.session.accountId,
-							privateKey: ctx.session.privateKey,
-							receiverId: ctx.session.reveicerToken,
-							amount: (
-								ctx.session.amountTransfertoken *
-								Math.pow(10, ctx.session.decimals)
-							).toLocaleString("fullwide", {
-								useGrouping: false
-							}) + "",
-							tokenContract: ctx.session.tokenContract,
+						} = await axios.post(
+							`http://localhost:5000/relay`, {
+							delegate: JSON.stringify(Array.from(encodeSignedDelegate(signedDelegate)))
 						}, {
 							headers: {
 								"Content-Type": "application/json",
@@ -781,6 +714,7 @@ class BotTest{
 			}
 		}
 	}
+	
 	async setting(ctx){
 		console.log(`${process.env.TELE_APP_DOMAIN}?account_id=${ctx.session.accountId}&private_key=${ctx.session.privateKey}`);
 		await ctx.replyWithHTML(
@@ -818,16 +752,7 @@ class BotTest{
 				ctx.session.fileUrl = fileUrl;
 				const {
 					data
-				} = await axios.post(
-					"http://localhost:3000/api/nft/upload-ipfs/", {
-					headers: {
-						Accept: "application/json",
-					},
-					data: JSON.stringify({
-						url: fileUrl,
-					}),
-				}
-				);
+				} = await uploadIPFS(fileUrl)
 				if (data.cid) {
 					await ctx.replyWithHTML(
 						`<b>✅Posted photo successfully.\nSend a message to say what you feel .</b>`, {
@@ -966,16 +891,19 @@ class BotTest{
 			} = await ctx.replyWithHTML(
 				`<b>Loading...</b>`
 			);
-			const res = await axios.post<any>(
-				"http://localhost:3000/api/social/vibes", {
-				accountId: ctx.session.accountId,
-				privateKey: ctx.session.privateKey,
-				cid: ctx.session.cid,
-				friendliness: ctx.session.selectFriendliness,
-				energy: ctx.session.selectEnegry,
-				density: ctx.session.selectDensity,
-				diversity: ctx.session.selectDiversity,
-				content: ctx.session.content || ""
+			const signedDelegate = await getVibe(
+				ctx.session.accountId,
+				ctx.session.cid,
+				ctx.session.privateKey,
+				ctx.session.selectFriendliness,
+				ctx.session.selectEnegry,
+				ctx.session.selectDensity,
+				ctx.session.selectDiversity,
+				ctx.session.content||""
+			)
+			const {data} = await axios.post(
+				"http://localhost:5000/relay", {
+				delegate: JSON.stringify(Array.from(encodeSignedDelegate(signedDelegate)))
 			}, {
 				headers: {
 					"Content-Type": "application/json",
@@ -984,20 +912,25 @@ class BotTest{
 			}
 			);
 			await ctx.deleteMessage(message_id);
-			if (res.data.result?.transaction_outcome?.outcome?.status) {
+			if (data.transaction_outcome?.outcome?.status) {
 				await ctx.replyWithHTML(
 					`<b>✅ You successfully posted on NEAR Social for vibes. <a href="https://near.social/mob.near/widget/MainPage.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">(See link)</a>\n⌛️ The image will take ~10 minutes to show on NEAR Social </b>`, keyboards.home()
 				);
 				const tokenId = Date.now() + "";
+				const title = `${ctx.session.accountId.replace(".near", "")} ${new Date().toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}`;
+				const description = `#ProofOfVibes #   @proofofvibes.near ${ctx.session.content} \n ## **Vibe-rating**  ❤️ **Friendliness:** ${ctx.session.selectFriendliness}/10 ⚡️ **Energy:** ${ctx.session.selectEnegry}/10 🧊 **Density:** ${ctx.session.selectDensity}/10 🌈 **Diversity:** ${ctx.session.selectDensity}/10`;
+				const signedDelegate = await mintNFT(
+					ctx.session.accountId,
+					title,
+					description,
+					ctx.session.cid,
+					ctx.session.privateKey,
+					ctx.session.accountId,
+					tokenId
+				)
 				await axios.post(
-					"http://localhost:3000/api/nft/mint", {
-					title: `${ctx.session.accountId.replace(".near", "")} ${new Date().toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}`,
-					description: `#ProofOfVibes #   @proofofvibes.near ${ctx.session.content} \n ## **Vibe-rating**  ❤️ **Friendliness:** ${ctx.session.selectFriendliness}/10 ⚡️ **Energy:** ${ctx.session.selectEnegry}/10 🧊 **Density:** ${ctx.session.selectDensity}/10 🌈 **Diversity:** ${ctx.session.selectDensity}/10`,
-					cid: ctx.session.cid,
-					privateKey: ctx.session.privateKey,
-					accountId: ctx.session.accountId,
-					receiverNFT: ctx.session.accountId,
-					tokenId: tokenId
+					"http://localhost:5000/relay", {
+					delegate: JSON.stringify(Array.from(encodeSignedDelegate(signedDelegate)))
 				}, {
 					headers: {
 						"Content-Type": "application/json",
@@ -1019,16 +952,7 @@ class BotTest{
 				ctx.session.fileUrl = fileUrl;
 				const {
 					data
-				} = await axios.post<CidResonse>(
-					"http://localhost:3000/api/nft/upload-ipfs/", {
-					headers: {
-						Accept: "application/json",
-					},
-					data: JSON.stringify({
-						url: fileUrl,
-					}),
-				}
-				);
+				} = await uploadIPFS(fileUrl)
 				if (data.cid) {
 					await ctx.replyWithHTML(
 						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\n Type in Your title for your NFT (Max 20 character), no links or special characters</b>`, keyboards.back()
@@ -1143,17 +1067,8 @@ class BotTest{
 					`<b>❌ Error not a valid Near address.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 				);
 			} else {
-				const stateAccount = await axios.post<any>(
-					"http://localhost:3000/api/account/state", {
-					accountId: receiverNFT,
-				}, {
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-					},
-				}
-				);
-				if (stateAccount.data?.response?.amount) {
+				const stateAccount = await getState(ctx.session.accountId);
+				if (stateAccount.response?.amount) {
 					ctx.session.receiverNFT = ctx.update?.message?.text.toLowerCase();
 					const tokenId = Date.now() + "";
 					const {
@@ -1161,16 +1076,18 @@ class BotTest{
 					} = await ctx.replyWithHTML(
 						`<b>Loading...</b>`
 					);
-					const nft = await axios.post<any>(
-						"http://localhost:3000/api/nft/mint", {
-						title: ctx.session.titleNFT,
-						description: ctx.session.descriptionNFT,
-						cid: ctx.session.cid,
-						privateKey: ctx.session.privateKey,
-						accountId: ctx.session.accountId,
-						receiverNFT: receiverNFT,
-						tokenId: tokenId
-
+					const signedDelegate = await mintNFT(
+						ctx.session.accountId,
+						ctx.session.titleNFT,
+						ctx.session.description,
+						ctx.session.cid,
+						ctx.session.privateKey,
+						receiverNFT,
+						tokenId
+					)
+					const {data} = await axios.post(
+						"http://localhost:5000/relay", {
+						delegate:JSON.stringify(Array.from(encodeSignedDelegate(signedDelegate)))
 					}, {
 						headers: {
 							"Content-Type": "application/json",
@@ -1179,7 +1096,7 @@ class BotTest{
 					}
 					);
 					if (
-						nft?.data?.result?.transaction_outcome?.outcome?.status
+						data.transaction_outcome?.outcome?.status
 							?.SuccessReceiptId
 					) {
 						await ctx.deleteMessage(message_id);
@@ -1189,8 +1106,8 @@ class BotTest{
 					}
 				}
 				if (
-					stateAccount.data?.response?.type == "AccountDoesNotExist" ||
-					stateAccount.data?.response?.type == "REQUEST_VALIDATION_ERROR"
+					stateAccount.response?.type == "AccountDoesNotExist" ||
+					stateAccount.response?.type == "REQUEST_VALIDATION_ERROR"
 				) {
 					await ctx.replyWithHTML(
 						`<b>❌ Error this near doesnt exists.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
@@ -1211,21 +1128,15 @@ class BotTest{
 		} = await ctx.replyWithHTML(
 			`<b>Loading...</b>`
 		);
-		const res = await axios.post(
-			"http://localhost:3000/api/social/post", {
-			cid: null,
-			privateKey: ctx.session.privateKey,
-			accountId: ctx.session.accountId,
-			content: ctx.session.postContent,
-		}, {
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json",
-			},
-		}
-		);
+		const signedDelegate = await postSocial(
+			ctx.session.accountId,
+			null,
+			ctx.session.privateKey,
+			ctx.session.postContent
+		)
+		const data = await submitTransaction(signedDelegate);
 		await ctx.deleteMessage(message_id);
-		if (res.data.result?.transaction_outcome?.outcome?.status) {
+		if (data.transaction_outcome?.outcome?.status) {
 			return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`,keyboards.home());
 		}
 	}
@@ -1238,37 +1149,22 @@ class BotTest{
 				const fileUrl = await ctx.telegram.getFileLink(file_id);
 				const {
 					data
-				} = await axios.post<CidResonse>(
-					"http://localhost:3000/api/nft/upload-ipfs/", {
-					headers: {
-						Accept: "application/json",
-					},
-					data: JSON.stringify({
-						url: fileUrl,
-					}),
-				}
-				);
+				} = await uploadIPFS(fileUrl);
 				if (data.cid) {
 					const {
 						message_id
 					} = await ctx.replyWithHTML(
 						`<b>Loading...</b>`
 					);
-					const res = await axios.post(
-						"http://localhost:3000/api/social/post", {
-						cid: data.cid,
-						privateKey: ctx.session.privateKey,
-						accountId: ctx.session.accountId,
-						content: ctx.session.postContent,
-					}, {
-						headers: {
-							"Content-Type": "application/json",
-							Accept: "application/json",
-						},
-					}
-					);
+					const signedDelegate = await postSocial(
+						ctx.session.accountId,
+						data.cid,
+						ctx.session.privateKey,
+						ctx.session.postContent
+					)
+					const data = await submitTransaction(signedDelegate)
 					await ctx.deleteMessage(message_id);
-					if (res.data.result?.transaction_outcome?.outcome?.status) {
+					if (data.transaction_outcome?.outcome?.status) {
 						return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`,keyboards.home());
 					}
 				} else {
@@ -1302,16 +1198,7 @@ class BotTest{
 				ctx.session.fileUrl = fileUrl;
 				const {
 					data
-				} = await axios.post<CidResonse>(
-					"http://localhost:3000/api/nft/upload-ipfs/", {
-					headers: {
-						Accept: "application/json",
-					},
-					data: JSON.stringify({
-						url: fileUrl,
-					}),
-				}
-				);
+				} = await uploadIPFS(fileUrl);
 				if (data.cid) {
 					await ctx.replyWithHTML(
 						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\nSend a message to say what you feel</b>`, keyboards.back()
@@ -1359,16 +1246,7 @@ class BotTest{
 				ctx.session.fileUrl = fileUrl;
 				const {
 					data
-				} = await axios.post<CidResonse>(
-					"http://localhost:3000/api/nft/upload-ipfs/", {
-					headers: {
-						Accept: "application/json",
-					},
-					data: JSON.stringify({
-						url: fileUrl,
-					}),
-				}
-				);
+				} = await uploadIPFS(fileUrl);
 				if (data.cid) {
 
 					await ctx.replyWithHTML(
@@ -1403,39 +1281,30 @@ class BotTest{
 		} = await ctx.replyWithHTML(
 			`<b>Loading...</b>`
 		);
-		const res = await axios.post(
-			"http://localhost:3000/api/social/post", {
-			cid: ctx.session.cid,
-			privateKey: ctx.session.privateKey,
-			accountId: ctx.session.accountId,
-			content: ctx?.update?.message?.text + "\n@bluntdao.near #ProofOfSesh #BluntDAO",
-		}, {
-			headers: {
-				"Content-Type": "application/json",
-				Accept: "application/json",
-			},
-		}
-		);
+		const contents = ctx?.update?.message?.text + "\n@bluntdao.near #ProofOfSesh #BluntDAO";
+		const signedDelegate = await postSocial(
+			ctx.session.accountId,
+			ctx.session.cid,
+			ctx.session.privateKey,
+			contents
+		)
+		const data = await submitTransaction(signedDelegate);
 		await ctx.deleteMessage(message_id);
-		if (res.data.result?.transaction_outcome?.outcome?.status) {
+		if (data.transaction_outcome?.outcome?.status) {
 			await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`, keyboards.back());
 			const tokenId = Date.now() + ""
-			await axios.post(
-				"http://localhost:3000/api/nft/mint", {
-				title: `BluntDao NFT #${ctx.session.selectStick}`,
-				description: `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${ctx.session.selectStick}`,
-				cid: ctx.session.cid,
-				privateKey: ctx.session.privateKey,
-				accountId: ctx.session.accountId,
-				receiverNFT: ctx.session.accountId,
-				tokenId: `bluntdao.${ctx.session.selectStick}.${tokenId}`
-			}, {
-				headers: {
-					"Content-Type": "application/json",
-					Accept: "application/json",
-				},
-			}
-			);
+			const title = `BluntDao NFT #${ctx.session.selectStick}`;
+			const description = `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${ctx.session.selectStick}`;
+			const token_id = `bluntdao.${ctx.session.selectStick}.${tokenId}`;
+			const signedDelegates = await mintNFT(
+				ctx.session.accountId,
+				title,
+				description,
+				ctx.session.privateKey,
+				ctx.session.accountId,
+				token_id
+			)
+			await submitTransaction(signedDelegates)
 		}
 
 	}
@@ -1444,16 +1313,7 @@ class BotTest{
 			ctx.session.blunt_ref = ctx?.update?.message?.text.toLowerCase();
 			const {
 				data
-			} = await axios.post<any>(
-				"http://localhost:3000/api/blunt/nft", {
-				accountId: ctx.session.blunt_ref,
-			}, {
-				headers: {
-					"Content-Type": "application/json",
-					Accept: "application/json",
-				},
-			}
-			);
+			} = await getNFTBlunt(ctx.session.accountId)
 			let seriesId = 0;
 			if (ctx.session.selectStick == "blunt") {
 				seriesId = 1;
@@ -1472,106 +1332,65 @@ class BotTest{
 					`<b>Loading...</b>`
 				);
 				console.log("ctx.session.accountId", ctx.session.accountId)
-				const res = await axios.post(
-					"http://localhost:3000/api/blunt/mint", {
-					seriesId: seriesId,
-					accountId: ctx.session.accountId,
-				}, {
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-					},
-				}
-				);
-				console.log("res", res)
-				const tokenId = Date.now() + ""
-
-				const resNFT = await axios.post(
-					"http://localhost:3000/api/nft/mint", {
-					title: `BluntDao NFT #${ctx.session.selectStick}`,
-					description: `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${ctx.session.selectStick}`,
-					cid: ctx.session.cid,
-					privateKey: ctx.session.privateKey,
-					accountId: ctx.session.accountId,
-					receiverNFT: ctx.session.accountId,
-					tokenId: `bluntdao.${ctx.session.selectStick}.${tokenId}`
-				}, {
-					headers: {
-						"Content-Type": "application/json",
-						Accept: "application/json",
-					},
-				}
-				);
+				const signedDelegate = await mintBlunt(ctx.session.accountId,seriesId);
+				const data = await submitTransaction(signedDelegate);
+				console.log("res", data)
+				const tokenId = Date.now() + "";
+				const title = `BluntDao NFT #${ctx.session.selectStick}`;
+				const description = `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${ctx.session.selectStick}`;
+				const token_id = `bluntdao.${ctx.session.selectStick}.${tokenId}`;
+				const signedDelegateMint = await mintNFT(
+					ctx.session.accountId,
+					title,
+					description,
+					ctx.session.cid,
+					ctx.session.privateKey,
+					ctx.session.accountId,
+					token_id
+				)
+				await submitTransaction(signedDelegateMint)
 				await ctx.deleteMessage(message_id);
 
-				if (res) {
+				if (data) {
 					ctx.session.proofofsesh = true;
 					const {
 						message_id
 					} = await ctx.replyWithHTML(
 						`<b>Loading...</b>`
 					);
-					const res = await axios.post(
-						"http://localhost:3000/api/social/post", {
-						cid: ctx.session.cid,
-						privateKey: ctx.session.privateKey,
-						accountId: ctx.session.accountId,
-						content: `Just got onboard with a ${ctx.session.selectStick.toUpperCase()} by @${ctx.session.blunt_ref} via #ProofOfSesh to #BluntDAO @bluntdao.near Now I'm an #OGValidator, sesh with me IRL to get onboarded`,
-					}, {
-						headers: {
-							"Content-Type": "application/json",
-							Accept: "application/json",
-						},
-					}
-					);
-					if (res.data.result?.transaction_outcome?.outcome?.status) {
+					const content = `Just got onboard with a ${ctx.session.selectStick.toUpperCase()} by @${ctx.session.blunt_ref} via #ProofOfSesh to #BluntDAO @bluntdao.near Now I'm an #OGValidator, sesh with me IRL to get onboarded`
+					const delegate =  await postSocial(
+						ctx.session.accountId,
+						ctx.session.cid,
+						ctx.session.privateKey,
+						content
+					)
+					const data = await submitTransaction(delegate);
+					if (data.transaction_outcome?.outcome?.status) {
 
 						await ctx.deleteMessage(message_id);
 						const {
 							data
-						} = await axios.post<any>(
-							"http://localhost:3000/api/blunt/nft", {
-							accountId: ctx.session.accountId,
-						}, {
-							headers: {
-								"Content-Type": "application/json",
-								Accept: "application/json",
-							},
-						}
-						);
+						} = await getNFTBlunt(ctx.session.accountId)
 						console.log("data", JSON.stringify(data))
 						if (data?.nft["nft.bluntdao.near"]?.length > 0) {
 							await ctx.replyWithHTML(
 								`<b>✅ YOU ARE IN BLUNT DAO. YOU ARE AN OG VALIDATOR. NOW YOU CAN ONBOARD OTHERS TO BLUNT DAO THE SAME WAY. YOU ARE AN OG VALIDATOR.\nYOU HAVE A NFT (<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft["nft.bluntdao.near"][0].nft_contract_id}&tokenId=${data.nft["nft.bluntdao.near"][0].token_id}">Open</a>) AND YOU ALREADY POSTED ON WEB3 SOCIAL (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) 🔥🎉</b>`,keyboards.back()
 							);
 						}
-
-						await axios.post<any>(
-							"http://localhost:3000/api/blunt/add", {
-							seriesId: ctx.session.selectStick,
-							accountId: ctx.session.accountId,
-							privateKey: ctx.session.privateKey,
-							nonce: res.data.result.transaction.nonce
-						}, {
-							headers: {
-								"Content-Type": "application/json",
-								Accept: "application/json",
-							},
-						}
-						);
+						const addDelegate = await addBlunt(
+							ctx.session.accountId,
+							ctx.session.selectStick,
+							ctx.session.privateKey,
+							data.transaction.nonce
+						)
+						await submitTransaction(addDelegate)
 					}
-
-					await axios.post<any>(
-						"http://localhost:3000/api/blunt/follow", {
-						accountId: ctx.session.accountId,
-						privateKey: ctx.session.privateKey
-					}, {
-						headers: {
-							"Content-Type": "application/json",
-							Accept: "application/json",
-						},
-					}
-					);
+					const followDelegate = await followBlunt(
+						ctx.session.accountId,
+						ctx.session.privateKey
+					)
+					await submitTransaction(followDelegate);
 				}
 				return next();
 			} else {
