@@ -4,5 +4,7 @@
 npm-debug.log*
 config.json
 app.logs
-**/.env*
+# local env files
+**/.env*.local
 **/.env
+**/sa.json

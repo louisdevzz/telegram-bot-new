@@ -3,9 +3,8 @@ const {
 	Context,
 	Markup,
 	Scenes,
-    memorySession
+    session
 }=require("telegraf");
-const { serialize, deserialize }=require('borsh');
 const Telegraf = require("telegraf");
 const axios =require("axios");
 const dotenv=require("dotenv");
@@ -35,7 +34,7 @@ const API_TOKEN = process.env.BOT_TOKEN;
 if (API_TOKEN === undefined) {
 	throw new TypeError("BOT_TOKEN must be provided!");
 }
-const session = new RedisSession({
+const redissession = new RedisSession({
     store: {
         host: process.env.TELEGRAM_SESSION_HOST || '127.0.0.1',
         port: process.env.TELEGRAM_SESSION_PORT || 6379
@@ -47,8 +46,8 @@ class BotTest{
         this.bot = new Telegraf(API_TOKEN);
         this.logger = logger;
         
-        this.bot.use(session);
-        
+		this.bot.use(redissession);
+
         this.bot.catch((err) => {
             this.logger.error(err);
         });
@@ -271,6 +270,8 @@ class BotTest{
 					);
 					console.log(data)
 					if (data.final_execution_status == "FINAL") {
+						redissession.saveSession("privatekey", privateKey);
+						redissession.saveSession("accountId", newAccount);
 						ctx.session.privateKey = privateKey;
 						ctx.session.user_telegram = ctx.update?.message?.chat?.username;
 						ctx.session.accountId = newAccount.toLowerCase();
@@ -373,17 +374,18 @@ class BotTest{
                 "\n🖼️ NFTs (" + totalNft + " NFT)\n----------------------------------\n";
             balanceMes += nftList;
             await ctx.deleteMessage(message_id);
+			const accountId = await redissession.getSession("accountId").then((session) => session) || ctx.session.accountId;
             await ctx.replyWithHTML(balanceMes, {
                 disable_web_page_preview: true,
                 reply_markup: {
                     inline_keyboard: [
                         [{
                             text: "🖼️ Open My NFTs",
-                            url: `https://near.social/genadrop.near/widget/GenaDrop.Profile.Main?accountId=${ctx.session.accountId}`,
+                            url: `https://near.social/genadrop.near/widget/GenaDrop.Profile.Main?accountId=${accountId}`,
                         },],
                         [{
                             text: "📚 Open Transaction History",
-                            url: `https://nearblocks.io/address/${ctx.session.accountId}`,
+                            url: `https://nearblocks.io/address/${accountId}`,
                         },],
                         [{
                             text: "⏪ Back",
@@ -402,8 +404,10 @@ class BotTest{
         return next();
     }
     async helper(ctx){
-		if (ctx.session.privateKey && ctx.session.accountId) {
-			return this.editMessageText(ctx,`<b>${ctx.session.accountId}</b>\nyou are logged in. Click button to use your wallet`, keyboards.helper())
+		const privateKey = await redissession.getSession("privatekey").then((session) => session);
+		const accountId = await redissession.getSession("accountId").then((session) => session);
+		if (ctx.session.privateKey || privateKey && ctx.session.accountId || accountId) {
+			return this.editMessageText(ctx,`<b>${ctx.session.accountId || accountId}</b>\nyou are logged in. Click button to use your wallet`, keyboards.helper())
 		} else {
 			return this.create_wallet(ctx);
 		}
@@ -413,7 +417,9 @@ class BotTest{
 			`<b>✅ you are logout</b>\n\nif you did not export your key than we cannot make you a new wallet`, keyboards.home()	
 		);
 		ctx.session.privateKey = null;
+		redissession.saveSession("privatekey",null);
 		ctx.session.accountId = null;
+		redissession.saveSession("accountId",null);
 		ctx.session.selecttoken = null;
 		ctx.session.selectNftCollection = null;
 		ctx.session.nftOwned = null;
@@ -447,14 +453,15 @@ class BotTest{
 				} = await ctx.replyWithHTML(
 					`<b>Loading...</b>`
 				);
-				const tokenList = await CheckBalance(ctx.session.accountId)
+				const accountId = await redissession.getSession("accountId").then((session) => session)||ctx.session.accountId;
+				const tokenList = await CheckBalance(accountId)
 				let totalUSD = 0;
 				tokenList.data.token.forEach((item) => {
 					totalUSD += parseFloat(item.balanceInUsd);
 				});
 				let balanceMes =
 					"<b>" +
-					ctx.session.accountId +
+					accountId +
 					" balance</b>\n\n💰 Money (" +
 					totalUSD +
 					" USD)\n----------------------------------\n";
@@ -470,7 +477,7 @@ class BotTest{
 				});
 				const {
 					data
-				} = await getNFT(ctx.session.accountId)
+				} = await getNFT(accountId)
 				let totalNft= 0;
 		
 				const contractOwnedList = Object.keys(data.nft);
@@ -512,7 +519,7 @@ class BotTest{
 				profile.username,
 				profileName,
 				profile.bio,
-				profile.cid,
+				data.cid,
 				""
 			) 
 			await axios.post(
@@ -753,6 +760,7 @@ class BotTest{
 				const {
 					data
 				} = await uploadIPFS(fileUrl)
+				console.log("ipfs: ",data)
 				if (data.cid) {
 					await ctx.replyWithHTML(
 						`<b>✅Posted photo successfully.\nSend a message to say what you feel .</b>`, {
@@ -771,7 +779,6 @@ class BotTest{
 					}
 					);
 					ctx.session.cid = data.cid;
-					return next();
 				} else {
 					await ctx.replyWithHTML("<b>❌Error upload to IPFS failed</b>");
 				}

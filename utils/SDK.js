@@ -1,8 +1,7 @@
 const { KeyPair,PublicKey } = require('@near-js/crypto');
-const { connects,submitTransaction,fundAccount, instatiateAccount, getNearAccount} = require('../helper/meta-transactions');
+const { connects,fundAccount, instatiateAccount, getNearAccount} = require('../helper/meta-transactions');
 const { InMemoryKeyStore } = require('@near-js/keystores');
 const { actionCreators,FunctionCallPermission,encodeSignedDelegate } = require("@near-js/transactions");
-const { deserialize } = require('borsh');
 const { generateSeedPhrase } = require('near-seed-phrase');
 const axios = require("axios");
 const Redis = require('ioredis');
@@ -104,6 +103,22 @@ const getAmount = async(accountId) => {
     } catch (error) {
         return 0
     } 
+}
+
+const viewMethod = async(data) => {
+  try {
+    const provider = new nearAPI.providers.JsonRpcProvider({ url: process.env.NEXT_PUBLIC_NETWORK_ID =="mainnet" ? process.env.RPC_MAINNET : process.env.RPC_TESTNET  });
+    let res = await provider.query({
+      request_type: 'call_function',
+      account_id: data.contractId,
+      method_name: data.method,
+      args_base64: Buffer.from(JSON.stringify(data.args)).toString('base64'),
+      finality: 'final',
+    });
+    return JSON.parse(Buffer.from(res.result).toString())
+  } catch (error) {
+    return 0
+  } 
 }
 
 const getToken = async(accountId) => {
@@ -240,24 +255,24 @@ async function getNFT(accountId) {
 }
 
 async function uploadIPFS(dt) {
-    const JWT = process.env.JWT_PINATA_CLOUD
+    const JWT = process.env.JWT_PINATA_CLOUD;
     try {
-        const response = await axios(dt.url, { responseType: 'arraybuffer' })
+        const response = await axios(dt, { responseType: 'arraybuffer' })
         const buffer64 = Buffer.from(response.data, 'binary');
         const stream = Readable.from(buffer64);
         const data = new FormData();
-    data.append('file', stream, {
-    filepath: 'nft.jpg'
-    })
+        data.append('file', stream, {
+        filepath: 'nft.jpg'
+        })
 
-    const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", data, {
-    maxBodyLength: Infinity,
-    headers: {
-        'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-        Authorization: JWT
-    }
-    });
-    
+        const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", data, {
+          maxBodyLength: Infinity,
+          headers: {
+              'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+              Authorization: `Bearer ${JWT}`,
+          }
+        });
+      //const { IpfsHash } = await res.json();
     return { data:{cid:res.data.IpfsHash }};
 } catch (error) {
     return {error};
