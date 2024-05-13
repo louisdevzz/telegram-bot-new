@@ -642,3 +642,271 @@
 2024-05-13T18:01:29.421Z | info | Worker initializing
 2024-05-13T18:01:29.423Z | info | Bot listen
 2024-05-13T18:01:29.424Z | info | Worker ready
+2024-05-13T18:07:47.410Z | info | Start cluster with 1 workers
+2024-05-13T18:07:47.416Z | info | Worker 17195 started.
+2024-05-13T18:07:47.698Z | info | Worker initializing
+2024-05-13T18:07:47.701Z | info | Bot listen
+2024-05-13T18:07:47.701Z | info | Worker ready
+2024-05-13T18:08:53.570Z | info | Start cluster with 1 workers
+2024-05-13T18:08:53.575Z | info | Worker 17241 started.
+2024-05-13T18:08:53.889Z | info | Worker initializing
+2024-05-13T18:08:53.892Z | info | Bot listen
+2024-05-13T18:08:53.892Z | info | Worker ready
+2024-05-13T18:08:57.533Z | info | Start cluster with 1 workers
+2024-05-13T18:08:57.540Z | info | Worker 17272 started.
+2024-05-13T18:08:57.861Z | info | Worker initializing
+2024-05-13T18:08:57.863Z | info | Bot listen
+2024-05-13T18:08:57.864Z | info | Worker ready
+2024-05-13T18:14:09.729Z | info | Start cluster with 1 workers
+2024-05-13T18:14:09.734Z | info | Worker 17547 started.
+2024-05-13T18:14:10.043Z | info | Worker initializing
+2024-05-13T18:14:10.045Z | info | Bot listen
+2024-05-13T18:14:10.046Z | info | Worker ready
+2024-05-13T18:23:01.384Z | info | Start cluster with 1 workers
+2024-05-13T18:23:01.387Z | info | Worker 17826 started.
+2024-05-13T18:23:01.636Z | info | Worker initializing
+2024-05-13T18:23:01.638Z | info | Bot listen
+2024-05-13T18:23:01.639Z | info | Worker ready
+2024-05-13T18:23:25.440Z | info | Start cluster with 1 workers
+2024-05-13T18:23:25.445Z | info | Worker 17865 started.
+2024-05-13T18:23:25.750Z | info | Worker initializing
+2024-05-13T18:23:25.753Z | info | Bot listen
+2024-05-13T18:23:25.753Z | info | Worker ready
+2024-05-13T18:25:16.752Z | info | Start cluster with 1 workers
+2024-05-13T18:25:16.756Z | info | Worker 17957 started.
+2024-05-13T18:25:17.030Z | info | Worker initializing
+2024-05-13T18:25:17.032Z | info | Bot listen
+2024-05-13T18:25:17.032Z | info | Worker ready
+2024-05-13T18:27:44.674Z | info | Start cluster with 1 workers
+2024-05-13T18:27:44.678Z | info | Worker 18076 started.
+2024-05-13T18:27:44.950Z | info | Worker initializing
+2024-05-13T18:27:44.951Z | info | Bot listen
+2024-05-13T18:27:44.952Z | info | Worker ready
+2024-05-13T18:30:36.845Z | info | Start cluster with 1 workers
+2024-05-13T18:30:36.852Z | info | Worker 18193 started.
+2024-05-13T18:30:37.135Z | info | Worker initializing
+2024-05-13T18:30:37.138Z | info | Bot listen
+2024-05-13T18:30:37.138Z | info | Worker ready
+2024-05-13T18:31:27.103Z | info | Start cluster with 1 workers
+2024-05-13T18:31:27.107Z | info | Worker 18251 started.
+2024-05-13T18:31:27.392Z | info | Worker initializing
+2024-05-13T18:31:27.394Z | info | Bot listen
+2024-05-13T18:31:27.394Z | info | Worker ready
+2024-05-13T18:35:16.114Z | info | Start cluster with 1 workers
+2024-05-13T18:35:16.119Z | info | Worker 18453 started.
+2024-05-13T18:35:16.413Z | info | Worker initializing
+2024-05-13T18:35:16.415Z | info | Bot listen
+2024-05-13T18:35:16.415Z | info | Worker ready
+2024-05-13T18:37:41.178Z | info | Start cluster with 1 workers
+2024-05-13T18:37:41.184Z | info | Worker 18617 started.
+2024-05-13T18:37:41.476Z | info | Worker initializing
+2024-05-13T18:37:41.479Z | info | Bot listen
+2024-05-13T18:37:41.479Z | info | Worker ready
+2024-05-13T18:41:11.360Z | info | Start cluster with 1 workers
+2024-05-13T18:41:11.363Z | info | Worker 18776 started.
+2024-05-13T18:41:11.636Z | info | Worker initializing
+2024-05-13T18:41:11.638Z | info | Bot listen
+2024-05-13T18:41:11.639Z | info | Worker ready
+2024-05-13T18:47:29.116Z | info | Start cluster with 1 workers
+2024-05-13T18:47:29.119Z | info | Worker 19009 started.
+2024-05-13T18:47:29.383Z | info | Worker initializing
+2024-05-13T18:47:29.384Z | info | Bot listen
+2024-05-13T18:47:29.385Z | info | Worker ready
+2024-05-13T18:49:00.362Z | info | Start cluster with 1 workers
+2024-05-13T18:49:00.372Z | info | Worker 19074 started.
+2024-05-13T18:49:00.796Z | info | Worker initializing
+2024-05-13T18:49:00.800Z | info | Bot listen
+2024-05-13T18:49:00.801Z | info | Worker ready
+2024-05-13T18:50:06.620Z | info | Start cluster with 1 workers
+2024-05-13T18:50:06.624Z | info | Worker 19191 started.
+2024-05-13T18:50:06.888Z | info | Worker initializing
+2024-05-13T18:50:06.890Z | info | Bot listen
+2024-05-13T18:50:06.890Z | info | Worker ready
+2024-05-13T18:53:22.543Z | info | Start cluster with 1 workers
+2024-05-13T18:53:22.547Z | info | Worker 19313 started.
+2024-05-13T18:53:22.794Z | info | Worker initializing
+2024-05-13T18:53:22.795Z | info | Bot listen
+2024-05-13T18:53:22.796Z | info | Worker ready
+2024-05-13T18:54:34.229Z | info | Start cluster with 1 workers
+2024-05-13T18:54:34.234Z | info | Worker 19392 started.
+2024-05-13T18:54:34.498Z | info | Worker initializing
+2024-05-13T18:54:34.500Z | info | Bot listen
+2024-05-13T18:54:34.500Z | info | Worker ready
+2024-05-13T18:54:38.267Z | info | Start cluster with 1 workers
+2024-05-13T18:54:38.273Z | info | Worker 19424 started.
+2024-05-13T18:54:38.563Z | info | Worker initializing
+2024-05-13T18:54:38.565Z | info | Bot listen
+2024-05-13T18:54:38.565Z | info | Worker ready
+2024-05-13T19:18:30.319Z | info | Start cluster with 1 workers
+2024-05-13T19:18:30.325Z | info | Worker 21389 started.
+2024-05-13T19:18:30.619Z | info | Worker initializing
+2024-05-13T19:18:30.621Z | info | Bot listen
+2024-05-13T19:18:30.621Z | info | Worker ready
+2024-05-13T19:18:47.928Z | error | unhandledRejection: Cannot read properties of undefined (reading 'session')
+2024-05-13T19:18:47.929Z | error | TypeError: Cannot read properties of undefined (reading 'session')
+    at BotTest.setSession (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:143:7)
+    at BotTest.uploadIPFS (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:976:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-13T19:18:59.100Z | error | unhandledRejection: Cannot read properties of undefined (reading 'session')
+2024-05-13T19:18:59.100Z | error | TypeError: Cannot read properties of undefined (reading 'session')
+    at BotTest.setSession (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:143:7)
+    at BotTest.mintNFTSuccess (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1072:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-13T19:22:26.384Z | info | Start cluster with 1 workers
+2024-05-13T19:22:26.388Z | info | Worker 21499 started.
+2024-05-13T19:22:26.646Z | info | Worker initializing
+2024-05-13T19:22:26.649Z | info | Bot listen
+2024-05-13T19:22:26.649Z | info | Worker ready
+2024-05-13T21:16:05.796Z | info | Start cluster with 1 workers
+2024-05-13T21:16:05.800Z | info | Worker 6486 started.
+2024-05-13T21:16:06.109Z | info | Worker initializing
+2024-05-13T21:16:06.111Z | info | Bot listen
+2024-05-13T21:16:06.111Z | info | Worker ready
+2024-05-13T21:19:13.994Z | info | Start cluster with 1 workers
+2024-05-13T21:19:13.999Z | info | Worker 6726 started.
+2024-05-13T21:19:14.305Z | info | Worker initializing
+2024-05-13T21:19:14.307Z | info | Bot listen
+2024-05-13T21:19:14.307Z | info | Worker ready
+2024-05-13T21:20:46.475Z | error | unhandledRejection: Cannot read properties of undefined (reading 'session')
+2024-05-13T21:20:46.476Z | error | TypeError: Cannot read properties of undefined (reading 'session')
+    at BotTest.setSession (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:143:7)
+    at BotTest.uploadIPFS (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:980:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-13T21:22:31.744Z | info | Start cluster with 1 workers
+2024-05-13T21:22:31.747Z | info | Worker 6877 started.
+2024-05-13T21:22:32.057Z | info | Worker initializing
+2024-05-13T21:22:32.063Z | info | Bot listen
+2024-05-13T21:22:32.067Z | info | Worker ready
+2024-05-13T21:26:17.915Z | info | Start cluster with 1 workers
+2024-05-13T21:26:17.920Z | info | Worker 7164 started.
+2024-05-13T21:26:18.200Z | info | Worker initializing
+2024-05-13T21:26:18.204Z | info | Bot listen
+2024-05-13T21:26:18.205Z | info | Worker ready
+2024-05-13T21:27:00.662Z | info | Start cluster with 1 workers
+2024-05-13T21:27:00.677Z | info | Worker 7268 started.
+2024-05-13T21:27:00.984Z | info | Worker initializing
+2024-05-13T21:27:00.986Z | info | Bot listen
+2024-05-13T21:27:00.986Z | info | Worker ready
+2024-05-13T21:30:38.803Z | info | Start cluster with 1 workers
+2024-05-13T21:30:38.807Z | info | Worker 7599 started.
+2024-05-13T21:30:39.052Z | info | Worker initializing
+2024-05-13T21:30:39.054Z | info | Bot listen
+2024-05-13T21:30:39.054Z | info | Worker ready
+2024-05-13T21:34:57.872Z | info | Start cluster with 1 workers
+2024-05-13T21:34:57.877Z | info | Worker 8019 started.
+2024-05-13T21:34:58.129Z | info | Worker initializing
+2024-05-13T21:34:58.132Z | info | Bot listen
+2024-05-13T21:34:58.132Z | info | Worker ready
+2024-05-13T21:37:01.990Z | info | Start cluster with 1 workers
+2024-05-13T21:37:01.995Z | info | Worker 8129 started.
+2024-05-13T21:37:02.250Z | info | Worker initializing
+2024-05-13T21:37:02.253Z | info | Bot listen
+2024-05-13T21:37:02.253Z | info | Worker ready
+2024-05-13T21:38:10.945Z | info | Start cluster with 1 workers
+2024-05-13T21:38:10.948Z | info | Worker 8206 started.
+2024-05-13T21:38:11.251Z | info | Worker initializing
+2024-05-13T21:38:11.253Z | info | Bot listen
+2024-05-13T21:38:11.253Z | info | Worker ready
+2024-05-13T21:42:52.976Z | info | Start cluster with 1 workers
+2024-05-13T21:42:52.979Z | info | Worker 8456 started.
+2024-05-13T21:42:53.245Z | info | Worker initializing
+2024-05-13T21:42:53.247Z | info | Bot listen
+2024-05-13T21:42:53.247Z | info | Worker ready
+2024-05-13T21:44:40.073Z | info | Start cluster with 1 workers
+2024-05-13T21:44:40.077Z | info | Worker 8543 started.
+2024-05-13T21:44:40.340Z | info | Worker initializing
+2024-05-13T21:44:40.342Z | info | Bot listen
+2024-05-13T21:44:40.343Z | info | Worker ready
+2024-05-13T21:45:20.426Z | info | Start cluster with 1 workers
+2024-05-13T21:45:20.429Z | info | Worker 8606 started.
+2024-05-13T21:45:20.683Z | info | Worker initializing
+2024-05-13T21:45:20.685Z | info | Bot listen
+2024-05-13T21:45:20.685Z | info | Worker ready
+2024-05-13T21:45:32.944Z | info | Start cluster with 1 workers
+2024-05-13T21:45:32.948Z | info | Worker 8641 started.
+2024-05-13T21:45:33.329Z | info | Worker initializing
+2024-05-13T21:45:33.333Z | info | Bot listen
+2024-05-13T21:45:33.334Z | info | Worker ready
+2024-05-13T21:45:48.932Z | info | Start cluster with 1 workers
+2024-05-13T21:45:48.936Z | info | Worker 8676 started.
+2024-05-13T21:45:49.281Z | info | Worker initializing
+2024-05-13T21:45:49.285Z | info | Bot listen
+2024-05-13T21:45:49.285Z | info | Worker ready
+2024-05-13T21:46:11.853Z | info | Start cluster with 1 workers
+2024-05-13T21:46:11.856Z | info | Worker 8706 started.
+2024-05-13T21:46:12.238Z | info | Worker initializing
+2024-05-13T21:46:12.242Z | info | Bot listen
+2024-05-13T21:46:12.242Z | info | Worker ready
+2024-05-13T21:46:24.538Z | info | Start cluster with 1 workers
+2024-05-13T21:46:24.542Z | info | Worker 8738 started.
+2024-05-13T21:46:24.971Z | info | Worker initializing
+2024-05-13T21:46:24.974Z | info | Bot listen
+2024-05-13T21:46:24.974Z | info | Worker ready
+2024-05-13T21:46:38.448Z | info | Start cluster with 1 workers
+2024-05-13T21:46:38.453Z | info | Worker 8797 started.
+2024-05-13T21:46:38.839Z | info | Worker initializing
+2024-05-13T21:46:38.842Z | info | Bot listen
+2024-05-13T21:46:38.843Z | info | Worker ready
+2024-05-13T21:47:03.723Z | info | Start cluster with 1 workers
+2024-05-13T21:47:03.729Z | info | Worker 8831 started.
+2024-05-13T21:47:04.074Z | info | Worker initializing
+2024-05-13T21:47:04.078Z | info | Bot listen
+2024-05-13T21:47:04.080Z | info | Worker ready
+2024-05-13T21:52:36.983Z | info | Start cluster with 1 workers
+2024-05-13T21:52:36.990Z | info | Worker 8999 started.
+2024-05-13T21:52:37.272Z | info | Worker initializing
+2024-05-13T21:52:37.275Z | info | Bot listen
+2024-05-13T21:52:37.275Z | info | Worker ready
+2024-05-13T21:58:50.606Z | info | Start cluster with 1 workers
+2024-05-13T21:58:50.614Z | info | Worker 9203 started.
+2024-05-13T21:58:50.917Z | info | Worker initializing
+2024-05-13T21:58:50.920Z | info | Bot listen
+2024-05-13T21:58:50.928Z | info | Worker ready
+2024-05-13T22:01:54.787Z | info | Start cluster with 1 workers
+2024-05-13T22:01:54.790Z | info | Worker 9363 started.
+2024-05-13T22:01:55.053Z | info | Worker initializing
+2024-05-13T22:01:55.055Z | info | Bot listen
+2024-05-13T22:01:55.055Z | info | Worker ready
+2024-05-13T22:03:31.034Z | info | Start cluster with 1 workers
+2024-05-13T22:03:31.037Z | info | Worker 9478 started.
+2024-05-13T22:03:31.259Z | info | Worker initializing
+2024-05-13T22:03:31.260Z | info | Bot listen
+2024-05-13T22:03:31.260Z | info | Worker ready
+2024-05-13T22:04:06.690Z | error | unhandledRejection: findHashtags is not defined
+2024-05-13T22:04:06.691Z | error | ReferenceError: findHashtags is not defined
+    at postSocial (/home/louisdevzz/Documents/telegram-bot-refactor/utils/SDK.js:528:18)
+    at BotTest.postProofOfSeshFinal (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1346:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-13T22:04:46.323Z | info | Start cluster with 1 workers
+2024-05-13T22:04:46.327Z | info | Worker 9566 started.
+2024-05-13T22:04:46.563Z | info | Worker initializing
+2024-05-13T22:04:46.565Z | info | Bot listen
+2024-05-13T22:04:46.565Z | info | Worker ready
+2024-05-13T22:04:48.380Z | info | Start cluster with 1 workers
+2024-05-13T22:04:48.384Z | info | Worker 9596 started.
+2024-05-13T22:04:48.655Z | info | Worker initializing
+2024-05-13T22:04:48.656Z | info | Bot listen
+2024-05-13T22:04:48.656Z | info | Worker ready
+2024-05-13T22:04:53.545Z | info | Start cluster with 1 workers
+2024-05-13T22:04:53.549Z | info | Worker 9630 started.
+2024-05-13T22:04:53.837Z | info | Worker initializing
+2024-05-13T22:04:53.839Z | info | Bot listen
+2024-05-13T22:04:53.840Z | info | Worker ready
+2024-05-13T22:05:13.050Z | error | unhandledRejection: res is not defined
+2024-05-13T22:05:13.051Z | error | ReferenceError: res is not defined
+    at BotTest.postProofOfSeshFinal (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1355:177)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-13T22:06:58.178Z | info | Start cluster with 1 workers
+2024-05-13T22:06:58.181Z | info | Worker 9715 started.
+2024-05-13T22:06:58.497Z | info | Worker initializing
+2024-05-13T22:06:58.500Z | info | Bot listen
+2024-05-13T22:06:58.500Z | info | Worker ready
+2024-05-13T22:07:22.271Z | error | unhandledRejection: Non-base58 character
+2024-05-13T22:07:22.271Z | error | Error: Non-base58 character
+    at Object.decode (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/base-x/index.js:83:11)
+    at baseDecode (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/utils/lib/format.js:131:42)
+    at new KeyPairEd25519 (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/crypto/lib/key_pair_ed25519.js:25:48)
+    at KeyPair.fromString (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/crypto/lib/key_pair.js:25:20)
+    at mintNFT (/home/louisdevzz/Documents/telegram-bot-refactor/utils/SDK.js:468:83)
+    at BotTest.postProofOfSeshFinal (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1361:35)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

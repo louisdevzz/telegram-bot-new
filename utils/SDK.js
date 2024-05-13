@@ -525,6 +525,11 @@ async function mintNFT(accountId,  title, description ,cid,privateKey,receiverNF
 }
 
 async function postSocial(accountId,cid,privateKey,content) {
+    const findHashtags = (searchText) =>{
+      const regexp = /\B\#\w\w+\b/g
+      const result = searchText.match(regexp) || [];
+      return result;
+    }
     const tags = findHashtags(content);
     const tagsArg = [];
     tags.forEach((element) => {

@@ -61,7 +61,14 @@ class BotTest{
         const commands = [
             ['start',this.start],
             ['createwallet', this.createwallet],
-            ['helper', this.helper]
+			['proofofsesh',this.proofofsesh],
+			['transfertoken',this.showTransferToken],
+			['transfernft',this.showTransferToken],
+			['mintnft', this.mint_nft],
+			['postnearsocial',this.postnearsocial],
+			['setting',this.setting],
+			['sync',this.sync],
+            ['clear', this.helper]
         ];
         const actions = [
             ['createwallet', this.createwallet],
@@ -79,7 +86,12 @@ class BotTest{
 			[/^rateFriendliness_(.+)$/, this.getRateFriendliness],
 			[/^rateDensity_(.+)$/, this.getRateDensity],
 			[/^rateDiversity_(.+)$/, this.getRateDiversity],
+			[/^selectStick_(.+)$/, this.proofOfSesh],
+			[/^select_(.+)$/, this.getSelect],
 			['transfertoken',this.transfertoken],
+			['postnearsocial',this.postnearsocial],
+			['post',this.post],
+			['proofofsesh',this.proofofsesh],
 			['blank',this.blank],
 			['logout',this.logout],
 			['action_logout',this.actionLogout],
@@ -160,17 +172,28 @@ class BotTest{
 							this.mintvibecontent(ctx);
 							this.setSession("action",null,ctx);
 							break;
-						case 'minft_nft':
-							this.uploadIPFS(ctx);
-							this.setSession("action",null,ctx);
-							break;	
 						case 'uploadipfs':
 							this.mintnft(ctx);
 							this.setSession("action",null,ctx);
 							break;	
+						case 'mintNFTmyself':
+							this.mintNFTMyself(ctx);
+							this.setSession("action",null,ctx);
+							break;	
+						case 'mintnftsuccess':
+							this.mintNFTSuccess(ctx);
+							this.setSession("action",null,ctx);
+							break;	
+						case 'postnearsocial':
+							this.postNearSocial(ctx);
+							this.setSession("action",null,ctx);
+							break;	
+						case 'getselect':
+							this.postProofOfSeshFinal(ctx);
+							this.setSession("action",null,ctx);
+							break;		
 						default:
 							this.setSession("action",null,ctx);
-							
 					}
 				}
 			}
@@ -182,6 +205,18 @@ class BotTest{
 							this.mintvibe(ctx);
 							ctx.session.action = null;
 							break;
+						case 'mint_nft':
+							this.uploadIPFS(ctx);
+							this.setSession("action",null,ctx);
+							break;	
+						case 'postNearSocialFinal':
+							this.postNearSocialFinal(ctx);
+							this.setSession("action",null,ctx);
+							break;
+						case 'proofofsesh':
+							this.proofOfSeshFinal(ctx);
+							this.setSession("action",null,ctx);
+							break;	
 						default:
 							ctx.session.action = null;
 							
@@ -204,20 +239,20 @@ class BotTest{
 		return this.editMessageText(ctx,"<b>Mint a single NFT on genadrop contract\n(we pay minting cost).\n\nSupported file types;png;gif;jpeg (max 10mb)\n\nSend a picture</b>",keyboards.back())
 	}
 	async postnearsocial(ctx){
+		ctx.session.action = 'postnearsocial';
 		await ctx.replyWithHTML(
 			"<b>Send message to create a post on NEAR SOCIAL (hyperlinking + formatting supported)</b>", keyboards.back()
 		);
 	}
-	async proofofsesh(ctx,next){
+	async proofofsesh(ctx){
+		this.setSession("action","proofofsesh",ctx);
 		if (ctx?.update?.message?.text == process.env.PROOF_OF_SESH) {
-
 			await ctx.replyWithHTML("<b>✅ Correct Password. Watchu smoking on???</b>", keyboards.proofofsesh());
-			return next();
 		}
-		if (ctx.session.proofofsesh) {
+		const proofofsesh = await redissession.getSession("proofofsesh");
+		if (proofofsesh) {
 			await ctx.replyWithHTML("<b>✅ YOU ALREADY IN BLUNT DAO SILLY.Learn more at bluntdao.org</b>", keyboards.back());
 			await ctx.replyWithHTML(`<b>📸Take a picture of the smoking stick</b>`, keyboards.home());
-			return next();
 		} else {
 			await ctx.replyWithHTML("<b>What's the password????</b>", keyboards.back());
 		}
@@ -440,7 +475,7 @@ class BotTest{
 					`<b>Loading...</b>`
 				);
 				const accountId = await redissession.getSession("accountId").then((session) => session)||ctx.session.accountId;
-				const tokenList = await CheckBalance(accountId)
+				const tokenList = await CheckBalance(accountId);
 				let totalUSD = 0;
 				tokenList.data.token.forEach((item) => {
 					totalUSD += parseFloat(item.balanceInUsd);
@@ -490,18 +525,19 @@ class BotTest{
 				}
 			}
 	}
-	async sync(ctx,next){
+	async sync(ctx){
 		const profile = await ctx.telegram.getChat(ctx.update.message.chat.id)
 		const big_file = await ctx.telegram.getFileLink(profile.photo.big_file_id);
 		const profileName = profile.last_name ? profile.first_name + " " + profile.last_name : profile.first_name;
-	
+		const accountId = await redissession.getSession("accountId");
+		const privateKey = await redissession.getSession("privatekey");
 		try {
 			const {
 				data
 			} = await uploadIPFS(big_file)
 			const signedDelegate = await syncProfile(
-				ctx.session.accountId,
-				ctx.session.privateKey,
+				accountId,
+				privateKey,
 				profile.username,
 				profileName,
 				profile.bio,
@@ -519,47 +555,49 @@ class BotTest{
 			}
 			);
 			await ctx.replyWithHTML(
-				`<b>✅ Synchronization with account completed <a href="https://near.social/mob.near/widget/ProfilePage?accountId=${ctx.session.accountId}">Open</a></b>`
+				`<b>✅ Synchronization with account completed <a href="https://near.social/mob.near/widget/ProfilePage?accountId=${accountId}">Open</a></b>`
 			);
-			return next();
 		} catch (error) {
 			await ctx.replyWithHTML(`<b>❌ Error.</b>`, keyboards.back());
 		}
 	
 	}
-	async max(ctx,next){
+	async max(ctx){
 		try {
 			const {
 				message_id
 			} = await ctx.replyWithHTML(
 				`<b>Loading...</b>`
 			);
-			const tokenList = await CheckBalance(ctx.session.accountId);
+			const accountId = await redissession.getSession("accountId");
+			const selecttoken = await redissession.getSession("selecttoken");
+			const tokenList = await CheckBalance(accountId);
 			tokenList.data.token.forEach((element) => {
-				if (element.symbol == ctx.session.selecttoken) {
-					ctx.session.amountTransfertoken = element.balance;
-					ctx.session.decimals = element.decimals;
+				if (element.symbol == selecttoken) {
+					this.setSession("amountTransfertoken",element.balance,ctx);
+					this.setSession("decimals",element.decimals,ctx);
 				}
 			});
 			await ctx.deleteMessage(message_id);
+			const amountTransfertoken = await redissession.getSession("amountTransfertoken");
 			await ctx.replyWithHTML(
-				`🔂 <b>Sending ${ctx.session.amountTransfertoken} ${ctx.session.selecttoken}</b>.\n\nType in a NEAR address to send FT token`, keyboards.back()
+				`🔂 <b>Sending ${amountTransfertoken} ${selecttoken}</b>.\n\nType in a NEAR address to send FT token`, keyboards.back()
 			);
-			return next();
 		} catch (error) {
 			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
 	async getselecttoken(ctx,next){
-		const token = ctx.update?.callback_query?.data.split("_")[1];
-		ctx.session.selecttoken = token;
+		const token = ctx.match[1];
+		this.setSession("selecttoken",token,ctx);
 		try {
 			const {
 				message_id
 			} = await ctx.replyWithHTML(
 				`<b>Loading...</b>`
 			);
-			const tokenList = await CheckBalance(ctx.session.accountId);
+			const accountId = await redissession.getSession("accountId");
+			const tokenList = await CheckBalance(accountId);
 			let totalUSD = 0;
 			tokenList.data.token.forEach((item) => {
 				totalUSD += parseFloat(item.balanceInUsd);
@@ -587,138 +625,143 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
-	async transfertoken(ctx,next){
-		async () => {
-			try {
-				const {
-					message_id
-				} = await ctx.replyWithHTML(
-					`<b>Loading...</b>`
-				);
-				const tokenList = await CheckBalance(ctx.session.accountId);
-				let totalUSD = 0;
-				tokenList.data.token.forEach((item) => {
-					totalUSD += parseFloat(item.balanceInUsd);
-				});
-				let balanceMes =
-					"<b>" +
-					ctx.session.accountId +
-					" balance</b>\n\n💰 Money (" +
-					totalUSD +
-					" USD)\n----------------------------------\n";
-				tokenList.data.token.forEach((item) => {
-					const textLength =
-						(item.balance + " " + item.symbol).length * 3;
-					const lengthDot = 50 - textLength;
-					let dot = "";
-					for (let index = 0; index < lengthDot; index++) {
-						dot += ".";
-					}
-					balanceMes +=
-						item.balance + " " + item.symbol + dot + item.balanceInUsd + ` USD\n`;
-				});
-	
-				let tokenListSend = [];
-				tokenList.data.token.forEach((item) => {
-					tokenListSend.push([{
-						text: `${item.symbol}`,
-						callback_data: `selecttoken_${item.symbol}`,
-					},]);
-				});
+	async showTransferToken(){
+		try {
+			const {
+				message_id
+			} = await ctx.replyWithHTML(
+				`<b>Loading...</b>`
+			);
+			const accountId = await redissession.getSession("accountId");
+			const tokenList = await CheckBalance(accountId);
+			let totalUSD = 0;
+			tokenList.data.token.forEach((item) => {
+				totalUSD += parseFloat(item.balanceInUsd);
+			});
+			let balanceMes =
+				"<b>" +
+				accountId +
+				" balance</b>\n\n💰 Money (" +
+				totalUSD +
+				" USD)\n----------------------------------\n";
+			tokenList.data.token.forEach((item) => {
+				const textLength =
+					(item.balance + " " + item.symbol).length * 3;
+				const lengthDot = 50 - textLength;
+				let dot = "";
+				for (let index = 0; index < lengthDot; index++) {
+					dot += ".";
+				}
+				balanceMes +=
+					item.balance + " " + item.symbol + dot + item.balanceInUsd + ` USD\n`;
+			});
+
+			let tokenListSend = [];
+			tokenList.data.token.forEach((item) => {
 				tokenListSend.push([{
-					text: " Back",
-					callback_data: "helper",
+					text: `${item.symbol}`,
+					callback_data: `selecttoken_${item.symbol}`,
 				},]);
-				ctx.deleteMessage(message_id);
-				await ctx.replyWithHTML(balanceMes, Markup.inlineKeyboard(tokenListSend));
-				return next();
-			} catch (error) {
-				await ctx.replyWithHTML("<b>❌ Error</b>");
-			}
-		},
-		async () => {
-			try {
-				var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
-				if (!format.test(ctx.update?.message?.text.toLowerCase())) {
-					await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, keyboards.back());
-	
-				} else {
-					const stateAccount = await getState(ctx.session.accountId);
-					if (
-						stateAccount.response?.type == "AccountDoesNotExist" ||
-						stateAccount.response.type == "REQUEST_VALIDATION_ERROR"
-					) {
-						await ctx.replyWithHTML(
-							`<b>❌ this address does not exist. try again</b>`, keyboards.back()
-						);
-					}
-	
-					ctx.session.reveicerToken = ctx.update?.message?.text.toLowerCase();
-					if (stateAccount.response.amount) {
-	
-						const {
-							message_id
-						} = await ctx.replyWithHTML(
-							`<b>Loading...</b>`
-						);
-						const amount = (
-							ctx.session.amountTransfertoken *
-							Math.pow(10, ctx.session.decimals)
-						).toLocaleString("fullwide", {
-							useGrouping: false
-						}) + "";
-						const signedDelegate = await transferToken(
-							ctx.session.privateKey,
-							ctx.session.accountId,
-							ctx.session.reveicerToken,
-							amount,
-							ctx.session.tokenContract
-							)
-						const {
-							data
-						} = await axios.post(
-							`http://localhost:5000/relay`, {
-							delegate: JSON.stringify(Array.from(encodeSignedDelegate(signedDelegate)))
-						}, {
-							headers: {
-								"Content-Type": "application/json",
-								Accept: "application/json",
-							},
-						}
-						);
-						await ctx.deleteMessage(message_id);
-						if (data.status) {
-							return await ctx.replyWithHTML(`<b>✅ Success </b>`, keyboards.home());
-						} else {
-							await ctx.replyWithHTML(`<b>❌ Error cannt transfer. try again</b>`, keyboards.home());
-						}
-					}
-	
+			});
+			tokenListSend.push([{
+				text: " Back",
+				callback_data: "helper",
+			},]);
+			ctx.deleteMessage(message_id);
+			await ctx.replyWithHTML(balanceMes, Markup.inlineKeyboard(tokenListSend));
+			return next();
+		} catch (error) {
+			await ctx.replyWithHTML("<b>❌ Error</b>");
+		}
+	}
+	async transfertoken(ctx,){
+		try {
+			var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
+			if (!format.test(ctx.update?.message?.text.toLowerCase())) {
+				await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, keyboards.back());
+
+			} else {
+				const accountId = await redissession.getSession("accountId");
+				const stateAccount = await getState(accountId);
+				if (
+					stateAccount.response?.type == "AccountDoesNotExist" ||
+					stateAccount.response.type == "REQUEST_VALIDATION_ERROR"
+				) {
+					await ctx.replyWithHTML(
+						`<b>❌ this address does not exist. try again</b>`, keyboards.back()
+					);
 				}
-	
-			} catch (error) {
-				const err = await error;
-				if (err?.response?.data?.error?.type == "NotEnoughBalance") {
-					return await ctx.replyWithHTML("<b>❌ You do not have enough balance to transfer.\n\nPlease enter a smaller transfer amount</b>", keyboards.back());
-				} else {
-					await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
+				this.setSession("reveicerToken",ctx.update?.message?.text.toLowerCase(),ctx);
+				if (stateAccount.response.amount) {
+					const {
+						message_id
+					} = await ctx.replyWithHTML(
+						`<b>Loading...</b>`
+					);
+					const amountTransfertoken = await redissession.getSession("amountTransfertoken");
+					const decimals = await redissession.getSession("decimals");
+					const privateKey = await redissession.getSession("privatekey");
+					const reveicerToken = await redissession.getSession("reveicerToken");
+					const tokenContract = await redissession.getSession("tokenContract");
+					const amount = (
+						amountTransfertoken *
+						Math.pow(10, decimals)
+					).toLocaleString("fullwide", {
+						useGrouping: false
+					}) + "";
+					const signedDelegate = await transferToken(
+						privateKey,
+						accountId,
+						reveicerToken,
+						amount,
+						tokenContract
+						)
+					const {
+						data
+					} = await axios.post(
+						`http://localhost:5000/relay`, {
+						delegate: JSON.stringify(Array.from(encodeSignedDelegate(signedDelegate)))
+					}, {
+						headers: {
+							"Content-Type": "application/json",
+							Accept: "application/json",
+						},
+					}
+					);
+					await ctx.deleteMessage(message_id);
+					if (data.status) {
+						return await ctx.replyWithHTML(`<b>✅ Success </b>`, keyboards.home());
+					} else {
+						await ctx.replyWithHTML(`<b>❌ Error cannt transfer. try again</b>`, keyboards.home());
+					}
 				}
-	
+
 			}
+
+		} catch (error) {
+			const err = await error;
+			if (err?.response?.data?.error?.type == "NotEnoughBalance") {
+				return await ctx.replyWithHTML("<b>❌ You do not have enough balance to transfer.\n\nPlease enter a smaller transfer amount</b>", keyboards.back());
+			} else {
+				await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
+			}
+
 		}
 	}
 	
 	async setting(ctx){
-		console.log(`${process.env.TELE_APP_DOMAIN}?account_id=${ctx.session.accountId}&private_key=${ctx.session.privateKey}`);
+		const accountId = await redissession.getSession("accountId");
+		const privateKey = await redissession.getSession("privatekey");
+		console.log(`${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`);
 		await ctx.replyWithHTML(
-			`<b>${ctx.session.accountId}</b>\n\nManager your wallet here\nOnce you sign out we will not make another on your behalf to prevent from bots`, {
+			`<b>${accountId}</b>\n\nManager your wallet here\nOnce you sign out we will not make another on your behalf to prevent from bots`, {
 			disable_web_page_preview: true,
 			reply_markup: {
 				inline_keyboard: [
 					[{
 						text: "🔑 Export your keys",
 						web_app: {
-							url: `${process.env.TELE_APP_DOMAIN}?account_id=${ctx.session.accountId}&private_key=${ctx.session.privateKey}`,
+							url: `${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`,
 						},
 					},],
 					[{
@@ -734,7 +777,7 @@ class BotTest{
 		}
 		);
 	}
-	async mintvibe(ctx,next){
+	async mintvibe(ctx){
 		try {
 			if (ctx.update?.message?.photo) {
 				const {
@@ -949,16 +992,16 @@ class BotTest{
 				} =
 					ctx.update.message.photo[ctx.update.message.photo.length - 1];
 				const fileUrl = await ctx.telegram.getFileLink(file_id);
-				ctx.session.fileUrl = fileUrl;
+				this.setSession("fileUrl",fileUrl,ctx);
 				const {
 					data
-				} = await uploadIPFS(fileUrl)
+				} = await uploadIPFS(fileUrl);
 				if (data.cid) {
 					await ctx.replyWithHTML(
 						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\n Type in Your title for your NFT (Max 20 character), no links or special characters</b>`, keyboards.back()
 					);
-					ctx.session.cid = data.cid;
-					return ctx.session.action = "uploadipfs";
+					this.setSession("cid",data.cid,ctx);
+					this.setSession("action","uploadipfs",ctx);
 				} else {
 					await ctx.replyWithHTML("<b>❌Error upload to IPFS failed</b>");
 				}
@@ -971,7 +1014,7 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
-	async mintnft(ctx,next){
+	async mintnft(ctx){
 		const regex = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
 		if (regex.test(ctx.update?.message?.text)) {
@@ -993,22 +1036,24 @@ class BotTest{
 				ctx.update?.message?.text?.length > 3 &&
 				ctx.update?.message?.text.length < 20
 			) {
+				const titleNFT = ctx.update?.message?.text;
 				await ctx.replyWithHTML(
-					`<b>✅ Successfully titled NFT "${ctx.update?.message?.text}"\n\nAdd description,max 200 characters.Links allowed.</b>`, keyboards.mintnft()
+					`<b>✅ Successfully titled NFT "${titleNFT}"\n\nAdd description,max 200 characters.Links allowed.</b>`, keyboards.mintnft()
 				);
-				ctx.session.titleNFT = ctx.update?.message?.text;
-				return this.mintNFTSuccess(ctx,next);
+				this.setSession("action","mintnftsuccess",ctx)
+				this.setSession("titleNFT",ctx.update?.message?.text,ctx);
 			}
 		}
 	}
-	async mintNFTAutogeneration(ctx,next){
+	async mintNFTAutogeneration(ctx){
 		try {
+			const fileUrl = ctx.session.fileUrl || await redissession.getSession("fileUrl");
 			const description = await axios.post<any>(
 				"https://api.openai.com/v1/chat/completions", {
 				model: "gpt-3.5-turbo",
 				messages: [{
 					role: "user",
-					content: `write a caption post to twitter ${ctx.session.fileUrl}`,
+					content: `write a caption post to twitter ${fileUrl}`,
 				},],
 				max_tokens: 64,
 				temperature: 1,
@@ -1021,10 +1066,10 @@ class BotTest{
 			);
 
 			if (description.data.choices[0].message.content) {
-				ctx.session.descriptionNFT =
-					description.data.choices[0].message.content;
+				this.setSession("descriptionNFT",description.data.choices[0].message.content,ctx);
+				const titleNFT = ctx.session.titleNFT || await redissession.getSession("titleNFT");
 				await ctx.replyWithHTML(
-					`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`,keyboards.mintNFTmyself()
+					`<b>✅ Successfully put description\n\nNow who are you minting your "${titleNFT}" NFT to?\n\n</b>Enter valid Near Account`,keyboards.mintNFTmyself()
 				);
 				return ctx.next();
 			}
@@ -1034,42 +1079,53 @@ class BotTest{
 		}
 	}
 	async mintNFTBlank(ctx,next){
-		ctx.session.descriptionNFT = "";
-			await ctx.replyWithHTML(
-				`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
-			);
-			return next();
+		this.setSession("descriptionNFT","",ctx);
+		const titleNFT = await redissession.getSession("titleNFT");
+		await ctx.replyWithHTML(
+			`<b>✅ Successfully put description\n\nNow who are you minting your "${titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
+		);
+		return next();
 	}
 	async mintNFTError(ctx){
 		await ctx.replyWithHTML(
 			"<b>❌ Error description title too long\n\n Add description, max 200 characters.Links allowed.</b>", keyboards.mintnft()
 		);
 	}
-	async mintNFTSuccess(ctx,next){
+	async mintNFTSuccess(ctx){
 		if(ctx.update?.message?.text.length > 200){
-			this.mintNFTError(ctx)
+			return this.mintNFTError(ctx);
 		}
-		ctx.session.descriptionNFT = ctx.update?.message?.text;
-		await ctx.replyWithHTML(
-			`<b>✅ Successfully put description\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
+		this.setSession("descriptionNFT", ctx.update?.message?.text,ctx);
+		const titleNFT = await redissession.getSession("titleNFT");
+		this.setSession("action", "mintNFTMyself");
+		return await ctx.replyWithHTML(
+			`<b>✅ Successfully put description\n\nNow who are you minting your "${titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 		);
-		return next();
 	}
-	async mintNFTMyself(ctx,next){
+	async mintNFTMyself(ctx){
 		let receiverNFT = null;
-		ctx.session.receiverNFT = ctx.session.accountId;
-		receiverNFT = ctx.session.accountId;
-
+		const accountId = await redissession.getSession("accountId");
+		console.log("ctx.match: ",ctx.match);
+		if (ctx.match[0] == "mintNFTmyself") {
+			this.setSession("receiverNFT",accountId,ctx);
+			receiverNFT = accountId;
+		} else {
+			receiverNFT = ctx.update?.message?.text?.toLowerCase();
+		}
+		const titleNFT = ctx.session.titleNFT || await redissession.getSession("titleNFT");
+		const descriptionNFT = ctx.session.descriptionNFT || await redissession.getSession("decriptionNFT");
+		const privateKey = ctx.session.privateKey || await redissession.getSession("privatekey");
+		const cid = ctx.session.cid || await redissession.getSession("cid");
 		try {
 			var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
-			if (!format.test(ctx.callback_query?.message?.text.toLowerCase())) {
+			if (!format.test(receiverNFT)) {
 				await ctx.replyWithHTML(
-					`<b>❌ Error not a valid Near address.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
+					`<b>❌ Error not a valid Near address.\n\nNow who are you minting your "${titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 				);
 			} else {
-				const stateAccount = await getState(ctx.session.accountId);
+				const stateAccount = await getState(accountId);
 				if (stateAccount.response?.amount) {
-					ctx.session.receiverNFT = ctx.update?.message?.text.toLowerCase();
+					this.setSession("receiverNFT",ctx.update?.message?.text.toLowerCase(),ctx);
 					const tokenId = Date.now() + "";
 					const {
 						message_id
@@ -1077,11 +1133,11 @@ class BotTest{
 						`<b>Loading...</b>`
 					);
 					const signedDelegate = await mintNFT(
-						ctx.session.accountId,
-						ctx.session.titleNFT,
-						ctx.session.description,
-						ctx.session.cid,
-						ctx.session.privateKey,
+						accountId,
+						titleNFT,
+						descriptionNFT,
+						cid,
+						privateKey,
 						receiverNFT,
 						tokenId
 					)
@@ -1101,7 +1157,7 @@ class BotTest{
 					) {
 						await ctx.deleteMessage(message_id);
 						return await ctx.replyWithHTML(
-							`<b>✅You successfully minted "${ctx.session.titleNFT}" NFT to user <a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=nft.genadrop.near&tokenId=${tokenId}&chainState=near">(Open)</a></b>`, keyboards.home()
+							`<b>✅You successfully minted "${titleNFT}" NFT to user <a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=nft.genadrop.near&tokenId=${tokenId}&chainState=near">(Open)</a></b>`, keyboards.home()
 						);
 					}
 				}
@@ -1110,7 +1166,7 @@ class BotTest{
 					stateAccount.response?.type == "REQUEST_VALIDATION_ERROR"
 				) {
 					await ctx.replyWithHTML(
-						`<b>❌ Error this near doesnt exists.\n\nNow who are you minting your "${ctx.session.titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
+						`<b>❌ Error this near doesnt exists.\n\nNow who are you minting your "${titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 					);
 				}
 			}
@@ -1118,29 +1174,33 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b>",keyboards.back());
 		}
 	}
-	async postNearSocial(ctx,next){
-		ctx.session.postContent = ctx?.update?.message?.text;
-			await ctx.replyWithHTML("<b>Upload Image to Post . Supported file types;png;gif;jpeg (max 10mb) Send a picture</b>",keyboards.postnearsoical());
+	async postNearSocial(ctx){
+		this.setSession("action","postNearSocialFinal",ctx);
+		this.setSession("postContent",ctx?.update?.message?.text,ctx);
+		await ctx.replyWithHTML("<b>Upload Image to Post . Supported file types;png;gif;jpeg (max 10mb) Send a picture</b>",keyboards.postnearsoical());
 	}
-	async post(ctx,next){
+	async post(ctx){
 		const {
 			message_id
 		} = await ctx.replyWithHTML(
 			`<b>Loading...</b>`
 		);
+		const accountId = ctx.session.accountId || await redissession.getSession("accountId");
+		const privateKey = ctx.session.privateKey || await redissession.getSession("privatekey");
+		const postContent = ctx.session.postContent || await redissession.getSession("postContent");
 		const signedDelegate = await postSocial(
-			ctx.session.accountId,
+			accountId,
 			null,
-			ctx.session.privateKey,
-			ctx.session.postContent
+			privateKey,
+			postContent
 		)
 		const data = await submitTransaction(signedDelegate);
 		await ctx.deleteMessage(message_id);
 		if (data.transaction_outcome?.outcome?.status) {
-			return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`,keyboards.home());
+			return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${accountId}&blockHeight=${data.transaction.nonce}">Open</a>) </b>`,keyboards.home());
 		}
 	}
-	async postNearSocialFinal(ctx,next){
+	async postNearSocialFinal(ctx){
 		try {
 			if (ctx.update.message?.photo) {
 				const {
@@ -1150,6 +1210,9 @@ class BotTest{
 				const {
 					data
 				} = await uploadIPFS(fileUrl);
+				const accountId = ctx.session.accountId || await redissession.getSession("accountId");
+				const privateKey = ctx.session.privateKey || await redissession.getSession("privatekey");
+				const postContent = ctx.session.postContent || await redissession.getSession("postContent");
 				if (data.cid) {
 					const {
 						message_id
@@ -1157,15 +1220,15 @@ class BotTest{
 						`<b>Loading...</b>`
 					);
 					const signedDelegate = await postSocial(
-						ctx.session.accountId,
+						accountId,
 						data.cid,
-						ctx.session.privateKey,
-						ctx.session.postContent
+						privateKey,
+						postContent
 					)
 					const data = await submitTransaction(signedDelegate)
 					await ctx.deleteMessage(message_id);
 					if (data.transaction_outcome?.outcome?.status) {
-						return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`,keyboards.home());
+						return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${accountId}&blockHeight=${data.transaction.nonce}">Open</a>) </b>`,keyboards.home());
 					}
 				} else {
 					await ctx.replyWithHTML(
@@ -1181,21 +1244,21 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
-	async proofOfSesh(ctx,next){
-		ctx.session.selectStick = ctx.update?.callback_query?.data;
-			await ctx.replyWithHTML(`<b>YOU HAVE CHOSEN ${ctx.session.selectStick.toUpperCase()}</b>`);
-			await ctx.replyWithHTML(`<b>📸Take a picture of the smoking stick</b>`, keyboards.back());
-		return next();
+	async proofOfSesh(ctx){
+		const selectStick = ctx.match[1];
+		this.setSession("selectStick",selectStick,ctx);
+		this.setSession("action","proofofsesh",ctx);
+		await ctx.replyWithHTML(`<b>YOU HAVE CHOSEN ${selectStick.toUpperCase()}</b>`);
+		await ctx.replyWithHTML(`<b>📸Take a picture of the smoking stick</b>`, keyboards.back());
 	}
-	async proofOfSeshFinal(ctx,next){
+	async proofOfSeshFinal(ctx){
 		try {
 			if (ctx.update.message?.photo) {
 				const {
 					file_id
-				} =
-					ctx.update.message.photo[ctx.update.message.photo.length - 1];
+				} = ctx.update.message.photo[ctx.update.message.photo.length - 1];
 				const fileUrl = await ctx.telegram.getFileLink(file_id);
-				ctx.session.fileUrl = fileUrl;
+				this.setSession("fileUrl",fileUrl,ctx)
 				const {
 					data
 				} = await uploadIPFS(fileUrl);
@@ -1203,19 +1266,15 @@ class BotTest{
 					await ctx.replyWithHTML(
 						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\nSend a message to say what you feel</b>`, keyboards.back()
 					);
-
-					ctx.session.cid = data.cid;
-					if (ctx.session.proofofsesh) {
+					this.setSession("cid",data.cid,ctx)
+					const proofofsesh = ctx.session.proofofsesh || await redissession.getSession("proofofsesh");
+					if (proofofsesh) {
 						await ctx.replyWithHTML("<b> Watchu smoking on???</b>", keyboards.proofofseshfinal());
-						return next();
-
 					} else {
 						await ctx.replyWithHTML(
 							`<b>WHO REFERED YOU. PUT THEIR .NEAR handle / telegram handle or name</b>`, keyboards.back()
 						);
-						return next();
 					}
-
 				} else {
 					await ctx.replyWithHTML("<b>❌Error upload to IPFS failed</b>");
 				}
@@ -1228,14 +1287,15 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
-	async getSelect(ctx,next){
-		ctx.session.selectStick = ctx.update?.callback_query?.data.split("_")[1];
+	async getSelect(ctx){
+		const selectStick = ctx.match[1];
+		this.setSession("selectStick",selectStick,ctx);
+		this.setSession("action","getselect",ctx);
 		await ctx.replyWithHTML(
-			`<b>✅ YOU HAVE CHOSEN ${ctx.session.selectStick.toUpperCase()}\n\nSend a message to say what you feel</b>`, keyboards.back()
+			`<b>✅ YOU HAVE CHOSEN ${selectStick.toUpperCase()}\n\nSend a message to say what you feel</b>`, keyboards.back()
 		);
-		return next();
 	}
-	async getAllSelect(ctx,next){
+	async getAllSelect(ctx){
 		try {
 			if (ctx.update.message?.photo) {
 				const {
@@ -1243,26 +1303,22 @@ class BotTest{
 				} =
 					ctx.update.message.photo[ctx.update.message.photo.length - 1];
 				const fileUrl = await ctx.telegram.getFileLink(file_id);
-				ctx.session.fileUrl = fileUrl;
+				this.setSession("fileUrl",fileUrl,ctx);
 				const {
 					data
 				} = await uploadIPFS(fileUrl);
 				if (data.cid) {
-
+					
 					await ctx.replyWithHTML(
 						`<b>✅🗂️ File Successfully Uploaded to IPFS <a href="https://gateway.pinata.cloud/ipfs/${data.cid}">(open ipfs link)</a>\n\nSend a message to say what you feel</b>`,keyboards.back()
 					);
-					ctx.session.cid = data.cid;
-					if (ctx.session.proofofsesh) {
-
-						return ctx.wizard.next();
-					} else {
+					this.setSession("cid",data.cid,ctx);
+					const proofofsesh = ctx.session.proofofsesh || await redissession.getSession("proofofsesh")
+					if (!proofofsesh) {
 						await ctx.replyWithHTML(
 							`<b>WHO REFERED YOU. PUT THEIR .NEAR handle / telegram handle or name</b>`,keyboards.home()
 						);
-						return next();
-					}
-
+					} 
 				} else {
 					await ctx.replyWithHTML("<b>❌Error upload to IPFS failed</b>");
 				}
@@ -1275,131 +1331,141 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b>",keyboards.back());
 		}
 	}
-	async getSelectFinal(ctx,next){
-		const {
-			message_id
-		} = await ctx.replyWithHTML(
-			`<b>Loading...</b>`
-		);
-		const contents = ctx?.update?.message?.text + "\n@bluntdao.near #ProofOfSesh #BluntDAO";
-		const signedDelegate = await postSocial(
-			ctx.session.accountId,
-			ctx.session.cid,
-			ctx.session.privateKey,
-			contents
-		)
-		const data = await submitTransaction(signedDelegate);
-		await ctx.deleteMessage(message_id);
-		if (data.transaction_outcome?.outcome?.status) {
-			await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) </b>`, keyboards.back());
-			const tokenId = Date.now() + ""
-			const title = `BluntDao NFT #${ctx.session.selectStick}`;
-			const description = `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${ctx.session.selectStick}`;
-			const token_id = `bluntdao.${ctx.session.selectStick}.${tokenId}`;
-			const signedDelegates = await mintNFT(
-				ctx.session.accountId,
-				title,
-				description,
-				ctx.session.privateKey,
-				ctx.session.accountId,
-				token_id
-			)
-			await submitTransaction(signedDelegates)
-		}
-
-	}
-	async postProofOfSeshFinal(ctx,next){
-		try {
-			ctx.session.blunt_ref = ctx?.update?.message?.text.toLowerCase();
+	async postProofOfSeshFinal(ctx){
+		const proofofsesh = await redissession.getSession("proofofsesh");
+		if(ctx?.update?.message?.text && proofofsesh){
 			const {
-				data
-			} = await getNFTBlunt(ctx.session.accountId)
-			let seriesId = 0;
-			if (ctx.session.selectStick == "blunt") {
-				seriesId = 1;
-			} else if (ctx.session.selectStick == "spliff") {
-				seriesId = 2;
-			} else if (ctx.session.selectStick == "joint") {
-				seriesId = 3;
-			}
-			if (data?.nft["nft.bluntdao.near"]?.length > 0) {
-				await ctx.replyWithHTML(
-					`<b>✅ Your OG Exist .Please wait to claim Blunt Dao NFT</b>`,
-				);
-				const {
-					message_id
-				} = await ctx.replyWithHTML(
-					`<b>Loading...</b>`
-				);
-				console.log("ctx.session.accountId", ctx.session.accountId)
-				const signedDelegate = await mintBlunt(ctx.session.accountId,seriesId);
-				const data = await submitTransaction(signedDelegate);
-				console.log("res", data)
+				message_id
+			} = await ctx.replyWithHTML(
+				`<b>Loading...</b>`
+			);
+			const contents = ctx?.update?.message?.text + "\n@bluntdao.near #ProofOfSesh #BluntDAO";
+			const accountId = await redissession.getSession("accountId");
+			const cid = await redissession.getSession("cid");
+			const privateKey = await redissession.getSession("privatekey");
+			const signedDelegate = await postSocial(
+				accountId,
+				cid,
+				privateKey,
+				contents
+			)
+			const data = await submitTransaction(signedDelegate);
+			await ctx.deleteMessage(message_id);
+			if (data.transaction_outcome?.outcome?.status) {
+				await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${accountId}&blockHeight=${data.transaction.nonce}">Open</a>) </b>`, keyboards.back());
 				const tokenId = Date.now() + "";
-				const title = `BluntDao NFT #${ctx.session.selectStick}`;
-				const description = `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${ctx.session.selectStick}`;
-				const token_id = `bluntdao.${ctx.session.selectStick}.${tokenId}`;
-				const signedDelegateMint = await mintNFT(
-					ctx.session.accountId,
+				const selectStick = ctx.session.selectStick || await redissession.getSession("selectStick");
+				const title = `BluntDao NFT #${selectStick}`;
+				const description = `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${selectStick}`;
+				const token_id = `bluntdao.${selectStick}.${tokenId}`;
+				const signedDelegates = await mintNFT(
+					accountId,
 					title,
 					description,
-					ctx.session.cid,
-					ctx.session.privateKey,
-					ctx.session.accountId,
+					privateKey,
+					accountId,
 					token_id
 				)
-				await submitTransaction(signedDelegateMint)
-				await ctx.deleteMessage(message_id);
-
-				if (data) {
-					ctx.session.proofofsesh = true;
+				await submitTransaction(signedDelegates)
+			}
+		}
+		if(ctx?.update?.message?.text){
+			try {
+				this.setSession("blunt_ref",ctx?.update?.message?.text.toLowerCase(),ctx);
+				const accountId = await redissession.getSession("accountId");
+				const selectStick = await redissession.getSession("selectStick");
+				const {
+					data
+				} = await getNFTBlunt(accountId)
+				let seriesId = 0;
+				if (selectStick == "blunt") {
+					seriesId = 1;
+				} else if (selectStick == "spliff") {
+					seriesId = 2;
+				} else if (selectStick == "joint") {
+					seriesId = 3;
+				}
+				if (data?.nft["nft.bluntdao.near"]?.length > 0) {
+					await ctx.replyWithHTML(
+						`<b>✅ Your OG Exist .Please wait to claim Blunt Dao NFT</b>`,
+					);
 					const {
 						message_id
 					} = await ctx.replyWithHTML(
 						`<b>Loading...</b>`
 					);
-					const content = `Just got onboard with a ${ctx.session.selectStick.toUpperCase()} by @${ctx.session.blunt_ref} via #ProofOfSesh to #BluntDAO @bluntdao.near Now I'm an #OGValidator, sesh with me IRL to get onboarded`
-					const delegate =  await postSocial(
-						ctx.session.accountId,
-						ctx.session.cid,
-						ctx.session.privateKey,
-						content
+					console.log("ctx.session.accountId", accountId)
+					const signedDelegate = await mintBlunt(accountId,seriesId);
+					const data = await submitTransaction(signedDelegate);
+					console.log("res", data)
+					const tokenId = Date.now() + "";
+					const title = `BluntDao NFT #${selectStick}`;
+					const cid = await redissession.getSession("cid");
+					const privateKey = await redissession.getSession("privatekey");
+					const description = `${ctx?.update?.message?.text} @bluntdao.near #ProofOfSesh #BluntDAO #${selectStick}`;
+					const token_id = `bluntdao.${selectStick}.${tokenId}`;
+					const signedDelegateMint = await mintNFT(
+						accountId,
+						title,
+						description,
+						cid,
+						privateKey,
+						accountId,
+						token_id
 					)
-					const data = await submitTransaction(delegate);
-					if (data.transaction_outcome?.outcome?.status) {
-
-						await ctx.deleteMessage(message_id);
+					await submitTransaction(signedDelegateMint)
+					await ctx.deleteMessage(message_id);
+					const proofofsesh = await redissession.getSession("proofofsesh");
+					const blunt_ref = await redissession.getSession("blunt_ref");
+					if (data) {
+						proofofsesh = true;
 						const {
-							data
-						} = await getNFTBlunt(ctx.session.accountId)
-						console.log("data", JSON.stringify(data))
-						if (data?.nft["nft.bluntdao.near"]?.length > 0) {
-							await ctx.replyWithHTML(
-								`<b>✅ YOU ARE IN BLUNT DAO. YOU ARE AN OG VALIDATOR. NOW YOU CAN ONBOARD OTHERS TO BLUNT DAO THE SAME WAY. YOU ARE AN OG VALIDATOR.\nYOU HAVE A NFT (<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft["nft.bluntdao.near"][0].nft_contract_id}&tokenId=${data.nft["nft.bluntdao.near"][0].token_id}">Open</a>) AND YOU ALREADY POSTED ON WEB3 SOCIAL (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) 🔥🎉</b>`,keyboards.back()
-							);
-						}
-						const addDelegate = await addBlunt(
-							ctx.session.accountId,
-							ctx.session.selectStick,
-							ctx.session.privateKey,
-							data.transaction.nonce
+							message_id
+						} = await ctx.replyWithHTML(
+							`<b>Loading...</b>`
+						);
+						const content = `Just got onboard with a ${selectStick.toUpperCase()} by @${blunt_ref} via #ProofOfSesh to #BluntDAO @bluntdao.near Now I'm an #OGValidator, sesh with me IRL to get onboarded`
+						const delegate =  await postSocial(
+							accountId,
+							cid,
+							privateKey,
+							content
 						)
-						await submitTransaction(addDelegate)
+						const data = await submitTransaction(delegate);
+						if (data.transaction_outcome?.outcome?.status) {
+	
+							await ctx.deleteMessage(message_id);
+							const {
+								data
+							} = await getNFTBlunt(accountId)
+							console.log("data", JSON.stringify(data))
+							if (data?.nft["nft.bluntdao.near"]?.length > 0) {
+								await ctx.replyWithHTML(
+									`<b>✅ YOU ARE IN BLUNT DAO. YOU ARE AN OG VALIDATOR. NOW YOU CAN ONBOARD OTHERS TO BLUNT DAO THE SAME WAY. YOU ARE AN OG VALIDATOR.\nYOU HAVE A NFT (<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft["nft.bluntdao.near"][0].nft_contract_id}&tokenId=${data.nft["nft.bluntdao.near"][0].token_id}">Open</a>) AND YOU ALREADY POSTED ON WEB3 SOCIAL (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">Open</a>) 🔥🎉</b>`,keyboards.back()
+								);
+							}
+							const addDelegate = await addBlunt(
+								accountId,
+								selectStick,
+								privateKey,
+								data.transaction.nonce
+							)
+							await submitTransaction(addDelegate)
+						}
+						const followDelegate = await followBlunt(
+							accountId,
+							privateKey
+						)
+						await submitTransaction(followDelegate);
 					}
-					const followDelegate = await followBlunt(
-						ctx.session.accountId,
-						ctx.session.privateKey
-					)
-					await submitTransaction(followDelegate);
+				} else {
+					await ctx.replyWithHTML(
+						`<b>❌ AN OG WITH THIS WALLET DOESNT EXIST.\n\nPLEASE TYPE AGAIN</b>`, keyboards.back()
+					);
 				}
-				return next();
-			} else {
-				await ctx.replyWithHTML(
-					`<b>❌ AN OG WITH THIS WALLET DOESNT EXIST.\n\nPLEASE TYPE AGAIN</b>`, keyboards.back()
-				);
+			} catch (error) {
+				console.log(error)
 			}
-		} catch (error) {
-			console.log(error)
 		}
 	}
     async editMessageText(ctx, ...message) {
