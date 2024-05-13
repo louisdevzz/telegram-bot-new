@@ -40,21 +40,21 @@ const CreateAccount = async(accountId) => {
     const gas = "200000000000000";
     const deposit = "0";
     const argsWithSocial = {
-    new_account_id: accountId,
-    options: {
-        contract_bytes: null,
-        full_access_keys: [
-        publicKey
-        ],
-        limited_access_keys: [
-        {
-            allowance: "250000000000000",
-            method_names: "",
-            public_key: "ed25519:FQzxfWrjAy1C62hL4cc47cRpUdnrLinajj69yLjwB2DG",
-            receiver_id: "social.near"
-        }
-        ]
-    }
+      new_account_id: accountId,
+      options: {
+          contract_bytes: null,
+          full_access_keys: [
+          publicKey
+          ],
+          limited_access_keys: [
+          {
+              allowance: "250000000000000",
+              method_names: "",
+              public_key: "ed25519:FQzxfWrjAy1C62hL4cc47cRpUdnrLinajj69yLjwB2DG",
+              receiver_id: "social.near"
+          }
+          ]
+      }
     }
     const action = actionCreators.functionCall(
         "create_account_advanced",
@@ -493,7 +493,7 @@ async function mintNFT(accountId,  title, description ,cid,privateKey,receiverNF
     url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
     headers: { 
       "Content-Type": "application/json",
-      Authorization: process.env.JWT_PINATA_CLOUD
+      Authorization: `Bearer ${process.env.JWT_PINATA_CLOUD}`
     },
     data: data
   };

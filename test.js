@@ -1,7 +1,9 @@
-const {getToken} = require("./utils/SDK")
-
-async function Data(){
-    const data = await getToken("louisdevzz.near");
-    console.log(data)
+const data={
+    value:"a"
+};
+function Data(key,value){
+    data[key] = value;
+    return data;
 }
-Data()
+console.log(Data("value",null))
+console.log(data)

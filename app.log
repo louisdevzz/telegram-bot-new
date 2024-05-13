@@ -398,3 +398,247 @@
 2024-05-13T14:22:16.411Z | info | Worker initializing
 2024-05-13T14:22:16.413Z | info | Bot listen
 2024-05-13T14:22:16.413Z | info | Worker ready
+2024-05-13T15:34:45.798Z | info | Start cluster with 1 workers
+2024-05-13T15:34:45.801Z | info | Worker 9458 started.
+2024-05-13T15:34:46.030Z | info | Worker initializing
+2024-05-13T15:34:46.032Z | info | Bot listen
+2024-05-13T15:34:46.032Z | info | Worker ready
+2024-05-13T15:53:04.066Z | info | Start cluster with 1 workers
+2024-05-13T15:53:04.071Z | info | Worker 9850 started.
+2024-05-13T15:53:04.343Z | info | Worker initializing
+2024-05-13T15:53:04.345Z | info | Bot listen
+2024-05-13T15:53:04.345Z | info | Worker ready
+2024-05-13T15:56:37.610Z | info | Start cluster with 1 workers
+2024-05-13T15:56:37.613Z | info | Worker 9952 started.
+2024-05-13T15:56:37.844Z | info | Worker initializing
+2024-05-13T15:56:37.846Z | info | Bot listen
+2024-05-13T15:56:37.846Z | info | Worker ready
+2024-05-13T15:58:08.178Z | info | Start cluster with 1 workers
+2024-05-13T15:58:08.186Z | info | Worker 10045 started.
+2024-05-13T15:58:08.453Z | info | Worker initializing
+2024-05-13T15:58:08.455Z | info | Bot listen
+2024-05-13T15:58:08.456Z | info | Worker ready
+2024-05-13T16:00:25.835Z | info | Start cluster with 1 workers
+2024-05-13T16:00:25.839Z | info | Worker 10157 started.
+2024-05-13T16:00:26.093Z | info | Worker initializing
+2024-05-13T16:00:26.095Z | info | Bot listen
+2024-05-13T16:00:26.095Z | info | Worker ready
+2024-05-13T16:02:45.049Z | info | Start cluster with 1 workers
+2024-05-13T16:02:45.053Z | info | Worker 10260 started.
+2024-05-13T16:02:45.297Z | info | Worker initializing
+2024-05-13T16:02:45.300Z | info | Bot listen
+2024-05-13T16:02:45.300Z | info | Worker ready
+2024-05-13T16:06:00.420Z | info | Start cluster with 1 workers
+2024-05-13T16:06:00.423Z | info | Worker 10458 started.
+2024-05-13T16:06:00.673Z | info | Worker initializing
+2024-05-13T16:06:00.674Z | info | Bot listen
+2024-05-13T16:06:00.674Z | info | Worker ready
+2024-05-13T16:06:59.646Z | info | Start cluster with 1 workers
+2024-05-13T16:06:59.649Z | info | Worker 10502 started.
+2024-05-13T16:06:59.918Z | info | Worker initializing
+2024-05-13T16:06:59.921Z | info | Bot listen
+2024-05-13T16:06:59.921Z | info | Worker ready
+2024-05-13T16:11:24.186Z | info | Start cluster with 1 workers
+2024-05-13T16:11:24.190Z | info | Worker 10763 started.
+2024-05-13T16:11:24.404Z | info | Worker initializing
+2024-05-13T16:11:24.406Z | info | Bot listen
+2024-05-13T16:11:24.406Z | info | Worker ready
+2024-05-13T16:12:28.019Z | info | Start cluster with 1 workers
+2024-05-13T16:12:28.022Z | info | Worker 10842 started.
+2024-05-13T16:12:28.330Z | info | Worker initializing
+2024-05-13T16:12:28.333Z | info | Bot listen
+2024-05-13T16:12:28.334Z | info | Worker ready
+2024-05-13T16:13:47.212Z | info | Start cluster with 1 workers
+2024-05-13T16:13:47.215Z | info | Worker 10917 started.
+2024-05-13T16:13:47.507Z | info | Worker initializing
+2024-05-13T16:13:47.510Z | info | Bot listen
+2024-05-13T16:13:47.510Z | info | Worker ready
+2024-05-13T16:14:04.451Z | error | unhandledRejection: ctx is not defined
+2024-05-13T16:14:04.451Z | error | ReferenceError: ctx is not defined
+    at BotTest.setSession (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:162:3)
+    at BotTest.handleBot (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:193:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:137:20
+    at async Promise.all (index 0)
+2024-05-13T16:14:24.382Z | info | Start cluster with 1 workers
+2024-05-13T16:14:24.388Z | info | Worker 10968 started.
+2024-05-13T16:14:24.677Z | info | Worker initializing
+2024-05-13T16:14:24.679Z | info | Bot listen
+2024-05-13T16:14:24.680Z | info | Worker ready
+2024-05-13T16:14:52.335Z | error | unhandledRejection: ctx is not defined
+2024-05-13T16:14:52.337Z | error | ReferenceError: ctx is not defined
+    at BotTest.setSession (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:162:3)
+    at BotTest.handleBot (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:193:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:137:20
+    at async Promise.all (index 0)
+2024-05-13T16:15:21.830Z | info | Start cluster with 1 workers
+2024-05-13T16:15:21.833Z | info | Worker 11057 started.
+2024-05-13T16:15:22.076Z | info | Worker initializing
+2024-05-13T16:15:22.078Z | info | Bot listen
+2024-05-13T16:15:22.079Z | info | Worker ready
+2024-05-13T16:17:17.910Z | info | Start cluster with 1 workers
+2024-05-13T16:17:17.913Z | info | Worker 11154 started.
+2024-05-13T16:17:18.193Z | info | Worker initializing
+2024-05-13T16:17:18.196Z | info | Bot listen
+2024-05-13T16:17:18.196Z | info | Worker ready
+2024-05-13T16:17:43.550Z | error | unhandledRejection: next is not a function
+2024-05-13T16:17:43.552Z | error | TypeError: next is not a function
+    at BotTest.mintvibecontent (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:861:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-13T17:08:24.390Z | info | Start cluster with 1 workers
+2024-05-13T17:08:24.392Z | info | Worker 11575 started.
+2024-05-13T17:08:24.617Z | info | Worker initializing
+2024-05-13T17:08:24.618Z | info | Bot listen
+2024-05-13T17:08:24.618Z | info | Worker ready
+2024-05-13T17:10:13.289Z | info | Start cluster with 1 workers
+2024-05-13T17:10:13.295Z | info | Worker 12126 started.
+2024-05-13T17:10:13.562Z | info | Worker initializing
+2024-05-13T17:10:13.564Z | info | Bot listen
+2024-05-13T17:10:13.564Z | info | Worker ready
+2024-05-13T17:12:30.368Z | info | Start cluster with 1 workers
+2024-05-13T17:12:30.373Z | info | Worker 12256 started.
+2024-05-13T17:12:30.657Z | info | Worker initializing
+2024-05-13T17:12:30.659Z | info | Bot listen
+2024-05-13T17:12:30.659Z | info | Worker ready
+2024-05-13T17:16:14.556Z | info | Start cluster with 1 workers
+2024-05-13T17:16:14.559Z | info | Worker 12520 started.
+2024-05-13T17:16:14.794Z | info | Worker initializing
+2024-05-13T17:16:14.796Z | info | Bot listen
+2024-05-13T17:16:14.796Z | info | Worker ready
+2024-05-13T17:21:13.205Z | info | Start cluster with 1 workers
+2024-05-13T17:21:13.208Z | info | Worker 12663 started.
+2024-05-13T17:21:13.449Z | info | Worker initializing
+2024-05-13T17:21:13.450Z | info | Bot listen
+2024-05-13T17:21:13.450Z | info | Worker ready
+2024-05-13T17:23:29.913Z | info | Start cluster with 1 workers
+2024-05-13T17:23:29.917Z | info | Worker 13543 started.
+2024-05-13T17:23:30.159Z | info | Worker initializing
+2024-05-13T17:23:30.160Z | info | Bot listen
+2024-05-13T17:23:30.161Z | info | Worker ready
+2024-05-13T17:23:33.495Z | info | Start cluster with 1 workers
+2024-05-13T17:23:33.500Z | info | Worker 13576 started.
+2024-05-13T17:23:33.739Z | info | Worker initializing
+2024-05-13T17:23:33.741Z | info | Bot listen
+2024-05-13T17:23:33.741Z | info | Worker ready
+2024-05-13T17:23:36.546Z | info | Start cluster with 1 workers
+2024-05-13T17:23:36.551Z | info | Worker 13606 started.
+2024-05-13T17:23:36.822Z | info | Worker initializing
+2024-05-13T17:23:36.825Z | info | Bot listen
+2024-05-13T17:23:36.825Z | info | Worker ready
+2024-05-13T17:23:59.258Z | info | Start cluster with 1 workers
+2024-05-13T17:23:59.262Z | info | Worker 13643 started.
+2024-05-13T17:23:59.504Z | info | Worker initializing
+2024-05-13T17:23:59.506Z | info | Bot listen
+2024-05-13T17:23:59.506Z | info | Worker ready
+2024-05-13T17:26:30.175Z | info | Start cluster with 1 workers
+2024-05-13T17:26:30.179Z | info | Worker 13756 started.
+2024-05-13T17:26:30.534Z | info | Worker initializing
+2024-05-13T17:26:30.536Z | info | Bot listen
+2024-05-13T17:26:30.537Z | info | Worker ready
+2024-05-13T17:28:53.280Z | info | Start cluster with 1 workers
+2024-05-13T17:28:53.285Z | info | Worker 13914 started.
+2024-05-13T17:28:53.548Z | info | Worker initializing
+2024-05-13T17:28:53.550Z | info | Bot listen
+2024-05-13T17:28:53.550Z | info | Worker ready
+2024-05-13T17:29:08.477Z | info | Start cluster with 1 workers
+2024-05-13T17:29:08.484Z | info | Worker 13963 started.
+2024-05-13T17:29:08.913Z | info | Worker initializing
+2024-05-13T17:29:08.915Z | info | Bot listen
+2024-05-13T17:29:08.915Z | info | Worker ready
+2024-05-13T17:30:31.636Z | info | Start cluster with 1 workers
+2024-05-13T17:30:31.646Z | info | Worker 14015 started.
+2024-05-13T17:30:31.960Z | info | Worker initializing
+2024-05-13T17:30:31.963Z | info | Bot listen
+2024-05-13T17:30:31.963Z | info | Worker ready
+2024-05-13T17:33:44.273Z | info | Start cluster with 1 workers
+2024-05-13T17:33:44.281Z | info | Worker 14171 started.
+2024-05-13T17:33:44.624Z | info | Worker initializing
+2024-05-13T17:33:44.627Z | info | Bot listen
+2024-05-13T17:33:44.627Z | info | Worker ready
+2024-05-13T17:34:24.957Z | error | uncaughtException: encodedKey.split is not a function
+2024-05-13T17:34:24.957Z | error | TypeError: encodedKey.split is not a function
+    at KeyPair.fromString (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/crypto/lib/key_pair.js:23:34)
+    at getVibe (/home/louisdevzz/Documents/telegram-bot-refactor/utils/SDK.js:376:83)
+    at BotTest.mintVibeSuccess (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:896:33)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:116:20
+    at async Promise.all (index 0)
+2024-05-13T17:37:20.382Z | info | Start cluster with 1 workers
+2024-05-13T17:37:20.387Z | info | Worker 14357 started.
+2024-05-13T17:37:20.744Z | info | Worker initializing
+2024-05-13T17:37:20.747Z | info | Bot listen
+2024-05-13T17:37:20.748Z | info | Worker ready
+2024-05-13T17:37:59.525Z | error | uncaughtException: Expected string not undefined(undefined) at value.receiverId
+2024-05-13T17:37:59.525Z | error | Error: Expected string not undefined(undefined) at value.receiverId
+    at Object.expect_type (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/utils.js:34:15)
+    at BorshSerializer.encode_string (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:85:34)
+    at BorshSerializer.encode_value (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:45:29)
+    at BorshSerializer.encode_struct (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:180:18)
+    at BorshSerializer.encode_value (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:61:29)
+    at BorshSerializer.encode (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:37:14)
+    at serialize (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/index.js:35:23)
+    at encodeDelegateAction (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/lib/schema.js:16:34)
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/lib/sign.js:60:59
+    at Generator.next (<anonymous>)
+2024-05-13T17:40:28.941Z | error | uncaughtException: Expected string not undefined(undefined) at value.receiverId
+2024-05-13T17:40:28.941Z | error | Error: Expected string not undefined(undefined) at value.receiverId
+    at Object.expect_type (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/utils.js:34:15)
+    at BorshSerializer.encode_string (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:85:34)
+    at BorshSerializer.encode_value (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:45:29)
+    at BorshSerializer.encode_struct (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:180:18)
+    at BorshSerializer.encode_value (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:61:29)
+    at BorshSerializer.encode (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/serialize.js:37:14)
+    at serialize (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/node_modules/borsh/lib/cjs/index.js:35:23)
+    at encodeDelegateAction (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/lib/schema.js:16:34)
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/@near-js/transactions/lib/sign.js:60:59
+    at Generator.next (<anonymous>)
+2024-05-13T17:41:30.723Z | info | Start cluster with 1 workers
+2024-05-13T17:41:30.727Z | info | Worker 14682 started.
+2024-05-13T17:41:31.035Z | info | Worker initializing
+2024-05-13T17:41:31.037Z | info | Bot listen
+2024-05-13T17:41:31.037Z | info | Worker ready
+2024-05-13T17:42:36.373Z | error | uncaughtException: res is not defined
+2024-05-13T17:42:36.373Z | error | ReferenceError: res is not defined
+    at BotTest.mintVibeSuccess (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:919:163)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:116:20
+    at async Promise.all (index 0)
+2024-05-13T17:43:24.653Z | info | Start cluster with 1 workers
+2024-05-13T17:43:24.658Z | info | Worker 14771 started.
+2024-05-13T17:43:25.010Z | info | Worker initializing
+2024-05-13T17:43:25.013Z | info | Bot listen
+2024-05-13T17:43:25.013Z | info | Worker ready
+2024-05-13T17:44:14.309Z | error | uncaughtException: Request failed with status code 401
+2024-05-13T17:44:14.309Z | error | AxiosError: Request failed with status code 401
+    at settle (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/axios/dist/node/axios.cjs:1966:12)
+    at IncomingMessage.handleStreamEnd (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/axios/dist/node/axios.cjs:3065:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1696:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+    at Axios.request (/home/louisdevzz/Documents/telegram-bot-refactor/node_modules/axios/dist/node/axios.cjs:3876:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async mintNFT (/home/louisdevzz/Documents/telegram-bot-refactor/utils/SDK.js:500:22)
+    at async BotTest.mintVibeSuccess (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:924:28)
+    at async /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:116:20
+    at async Promise.all (index 0)
+2024-05-13T17:52:09.611Z | info | Start cluster with 1 workers
+2024-05-13T17:52:09.616Z | info | Worker 15498 started.
+2024-05-13T17:52:09.870Z | info | Worker initializing
+2024-05-13T17:52:09.872Z | info | Bot listen
+2024-05-13T17:52:09.872Z | info | Worker ready
+2024-05-13T17:55:57.342Z | info | Start cluster with 1 workers
+2024-05-13T17:55:57.348Z | info | Worker 15662 started.
+2024-05-13T17:55:57.742Z | info | Worker initializing
+2024-05-13T17:55:57.746Z | info | Bot listen
+2024-05-13T17:55:57.748Z | info | Worker ready
+2024-05-13T17:57:14.095Z | info | Start cluster with 1 workers
+2024-05-13T17:57:14.098Z | info | Worker 15788 started.
+2024-05-13T17:57:14.421Z | info | Worker initializing
+2024-05-13T17:57:14.424Z | info | Bot listen
+2024-05-13T17:57:14.426Z | info | Worker ready
+2024-05-13T18:01:29.142Z | info | Start cluster with 1 workers
+2024-05-13T18:01:29.146Z | info | Worker 16032 started.
+2024-05-13T18:01:29.421Z | info | Worker initializing
+2024-05-13T18:01:29.423Z | info | Bot listen
+2024-05-13T18:01:29.424Z | info | Worker ready

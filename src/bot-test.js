@@ -58,31 +58,6 @@ class BotTest{
         this.logger.log('Bot listen');  
     }
     listen(){
-        // const commands = [
-        //     ['createwallet', this.createwallet],
-        //     ['actions', this.actions],
-        //     ['proofofsesh', this.proofofsesh],
-        //     ['postsocialnear', this.postsocialnear],
-        //     ['mintnft', this.mintnft],
-        //     ['transfertoken', this.transfertoken],
-        //     ['transfernft', this.transfernft],
-        //     ['clear', this.clear],
-        //     ['sync', this.sync],
-        // ];
-        // const actions = [
-        //     ['createwallet', this.createwallet],
-        //     ['transfertoken', this.transfertoken],
-        //     ['mintvibe', this.mintvibe],
-        //     ['transfernft', this.transfernft],
-        //     ['mintnft', this.mintnft],
-        //     ['backtotransfer', this.backtotransfer],
-        //     ['postnearsocial', this.postnearsocial],
-        //     ['back', this.back],
-        //     ['logout', this.logout],
-        //     ['checkbalance', this.checkbalance],
-        //     ['setting', this.setting]
-        //     ['transfer', this.transfer]
-        // ];
         const commands = [
             ['start',this.start],
             ['createwallet', this.createwallet],
@@ -100,6 +75,10 @@ class BotTest{
             ['transfer', this.transfer],
 			['max', this.max],
 			[/^selecttoken_(.+)$/, this.getselecttoken],
+			[/^rateEnegery_(.+)$/, this.getRateEnegery],
+			[/^rateFriendliness_(.+)$/, this.getRateFriendliness],
+			[/^rateDensity_(.+)$/, this.getRateDensity],
+			[/^rateDiversity_(.+)$/, this.getRateDiversity],
 			['transfertoken',this.transfertoken],
 			['blank',this.blank],
 			['logout',this.logout],
@@ -157,31 +136,40 @@ class BotTest{
 		);
 		return next();
 	}
+	async setSession(key,value,ctx){
+		redissession.saveSession(key,value)
+		ctx.session[key] = value;
+	}
+	async getSession(key,ctx){
+		return await redissession.getSession(key)||ctx.session[key];
+	}
     async handleBot(ctx) {
-        console.log("photo",ctx.update?.message?.photo?.file_id)
+        console.log("photo",ctx.update?.message?.photo)
         console.log("text",ctx.update?.message?.text)
+		console.log("action:",await redissession.getSession("action"))
+		const action = ctx.session.action||await redissession.getSession("action")
         if(ctx.update?.message?.text){
 			if(!ctx.match[0].startsWith("/")){
-				if (ctx.session.action) {
-					switch (ctx.session.action) {
+				if (action) {
+					switch (action) {
 						case 'createwallet':
 							this.createwallet(ctx);
-							ctx.session.action = null;
+							this.setSession("action",null,ctx);
 							break;
-						case 'mintvibe':
+						case 'mintvibecontent':
 							this.mintvibecontent(ctx);
-							ctx.session.action = null;
+							this.setSession("action",null,ctx);
 							break;
 						case 'minft_nft':
 							this.uploadIPFS(ctx);
-							ctx.session.action = null;
+							this.setSession("action",null,ctx);
 							break;	
 						case 'uploadipfs':
 							this.mintnft(ctx);
-							ctx.session.action = null;
+							this.setSession("action",null,ctx);
 							break;	
 						default:
-							ctx.session.action = null;
+							this.setSession("action",null,ctx);
 							
 					}
 				}
@@ -374,7 +362,7 @@ class BotTest{
                 "\n🖼️ NFTs (" + totalNft + " NFT)\n----------------------------------\n";
             balanceMes += nftList;
             await ctx.deleteMessage(message_id);
-			const accountId = await redissession.getSession("accountId").then((session) => session) || ctx.session.accountId;
+			const accountId = await redissession.getSession("accountId")|| ctx.session.accountId;
             await ctx.replyWithHTML(balanceMes, {
                 disable_web_page_preview: true,
                 reply_markup: {
@@ -416,29 +404,27 @@ class BotTest{
 		await ctx.replyWithHTML(
 			`<b>✅ you are logout</b>\n\nif you did not export your key than we cannot make you a new wallet`, keyboards.home()	
 		);
-		ctx.session.privateKey = null;
-		redissession.saveSession("privatekey",null);
-		ctx.session.accountId = null;
-		redissession.saveSession("accountId",null);
-		ctx.session.selecttoken = null;
-		ctx.session.selectNftCollection = null;
-		ctx.session.nftOwned = null;
-		ctx.session.postContent = null;
-		ctx.session.postImage = null;
-		ctx.session.selectNft = null;
-		ctx.session.titleNFT = null;
-		ctx.session.tokenContract = null;
-		ctx.session.descriptionNFT = null;
-		ctx.session.amountTransfertoken = null;
-		ctx.session.reveicerToken = null;
-		ctx.session.selectEnegry = null;
-		ctx.session.selectFriendliness = null;
-		ctx.session.selectDiversity = null;
-		ctx.session.selectDensity = null;
-		ctx.session.proofofsesh = null;
-		ctx.session.selectStick = null;
-		ctx.session.blunt_ref = null;
-		ctx.session.cid = null;
+		this.setSession("privatekey",null,ctx);
+		this.setSession("accountId",null,ctx);
+		this.setSession("selecttoken",null,ctx);
+		this.setSession("selectNftCollection",null,ctx);
+		this.setSession("nftOwned",null,ctx);
+		this.setSession("postContent",null,ctx);
+		this.setSession("postImage",null,ctx);
+		this.setSession("selectNft",null,ctx);
+		this.setSession("titleNFT",null,ctx);
+		this.setSession("tokenContract",null,ctx);
+		this.setSession("descriptionNFT",null,ctx);
+		this.setSession("amountTransfertoken",null,ctx);
+		this.setSession("reveicerToken",null,ctx);
+		this.setSession("selectEnegry",null,ctx);
+		this.setSession("selectFriendliness",null,ctx);
+		this.setSession("selectDiversity",null,ctx);
+		this.setSession("selectDensity",null,ctx);
+		this.setSession("proofofsesh",null,ctx);
+		this.setSession("selectStick",null,ctx);
+		this.setSession("blunt_ref",null,ctx);
+		this.setSession("cid",null,ctx);
 		return this.helper(ctx);
 	}
 	async logout(ctx){
@@ -761,8 +747,9 @@ class BotTest{
 					data
 				} = await uploadIPFS(fileUrl)
 				console.log("ipfs: ",data)
+				this.setSession("cid",data.cid,ctx);
 				if (data.cid) {
-					ctx.session.action = 'mintvibe'
+					redissession.saveSession("action","mintvibecontent")
 					await ctx.replyWithHTML(
 						`<b>✅Posted photo successfully.\nSend a message to say what you feel .</b>`, {
 						reply_markup: {
@@ -792,14 +779,13 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b> "+error, keyboards.back());
 		}
 	}
-	async blank(ctx,next){
+	async blank(ctx){
 		ctx.session.content = "";
 		await ctx.replyWithHTML(
 				`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, keyboards.mintvibeBlank()
 		);
-		return next();
 	}
-	async autogenerate(ctx,next){
+	async autogenerate(ctx){
 		try {
 			const content = await axios.post(
 				"https://api.openai.com/v1/chat/completions", {
@@ -824,7 +810,6 @@ class BotTest{
 				await ctx.replyWithHTML(
 					`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, keyboards.mintvibeBlank()
 				);
-				return next();
 			}
 		} catch (e) {
 			await ctx.replyWithHTML("<b>❌ Error</b>", {
@@ -843,71 +828,78 @@ class BotTest{
 			});
 		}
 	}
-	async mintvibecontent(ctx,next){
+	async mintvibecontent(ctx){
 		ctx.session.content = ctx.update?.message?.text;
-
-			await ctx.replyWithHTML(
-				`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, keyboards.mintvibeBlank()
-			);
-			return next();
-	}
-	async getRateEnegery(ctx,next){
-		const rate = ctx.update?.callback_query?.data.split("_")[1];
-			ctx.session.selectEnegry = rate;
-			await ctx.replyWithHTML(
-				`You selected <b>${rate}</b>⚡️for energy`
-			);
-			await ctx.replyWithHTML(
-				`<b>Rate the ❤️ friendliness (how friendly was people) with 10 being the most friendly</b>`, keyboards.getRateEnegery()
+		await ctx.replyWithHTML(
+			`<b>Rate the ⚡️energy (was the vibe calm or very active) with 10 being the most active</b>`, keyboards.mintvibeBlank()
 		);
-			return next();
 	}
-	async getRateFriendliness(ctx,next){
-		const rate = ctx.update?.callback_query?.data.split("_")[1];
-			ctx.session.selectFriendliness = rate;
-			await ctx.replyWithHTML(
-				`You selected <b>${rate}</b> ❤️ for friendliness`
-			);
-			await ctx.replyWithHTML(
-				`<b>Rate the 🧊 density (were you were alone or was the vibe packed) with 10 being the most backed</b>`, keyboards.getRateFriendliness()
-			);
-			return next();
+	async getRateEnegery(ctx){
+		const rate = ctx.match[1];
+		this.setSession("selectEnegry",rate,ctx);
+		await ctx.replyWithHTML(
+			`You selected <b>${rate}</b>⚡️for energy`
+		);
+		await ctx.replyWithHTML(
+			`<b>Rate the ❤️ friendliness (how friendly was people) with 10 being the most friendly</b>`, keyboards.getRateEnegery()
+		);
 	}
-	async getRateDensity(ctx,next){
-		const rate = ctx.update?.callback_query?.data.split("_")[1];
-			ctx.session.selectDensity = rate;
-			await ctx.replyWithHTML(
-				`You selected <b>${rate}</b> 🧊 for density`
-			);
-			await ctx.replyWithHTML(
-				`<b>Rate the 🌈 diversity (was the vibe full of the same type of people or was the culture diverse) with 10 being the most diverse</b>`, keyboards.getRateDensity()
-			);
-			return next();
+	async getRateFriendliness(ctx){
+		const rate = ctx.match[1];
+		this.setSession("selectFriendliness",rate,ctx);
+		await ctx.replyWithHTML(
+			`You selected <b>${rate}</b> ❤️ for friendliness`
+		);
+		await ctx.replyWithHTML(
+			`<b>Rate the 🧊 density (were you were alone or was the vibe packed) with 10 being the most backed</b>`, keyboards.getRateFriendliness()
+		);
 	}
-	async getRateDiversity(ctx,next){
-		if (!ctx.session.selectDiversity) {
-			const rate = ctx.update?.callback_query?.data.split("_")[1];
-			ctx.session.selectDiversity = rate;
+	async getRateDensity(ctx){
+		const rate = ctx.match[1];
+		this.setSession("selectDensity",rate,ctx);
+		await ctx.replyWithHTML(
+			`You selected <b>${rate}</b> 🧊 for density`
+		);
+		await ctx.replyWithHTML(
+			`<b>Rate the 🌈 diversity (was the vibe full of the same type of people or was the culture diverse) with 10 being the most diverse</b>`, keyboards.getRateDensity()
+		);
+	}
+	async getRateDiversity(ctx){
+		if (!ctx.session.selectDiversity || await redissession.getSession("selectDiversity")) {
+			const rate = ctx.match[1];
+			this.setSession("selectDiversity",rate,ctx)
 			await ctx.replyWithHTML(
 				`You selected <b>${rate}</b> 🌈 for diversity`
 			);
+			return this.mintVibeSuccess(ctx);
 		}
-		if (ctx.session.selectEnegry && ctx.session.selectFriendliness && ctx.session.selectDensity && ctx.session.selectDiversity && ctx.session.cid) {
-
+		
+	}
+	async mintVibeSuccess(ctx){
+		const selectEnegry = ctx.session.selectEnegry || await redissession.getSession("selectEnegry");
+		const selectFriendliness = ctx.session.selectFriendliness || redissession.getSession("selectFriendliness");
+		const selectDensity = ctx.session.selectDensity || await redissession.getSession("selectDensity");
+		const selectDiversity = ctx.session.selectDiversity || await redissession.getSession("selectDiversity");
+		const cid = ctx.session.cid || await redissession.getSession("cid");
+		console.log("cid: ",cid)
+		if (selectEnegry&&selectFriendliness&&selectDensity&&selectDiversity&&cid) {
 			const {
 				message_id
 			} = await ctx.replyWithHTML(
 				`<b>Loading...</b>`
 			);
+			const accountId = ctx.session.accountId || await redissession.getSession("accountId");
+			const privateKey = ctx.session.privateKey || await redissession.getSession("privatekey");
+			const content = ctx.session.content || await redissession.getSession("content") || "";
 			const signedDelegate = await getVibe(
-				ctx.session.accountId,
-				ctx.session.cid,
-				ctx.session.privateKey,
-				ctx.session.selectFriendliness,
-				ctx.session.selectEnegry,
-				ctx.session.selectDensity,
-				ctx.session.selectDiversity,
-				ctx.session.content||""
+				accountId,
+				cid,
+				privateKey,
+				selectFriendliness,
+				selectEnegry,
+				selectDensity,
+				selectDiversity,
+				content
 			)
 			const {data} = await axios.post(
 				"http://localhost:5000/relay", {
@@ -922,18 +914,18 @@ class BotTest{
 			await ctx.deleteMessage(message_id);
 			if (data.transaction_outcome?.outcome?.status) {
 				await ctx.replyWithHTML(
-					`<b>✅ You successfully posted on NEAR Social for vibes. <a href="https://near.social/mob.near/widget/MainPage.Post.Page?accountId=${ctx.session.accountId}&blockHeight=${res.data.result.transaction.nonce}">(See link)</a>\n⌛️ The image will take ~10 minutes to show on NEAR Social </b>`, keyboards.home()
+					`<b>✅ You successfully posted on NEAR Social for vibes. <a href="https://near.social/mob.near/widget/MainPage.Post.Page?accountId=${accountId}&blockHeight=${data.transaction.nonce}">(See link)</a>\n⌛️ The image will take ~10 minutes to show on NEAR Social </b>`, keyboards.home()
 				);
 				const tokenId = Date.now() + "";
-				const title = `${ctx.session.accountId.replace(".near", "")} ${new Date().toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}`;
-				const description = `#ProofOfVibes #   @proofofvibes.near ${ctx.session.content} \n ## **Vibe-rating**  ❤️ **Friendliness:** ${ctx.session.selectFriendliness}/10 ⚡️ **Energy:** ${ctx.session.selectEnegry}/10 🧊 **Density:** ${ctx.session.selectDensity}/10 🌈 **Diversity:** ${ctx.session.selectDensity}/10`;
+				const title = `${accountId.replace(".near", "")} ${new Date().toLocaleDateString('en-us', { year: "numeric", month: "short", day: "numeric" })}`;
+				const description = `#ProofOfVibes #   @proofofvibes.near ${content} \n ## **Vibe-rating**  ❤️ **Friendliness:** ${selectFriendliness}/10 ⚡️ **Energy:** ${selectEnegry}/10 🧊 **Density:** ${selectDensity}/10 🌈 **Diversity:** ${selectDensity}/10`;
 				const signedDelegate = await mintNFT(
-					ctx.session.accountId,
+					accountId,
 					title,
 					description,
-					ctx.session.cid,
-					ctx.session.privateKey,
-					ctx.session.accountId,
+					cid,
+					privateKey,
+					accountId,
 					tokenId
 				)
 				await axios.post(
@@ -949,7 +941,7 @@ class BotTest{
 			}
 		}
 	}
-	async uploadIPFS(ctx,next){
+	async uploadIPFS(ctx){
 		try {
 			if (ctx.update.message?.photo) {
 				const {
