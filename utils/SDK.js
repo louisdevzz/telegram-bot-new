@@ -800,6 +800,7 @@ async function followBlunt(accountId,privateKey) {
 module.exports={
     CreateAccount,
     getState,
+    getToken,
     CheckBalance,
     getNFT,
     uploadIPFS,

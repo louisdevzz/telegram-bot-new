@@ -169,7 +169,7 @@ class BotTest{
 							ctx.session.action = null;
 							break;
 						case 'mintvibe':
-							this.mintvibe(ctx);
+							this.mintvibecontent(ctx);
 							ctx.session.action = null;
 							break;
 						case 'minft_nft':
@@ -762,6 +762,7 @@ class BotTest{
 				} = await uploadIPFS(fileUrl)
 				console.log("ipfs: ",data)
 				if (data.cid) {
+					ctx.session.action = 'mintvibe'
 					await ctx.replyWithHTML(
 						`<b>✅Posted photo successfully.\nSend a message to say what you feel .</b>`, {
 						reply_markup: {
