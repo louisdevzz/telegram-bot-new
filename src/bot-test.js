@@ -25,7 +25,8 @@ const {
 	mintBlunt, 
 	addBlunt,
 	submitTransaction,
-	followBlunt
+	followBlunt,
+	transferNFT
 } = require("../utils/SDK");
 
 
@@ -80,15 +81,19 @@ class BotTest{
 			['mintNFTmyself',this.mintNFTMyself],
             ['checkbalance', this.checkbalance],
             ['transfer', this.transfer],
+            ['transfertoken', this.showTransferToken],
+            ['transfernft', this.transfernft],
 			['max', this.max],
+			['send', this.sendNFT],
 			[/^selecttoken_(.+)$/, this.getselecttoken],
+			[/^selectnftcollection_(.+)$/, this.getSelectNFTCollection],
+			[/^selectnft_(.+)$/, this.getSelectNFT],
 			[/^rateEnegery_(.+)$/, this.getRateEnegery],
 			[/^rateFriendliness_(.+)$/, this.getRateFriendliness],
 			[/^rateDensity_(.+)$/, this.getRateDensity],
 			[/^rateDiversity_(.+)$/, this.getRateDiversity],
 			[/^selectStick_(.+)$/, this.proofOfSesh],
 			[/^select_(.+)$/, this.getSelect],
-			['transfertoken',this.transfertoken],
 			['postnearsocial',this.postnearsocial],
 			['post',this.post],
 			['proofofsesh',this.proofofsesh],
@@ -191,7 +196,19 @@ class BotTest{
 						case 'getselect':
 							this.postProofOfSeshFinal(ctx);
 							this.setSession("action",null,ctx);
-							break;		
+							break;	
+						case 'amount':
+							this.transfertoken(ctx);
+							this.setSession("action",null,ctx);
+							break;	
+						case 'address':
+							this.transferOfTokenSucess(ctx);
+							this.setSession("action",null,ctx);
+							break;	
+						case 'transferNFTSuccess':
+							this.transferNFTSuccess(ctx);
+							this.setSession("action",null,ctx);
+							break;			
 						default:
 							this.setSession("action",null,ctx);
 					}
@@ -199,17 +216,17 @@ class BotTest{
 			}
 		}else{
 			if(ctx.update?.message?.photo){
-				if (ctx.session.action) {
-					switch (ctx.session.action) {
+				if (action) {
+					switch (action) {
 						case 'mintvibe':
 							this.mintvibe(ctx);
-							ctx.session.action = null;
+							this.setSession("action",null,ctx);
 							break;
 						case 'mint_nft':
 							this.uploadIPFS(ctx);
 							this.setSession("action",null,ctx);
 							break;	
-						case 'postNearSocialFinal':
+						case 'postnearsocialfinal':
 							this.postNearSocialFinal(ctx);
 							this.setSession("action",null,ctx);
 							break;
@@ -218,8 +235,7 @@ class BotTest{
 							this.setSession("action",null,ctx);
 							break;	
 						default:
-							ctx.session.action = null;
-							
+							this.setSession("action",null,ctx);
 					}
 				}
 			}
@@ -348,26 +364,27 @@ class BotTest{
 			}
 		}
     }
-    async checkbalance(ctx,next) {
+    async checkbalance(ctx) {
         const {
             message_id
         } = await ctx.replyWithHTML(
             `<b>Loading...</b>`
         );
         try {
-            const tokenList = await CheckBalance(ctx.session.accountId);
-			//console.log(tokenList);
+			const accountId = await redissession.getSession("accountId")
+            const tokenList = await CheckBalance(accountId);
+			console.log("token",tokenList)
             let totalUSD = 0;
-            tokenList.data.token.forEach((item) => {
+            tokenList.forEach((item) => {
                 totalUSD += parseFloat(item.balanceInUsd);
             });
             let balanceMes =
                 "<b>" +
-                ctx.session.accountId +
+                accountId +
                 " balance</b>\n\n💰 Money (" +
                 totalUSD +
                 " USD)\n----------------------------------\n";
-            tokenList.data.token.forEach((item) => {
+            tokenList.forEach((item) => {
                 const textLength = (item.balance + " " + item.symbol).length * 3;
                 const lengthDot = 50 - textLength;
                 let dot = "";
@@ -379,10 +396,12 @@ class BotTest{
             });
             const {
                 data
-            } = await getNFT(ctx.session.accountId);
-            let totalNft = 0;
-    
-            const contractOwnedList = Object.keys(data.nft);
+            } = await getNFT(accountId);
+            
+			console.log("data: ",data)
+            if(Object.keys(data).length > 0){
+				let totalNft = 0;
+				const contractOwnedList = Object.keys(data.nft);
             let nftList = "";
             contractOwnedList.forEach((item, index) => {
                 totalNft += data.nft[item].length;
@@ -397,7 +416,6 @@ class BotTest{
                 "\n🖼️ NFTs (" + totalNft + " NFT)\n----------------------------------\n";
             balanceMes += nftList;
             await ctx.deleteMessage(message_id);
-			const accountId = await redissession.getSession("accountId")|| ctx.session.accountId;
             await ctx.replyWithHTML(balanceMes, {
                 disable_web_page_preview: true,
                 reply_markup: {
@@ -417,6 +435,11 @@ class BotTest{
                     ],
                 },
             });
+			}else{
+				await ctx.deleteMessage(message_id);
+				await ctx.replyWithHTML(balanceMes);
+				await ctx.replyWithHTML("🖼️ Not Found NFT In Account",keyboards.back());
+			}
         } catch (error) {
             if (error.response?.data?.error?.message) {
                 await ctx.reply(error.response?.data?.error?.message);
@@ -424,8 +447,175 @@ class BotTest{
                 await ctx.replyWithHTML("<b>❌ Error</b>");
             }
         }
-        return next();
     }
+	async transfernft(ctx){
+		try {
+			const accountId = await redissession.getSession("accountId");
+			const {
+				message_id
+			} = await ctx.replyWithHTML(
+				`<b>Loading...</b>`
+			);
+			const {
+				data
+			} = await getNFT(accountId)
+			let totalNft = 0;
+			let balanceMes = "<b>choose collection to send</b>\n\n";
+			const contractOwnedList = Object.keys(data.nft);
+			this.setSession("nftOwned",data.nft,ctx);
+			let nftColelctionSelect = [];
+			contractOwnedList.forEach((item, index) => {
+
+				nftColelctionSelect.push([{
+					text: `${data.nft[item][index].nft_contract_name}`,
+					callback_data: `selectnftcollection_${item}`,
+				},]);
+			});
+			let nftList = "";
+			contractOwnedList.forEach((item, index) => {
+				totalNft += data.nft[item].length;
+				nftList +=
+					`${data.nft[item][index].nft_contract_name
+						? data.nft[item][index].nft_contract_name
+						: "Unknow Title"
+					} (${data.nft[item].length})` +
+					`..<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft[item][index].nft_contract_id}&tokenId=${data.nft[item][index].token_id}&chainState=near">Open</a>\n`;
+			});
+			balanceMes +=
+				"\n🖼️ NFTs (" +
+				totalNft +
+				" NFT)\n----------------------------------\n";
+			balanceMes += nftList;
+
+			nftColelctionSelect.push([{
+				text: "⏪ Back",
+				callback_data: "back",
+			},]);
+			await ctx.deleteMessage(message_id);
+			await ctx.replyWithHTML(balanceMes, {
+				disable_web_page_preview: true,
+				reply_markup: {
+					inline_keyboard: nftColelctionSelect,
+				},
+			});
+		} catch (error) {
+			await ctx.replyWithHTML("<b>❌ Error</b>", {
+				reply_markup: {
+					inline_keyboard: [
+						[{
+							text: "⏪ Back",
+							callback_data: "back",
+						},],
+					],
+				},
+			});
+		}
+	}
+	async getSelectNFTCollection(ctx){
+		let nftCollection = null;
+		if (ctx.match[1]) {
+			nftCollection = ctx.match[1];
+			this.setSession("selectNftCollection",nftCollection,ctx);
+			try {
+				let nftSelect = [];
+				const nftOwned = await redissession.getSession("nftOwned");
+				let nftListMess = `<b>choose collection to send</b>\n\n${nftOwned[nftCollection][0].nft_contract_name}  (${nftOwned[nftCollection].length})..<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${nftOwned[nftCollection][0].nft_contract_id}&tokenId=${nftOwned[nftCollection][0].token_id}&chainState=near">Open</a>\n\n`;
+				nftOwned[nftCollection].forEach((item) => {
+					nftListMess += `${item.title}..<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${item.nft_contract_id}&tokenId=${item.token_id}&chainState=near">Open</a>\n`;
+					nftSelect.push([
+						Markup.callbackButton(`${item.title}`,`selectnft_${item.token_id}`)
+					]);
+				});
+				nftSelect.push([{
+					text: "⏪ Back",
+					callback_data: "back",
+				},]);
+				await ctx.replyWithHTML(nftListMess, Markup.inlineKeyboard(nftSelect).extra());
+			} catch (error) {
+				await ctx.replyWithHTML("<b>❌ Error</b>"+error, keyboards.back());
+			}
+		}
+	}
+	async getSelectNFT(ctx){
+		if (ctx.match[1]) {
+			const nft_token_id = ctx.match[1];
+			this.setSession("selectNft",nft_token_id,ctx);
+			const selectNft = await redissession.getSession("selectNft");
+			let nftselect = null;
+			const nftOwned = await redissession.getSession("nftOwned");
+			const selectNftCollection = await redissession.getSession("selectNftCollection");
+			nftOwned[selectNftCollection].forEach((item) => {
+				if (item.token_id == selectNft) {
+					nftselect = item;
+				}
+			});
+			await ctx.replyWithHTML(
+				`<b>Type in a receiver address\nYou are sending ${nftselect.title} <a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${nftselect.nft_contract_id}&tokenId=${nftselect.token_id}&chainState=near">Open</a></b>`, keyboards.back()
+			);
+			this.setSession("action","transferNFTSuccess",ctx);
+		}
+	}
+	async transferNFTSuccess(ctx){
+		const {
+			message_id
+		} = await ctx.replyWithHTML(
+			`<b>Loading...</b>`
+		);
+		const accountId = await redissession.getSession("accountId");
+		const stateAccount = await getState(accountId);
+		await ctx.deleteMessage(message_id);
+		var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
+		if (!format.test(ctx.update?.message?.text.toLowerCase())) {
+			await ctx.replyWithHTML(`<b>❌ Error not a valid Near address.</b>`, keyboards.back());
+		}
+		if (
+			stateAccount.response?.type == "AccountDoesNotExist" ||
+			stateAccount.response.type == "REQUEST_VALIDATION_ERROR"
+		) {
+			await ctx.replyWithHTML(
+				`<b>❌ this address does not exist. try again</b>`, keyboards.back()
+			);
+		}
+
+		if (stateAccount.response.amount) {
+			const receiverNFT = ctx.update?.message?.text.toLowerCase();
+			const nftOwned = await redissession.getSession("nftOwned");
+			const selectNftCollection = await redissession.getSession("selectNftCollection");
+			const selectNft = await redissession.getSession("selectNft");
+			this.setSession("receiverNFT",receiverNFT,ctx);
+			let nftselect = null;
+			nftOwned[selectNftCollection].forEach(
+				(item) => {
+					if (item.token_id == selectNft) {
+						nftselect = item;
+					}
+				}
+			);
+			await ctx.replyWithHTML(
+				`<b>✅ You are sending ${nftselect.title} (<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${nftselect.nft_contract_id}&tokenId=${nftselect.token_id}&chainState=near">Open of ${nftselect.nft_contract_name}) to ${ctx.update?.message?.text}</a>  <a href="">Open Profile</a></b>`, keyboards.transferNFT()
+			);
+		}
+	}
+	async sendNFT(ctx){
+		const {
+			message_id
+		} = await ctx.replyWithHTML(
+			`<b>Loading...</b>`
+		);
+		const accountId = await redissession.getSession("accountId");
+		const privateKey = await redissession.getSession("privatekey");
+		const receiverNFT = await redissession.getSession("receiverNFT");
+		const selectNft = await redissession.getSession("selectNft");
+		const selectNftCollection = await redissession.getSession("selectNftCollection");
+		const signedDelegate = await transferNFT(privateKey,accountId,receiverNFT,selectNft,selectNftCollection)
+		const data = await submitTransaction(signedDelegate);
+		await ctx.deleteMessage(message_id);
+		if (data.transaction_outcome.outcome.status) {
+			await ctx.replyWithHTML(`<b>✅ Success </b>`, keyboards.home());
+		} else {
+			await ctx.replyWithHTML(`<b>❌ Error cannt transfer. try again</b>`, keyboards.home());
+		}
+	}
     async helper(ctx){
 		const privateKey = await redissession.getSession("privatekey").then((session) => session);
 		const accountId = await redissession.getSession("accountId").then((session) => session);
@@ -477,7 +667,7 @@ class BotTest{
 				const accountId = await redissession.getSession("accountId").then((session) => session)||ctx.session.accountId;
 				const tokenList = await CheckBalance(accountId);
 				let totalUSD = 0;
-				tokenList.data.token.forEach((item) => {
+				tokenList.forEach((item) => {
 					totalUSD += parseFloat(item.balanceInUsd);
 				});
 				let balanceMes =
@@ -486,7 +676,7 @@ class BotTest{
 					" balance</b>\n\n💰 Money (" +
 					totalUSD +
 					" USD)\n----------------------------------\n";
-				tokenList.data.token.forEach((item) => {
+				tokenList.forEach((item) => {
 					const textLength = (item.balance + " " + item.symbol).length * 3;
 					const lengthDot = 50 - textLength;
 					let dot = "";
@@ -499,29 +689,34 @@ class BotTest{
 				const {
 					data
 				} = await getNFT(accountId)
-				let totalNft= 0;
-		
-				const contractOwnedList = Object.keys(data.nft);
-				let nftList = "";
-				contractOwnedList.forEach((item, index) => {
-					totalNft += data.nft[item].length;
-					nftList +=
-						`${data.nft[item][index].nft_contract_name
-							? data.nft[item][index].nft_contract_name
-							: "Unknown Title"
-						} (${data.nft[item].length})` +
-						`..<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft[item][index].nft_contract_id}&tokenId=${data.nft[item][index].token_id}&chainState=near">Open</a>\n`;
-				});
-				balanceMes +=
-					"\n🖼️ NFTs (" + totalNft + " NFT)\n----------------------------------\n";
-				balanceMes += nftList;
-				ctx.deleteMessage(message_id);
-				await ctx.replyWithHTML(balanceMes,keyboards.transfer());
+				if(data && Object.keys(data).length > 0){
+					let totalNft= 0;
+					const contractOwnedList = Object.keys(data.nft);
+					let nftList = "";
+					contractOwnedList.forEach((item, index) => {
+						totalNft += data.nft[item].length;
+						nftList +=
+							`${data.nft[item][index].nft_contract_name
+								? data.nft[item][index].nft_contract_name
+								: "Unknown Title"
+							} (${data.nft[item].length})` +
+							`..<a href="https://near.social/agwaze.near/widget/GenaDrop.NFTDetails?contractId=${data.nft[item][index].nft_contract_id}&tokenId=${data.nft[item][index].token_id}&chainState=near">Open</a>\n`;
+					});
+					balanceMes +=
+						"\n🖼️ NFTs (" + totalNft + " NFT)\n----------------------------------\n";
+					balanceMes += nftList;
+					ctx.deleteMessage(message_id);
+					await ctx.replyWithHTML(balanceMes,keyboards.transfer());
+				}else{
+					await ctx.deleteMessage(message_id);
+					await ctx.replyWithHTML(balanceMes);
+					await ctx.replyWithHTML("🖼️ Not Found NFT In Account",keyboards.transferOfToken());
+				}
 			} catch (error) {
 				if (error.response?.data.error?.message) {
 					await ctx.reply(error.response?.data?.error?.message);
 				} else {
-					await ctx.replyWithHTML("<b>❌ Error</b>");
+					await ctx.replyWithHTML(`<b>❌ Error</b> ${error}`);
 				}
 			}
 	}
@@ -572,13 +767,15 @@ class BotTest{
 			const accountId = await redissession.getSession("accountId");
 			const selecttoken = await redissession.getSession("selecttoken");
 			const tokenList = await CheckBalance(accountId);
-			tokenList.data.token.forEach((element) => {
+			tokenList.forEach((element) => {
 				if (element.symbol == selecttoken) {
 					this.setSession("amountTransfertoken",element.balance,ctx);
-					this.setSession("decimals",element.decimals,ctx);
+					this.setSession("tokenContract",element.contract,ctx);
+					this.setSession("decimals",element.decimals.toString(),ctx);
 				}
 			});
 			await ctx.deleteMessage(message_id);
+			this.setSession("action","address",ctx);
 			const amountTransfertoken = await redissession.getSession("amountTransfertoken");
 			await ctx.replyWithHTML(
 				`🔂 <b>Sending ${amountTransfertoken} ${selecttoken}</b>.\n\nType in a NEAR address to send FT token`, keyboards.back()
@@ -599,12 +796,13 @@ class BotTest{
 			const accountId = await redissession.getSession("accountId");
 			const tokenList = await CheckBalance(accountId);
 			let totalUSD = 0;
-			tokenList.data.token.forEach((item) => {
+			tokenList.forEach((item) => {
 				totalUSD += parseFloat(item.balanceInUsd);
 			});
 			let balanceMes =
 				"<b>Type Amount or Put Max amount of Near you want to end\n\nYou have</b>\n----------------------------------\n";
-			tokenList.data.token.forEach((item) => {
+			this.setSession("action","amount",ctx);
+			tokenList.forEach((item) => {
 				if (item.symbol == ctx.session.selecttoken) {
 					const textLength =
 						(item.balance + " " + item.symbol).length * 3;
@@ -625,7 +823,7 @@ class BotTest{
 			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
 		}
 	}
-	async showTransferToken(){
+	async showTransferToken(ctx){
 		try {
 			const {
 				message_id
@@ -635,7 +833,7 @@ class BotTest{
 			const accountId = await redissession.getSession("accountId");
 			const tokenList = await CheckBalance(accountId);
 			let totalUSD = 0;
-			tokenList.data.token.forEach((item) => {
+			tokenList.forEach((item) => {
 				totalUSD += parseFloat(item.balanceInUsd);
 			});
 			let balanceMes =
@@ -644,7 +842,7 @@ class BotTest{
 				" balance</b>\n\n💰 Money (" +
 				totalUSD +
 				" USD)\n----------------------------------\n";
-			tokenList.data.token.forEach((item) => {
+			tokenList.forEach((item) => {
 				const textLength =
 					(item.balance + " " + item.symbol).length * 3;
 				const lengthDot = 50 - textLength;
@@ -657,24 +855,135 @@ class BotTest{
 			});
 
 			let tokenListSend = [];
-			tokenList.data.token.forEach((item) => {
-				tokenListSend.push([{
-					text: `${item.symbol}`,
-					callback_data: `selecttoken_${item.symbol}`,
-				},]);
+			tokenList.forEach((item) => {
+				tokenListSend.push([
+					Markup.callbackButton(`${item.symbol}`,`selecttoken_${item.symbol}`)
+				]);
 			});
-			tokenListSend.push([{
-				text: " Back",
-				callback_data: "helper",
-			},]);
+			tokenListSend.push([Markup.callbackButton("⏪ Back","helper")]);
+			console.log(tokenListSend)
 			ctx.deleteMessage(message_id);
-			await ctx.replyWithHTML(balanceMes, Markup.inlineKeyboard(tokenListSend));
-			return next();
+			await ctx.replyWithHTML(balanceMes, Markup.inlineKeyboard(tokenListSend).extra());
 		} catch (error) {
 			await ctx.replyWithHTML("<b>❌ Error</b>");
 		}
 	}
-	async transfertoken(ctx,){
+	async transfertoken(ctx){
+		let amountToken = "";
+		if (ctx.update?.message?.text[0] == ".") {
+			amountToken = "0" + ctx.update?.message?.text
+		} else {
+			amountToken = ctx.update?.message?.text;
+		}
+		const accountId = await redissession.getSession("accountId");
+		const selecttoken = await redissession.getSession("selecttoken");
+		if (/^-?\d+\.?\d*$/.test(amountToken)) {
+			try {
+				const {
+					message_id
+				} = await ctx.replyWithHTML(
+					`<b>Loading...</b>`
+				);
+				
+				const tokenList = await CheckBalance(accountId);
+				
+				let isEnoughAmount = false;
+				tokenList.forEach((element) => {
+					if (element.symbol == selecttoken) {
+						if (amountToken <= element.balance) {
+							this.setSession("tokenContract",element.contract,ctx);
+							this.setSession("decimals",element.decimals,ctx);
+							isEnoughAmount = true;
+						}
+					}
+				});
+				if (isEnoughAmount) {
+					this.setSession("amountTransfertoken",amountToken,ctx);
+					await ctx.deleteMessage(message_id);
+					this.setSession("action","address",ctx);
+					await ctx.replyWithHTML(
+						`✅Sending ${amountToken} ${selecttoken} . Type in NEAR address to send`, keyboards.back()
+					);
+				} else {
+					const {
+						message_id
+					} = await ctx.replyWithHTML(
+						`<b>Loading...</b>`
+					);
+					const tokenList = await CheckBalance(accountId);
+					let totalUSD = 0;
+					tokenList.forEach((item) => {
+						totalUSD += parseFloat(item.balanceInUsd);
+					});
+					this.setSession("action","amount",ctx);
+					const amountTransfertoken = await redissession.getSession("amountTransfertoken");
+					let balanceMes = `<b>❌ You do not have ${amountTransfertoken} ${selecttoken}, try again\n\nType Amount or Put Max amount of Near you want to end\n\nYou have</b>\n----------------------------------\n`;
+					for (const item of tokenList) {
+						if (item.symbol == selecttoken) {
+							const textLength =
+								(item.balance + " " + item.symbol).length * 3;
+							const lengthDot = 50 - textLength;
+							let dot = "";
+							for (let index = 0; index < lengthDot; index++) {
+								dot += ".";
+							}
+							balanceMes +=
+								item.balance +
+								" " +
+								item.symbol +
+								dot +
+								item.balanceInUsd +
+								` USD\n`;
+						}
+					}
+					await ctx.deleteMessage(message_id);
+					await ctx.replyWithHTML(balanceMes);
+				}
+			} catch (error) {
+				await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
+			}
+		} else {
+			try {
+				const {
+					message_id
+				} = await ctx.replyWithHTML(
+					`<b>Loading...</b>`
+				);
+				const tokenList = await CheckBalance(accountId);
+				let totalUSD = 0;
+				tokenList.forEach((item) => {
+					totalUSD += parseFloat(item.balanceInUsd);
+				});
+				let balanceMes =
+					"<b>❌ Only numbers allowed,try again\n\nType Amount or Put Max amount of Near you want to end\n\nYou have</b>\n----------------------------------\n";
+				tokenList.forEach((item) => {
+					if (item.symbol == ctx.session.selecttoken) {
+						const textLength =
+							(item.balance + " " + item.symbol).length * 3;
+						const lengthDot = 50 - textLength;
+						let dot = "";
+						for (let index = 0; index < lengthDot; index++) {
+							dot += ".";
+						}
+						balanceMes +=
+							item.balance +
+							" " +
+							item.symbol +
+							dot +
+							item.balanceInUsd +
+							` USD\n`;
+					}
+				});
+				this.setSession("action","amount",ctx);
+				await ctx.deleteMessage(message_id);
+				await ctx.replyWithHTML(balanceMes, keyboards.back());
+			} catch (error) {
+				await ctx.replyWithHTML("<b>❌ Got some errors, try again</b>",keyboards.back());
+			}
+		}
+	}
+	async transferOfTokenSucess(ctx){
+		console.log("transferOfTokenSucess")
 		try {
 			var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
 			if (!format.test(ctx.update?.message?.text.toLowerCase())) {
@@ -683,16 +992,17 @@ class BotTest{
 			} else {
 				const accountId = await redissession.getSession("accountId");
 				const stateAccount = await getState(accountId);
+				console.log("stateAccount: ",stateAccount)
 				if (
-					stateAccount.response?.type == "AccountDoesNotExist" ||
-					stateAccount.response.type == "REQUEST_VALIDATION_ERROR"
+					stateAccount?.response?.type == "AccountDoesNotExist" ||
+					stateAccount?.response?.type == "REQUEST_VALIDATION_ERROR"
 				) {
 					await ctx.replyWithHTML(
 						`<b>❌ this address does not exist. try again</b>`, keyboards.back()
 					);
 				}
 				this.setSession("reveicerToken",ctx.update?.message?.text.toLowerCase(),ctx);
-				if (stateAccount.response.amount) {
+				if (stateAccount?.response?.amount) {
 					const {
 						message_id
 					} = await ctx.replyWithHTML(
@@ -703,19 +1013,23 @@ class BotTest{
 					const privateKey = await redissession.getSession("privatekey");
 					const reveicerToken = await redissession.getSession("reveicerToken");
 					const tokenContract = await redissession.getSession("tokenContract");
+					console.log("tokenContract",tokenContract)
+					console.log("decimals",decimals)
 					const amount = (
 						amountTransfertoken *
 						Math.pow(10, decimals)
 					).toLocaleString("fullwide", {
 						useGrouping: false
 					}) + "";
+					console.log("amount",amount)
 					const signedDelegate = await transferToken(
 						privateKey,
 						accountId,
 						reveicerToken,
 						amount,
 						tokenContract
-						)
+						);
+					console.log("signedDelegate",signedDelegate)
 					const {
 						data
 					} = await axios.post(
@@ -728,6 +1042,7 @@ class BotTest{
 						},
 					}
 					);
+					console.log("data: ",data)
 					await ctx.deleteMessage(message_id);
 					if (data.status) {
 						return await ctx.replyWithHTML(`<b>✅ Success </b>`, keyboards.home());
@@ -748,22 +1063,21 @@ class BotTest{
 
 		}
 	}
-	
 	async setting(ctx){
 		const accountId = await redissession.getSession("accountId");
 		const privateKey = await redissession.getSession("privatekey");
-		console.log(`${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`);
+		//console.log(`${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`);
 		await ctx.replyWithHTML(
 			`<b>${accountId}</b>\n\nManager your wallet here\nOnce you sign out we will not make another on your behalf to prevent from bots`, {
 			disable_web_page_preview: true,
 			reply_markup: {
 				inline_keyboard: [
-					[{
-						text: "🔑 Export your keys",
-						web_app: {
-							url: `${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`,
-						},
-					},],
+					// [{
+					// 	text: "🔑 Export your keys",
+					// 	web_app: {
+					// 		url: `${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`,
+					// 	},
+					// },],
 					[{
 						text: "🔐 Logout",
 						callback_data: "logout",
@@ -1095,9 +1409,11 @@ class BotTest{
 		if(ctx.update?.message?.text.length > 200){
 			return this.mintNFTError(ctx);
 		}
-		this.setSession("descriptionNFT", ctx.update?.message?.text,ctx);
+		const descriptionNFT = ctx.update?.message?.text;
+		console.log("descriptionNFT",descriptionNFT)
+		this.setSession("descriptionNFT", descriptionNFT,ctx);
 		const titleNFT = await redissession.getSession("titleNFT");
-		this.setSession("action", "mintNFTMyself");
+		this.setSession("action", "mintNFTMyself",ctx);
 		return await ctx.replyWithHTML(
 			`<b>✅ Successfully put description\n\nNow who are you minting your "${titleNFT}" NFT to?\n\n</b>Enter valid Near Account`, keyboards.mintNFTmyself()
 		);
@@ -1106,16 +1422,16 @@ class BotTest{
 		let receiverNFT = null;
 		const accountId = await redissession.getSession("accountId");
 		console.log("ctx.match: ",ctx.match);
-		if (ctx.match[0] == "mintNFTmyself") {
+		if (ctx.match == "mintNFTmyself") {
 			this.setSession("receiverNFT",accountId,ctx);
 			receiverNFT = accountId;
 		} else {
 			receiverNFT = ctx.update?.message?.text?.toLowerCase();
 		}
-		const titleNFT = ctx.session.titleNFT || await redissession.getSession("titleNFT");
-		const descriptionNFT = ctx.session.descriptionNFT || await redissession.getSession("decriptionNFT");
-		const privateKey = ctx.session.privateKey || await redissession.getSession("privatekey");
-		const cid = ctx.session.cid || await redissession.getSession("cid");
+		const titleNFT = await redissession.getSession("titleNFT");
+		const descriptionNFT =  await redissession.getSession("descriptionNFT");
+		const privateKey =  await redissession.getSession("privatekey");
+		const cid = await redissession.getSession("cid");
 		try {
 			var format = /^(([a-z\d]+[\-_])*[a-z\d]+\.)*([a-z\d]+[\-_])*[a-z\d]+$/g;
 			if (!format.test(receiverNFT)) {
@@ -1175,9 +1491,9 @@ class BotTest{
 		}
 	}
 	async postNearSocial(ctx){
-		this.setSession("action","postNearSocialFinal",ctx);
-		this.setSession("postContent",ctx?.update?.message?.text,ctx);
 		await ctx.replyWithHTML("<b>Upload Image to Post . Supported file types;png;gif;jpeg (max 10mb) Send a picture</b>",keyboards.postnearsoical());
+		this.setSession("action","postnearsocialfinal",ctx);
+		this.setSession("postContent",ctx?.update?.message?.text,ctx);
 	}
 	async post(ctx){
 		const {
@@ -1185,9 +1501,9 @@ class BotTest{
 		} = await ctx.replyWithHTML(
 			`<b>Loading...</b>`
 		);
-		const accountId = ctx.session.accountId || await redissession.getSession("accountId");
-		const privateKey = ctx.session.privateKey || await redissession.getSession("privatekey");
-		const postContent = ctx.session.postContent || await redissession.getSession("postContent");
+		const accountId = await redissession.getSession("accountId");
+		const privateKey = await redissession.getSession("privatekey");
+		const postContent = await redissession.getSession("postContent");
 		const signedDelegate = await postSocial(
 			accountId,
 			null,
@@ -1204,31 +1520,34 @@ class BotTest{
 		try {
 			if (ctx.update.message?.photo) {
 				const {
+					message_id
+				} = await ctx.replyWithHTML(
+					`<b>Loading...</b>`
+				);
+				const {
 					file_id
 				} = ctx.update.message.photo[ctx.update.message.photo.length - 1];
 				const fileUrl = await ctx.telegram.getFileLink(file_id);
 				const {
 					data
 				} = await uploadIPFS(fileUrl);
-				const accountId = ctx.session.accountId || await redissession.getSession("accountId");
-				const privateKey = ctx.session.privateKey || await redissession.getSession("privatekey");
-				const postContent = ctx.session.postContent || await redissession.getSession("postContent");
+				const accountId =  await redissession.getSession("accountId");
+				const privateKey = await redissession.getSession("privatekey");
+				const postContent = await redissession.getSession("postContent");
 				if (data.cid) {
-					const {
-						message_id
-					} = await ctx.replyWithHTML(
-						`<b>Loading...</b>`
-					);
-					const signedDelegate = await postSocial(
+					const cid = data.cid;
+					const value = await postSocial(
 						accountId,
-						data.cid,
+						cid,
 						privateKey,
 						postContent
-					)
-					const data = await submitTransaction(signedDelegate)
+					);
+					//console.log("value:",value)
+					const result = await submitTransaction(value);
+					console.log(result)
 					await ctx.deleteMessage(message_id);
-					if (data.transaction_outcome?.outcome?.status) {
-						return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${accountId}&blockHeight=${data.transaction.nonce}">Open</a>) </b>`,keyboards.home());
+					if (result.transaction_outcome?.outcome?.status) {
+						return await ctx.replyWithHTML(`<b>✅ You posted on NEAR Social (<a href="https://near.social/mob.near/widget/MainPage.N.Post.Page?accountId=${accountId}&blockHeight=${result.transaction.nonce}">Open</a>) </b>`,keyboards.home());
 					}
 				} else {
 					await ctx.replyWithHTML(
@@ -1241,7 +1560,7 @@ class BotTest{
 				);
 			}
 		} catch (error) {
-			await ctx.replyWithHTML("<b>❌ Error</b>", keyboards.back());
+			await ctx.replyWithHTML("<b>❌ Error</b>"+error, keyboards.back());
 		}
 	}
 	async proofOfSesh(ctx){

@@ -13,6 +13,7 @@ const nearAPI = require("near-api-js");
 const dotenv = require("dotenv");
 dotenv.config();
 
+
 const submitTransaction = async(delegate)=>{
     const {data} = await axios.post(
         "http://localhost:5000/relay", {
@@ -26,6 +27,7 @@ const submitTransaction = async(delegate)=>{
     );
     return data;
 }
+
 
 const CreateAccount = async(accountId) => {
     console.log("accountid: ",accountId)
@@ -251,7 +253,7 @@ async function getNFT(accountId) {
     });
 
 
-    return {nft};
+    return {data:{nft:nft}};
 }
 
 async function uploadIPFS(dt) {
@@ -336,11 +338,16 @@ async function transferToken(privateKey, accountId ,receiverId , amount , tokenC
     if(tokenContract == 'NEAR'){
     const newAmount = (parseInt(amount)-50000000000000000000).toLocaleString('fullwide', {useGrouping:false}) ;
     try {
-        const result = await signerAccount.signAndSendTransaction({
-        receiverId: receiverId,
-        actions: [actionCreators.transfer(new BN(newAmount))],
-        });
-        return  { status: "successful",result };
+        const deserializeDelegate = await signerAccount.signedDelegate({
+          actions: [actionCreators.transfer(new BN(newAmount))],
+          blockHeightTtl: 60,
+          receiverId: receiverId,
+      });
+        // const result = await signerAccount.signAndSendTransaction({
+        // receiverId: receiverId,
+        // actions: [actionCreators.transfer(new BN(newAmount))],
+        // });
+        return deserializeDelegate;
     } catch (error) {
         return {error};
     }
@@ -359,7 +366,7 @@ async function transferToken(privateKey, accountId ,receiverId , amount , tokenC
         );
         const deserializeDelegate = await signerAccount.signedDelegate({
             actions: [action],
-            blockHeightTtl: 600,
+            blockHeightTtl: 60,
             receiverId: tokenContract,
         });
         return deserializeDelegate;
@@ -546,7 +553,7 @@ async function postSocial(accountId,cid,privateKey,content) {
   
     await keyStore.setKey( process.env.NEXT_PUBLIC_NETWORK_ID , accountId, KeyPair.fromString(privateKey));
     const signerAccount = await connects(accountId, keyStore,  process.env.NEXT_PUBLIC_NETWORK_ID );
-  
+    
     const gas = "300000000000000";
     const deposit = "30000000000000000000000";
     let args  = null
@@ -799,8 +806,37 @@ async function followBlunt(accountId,privateKey) {
         receiverId:  process.env.NEXT_PUBLIC_NETWORK_ID  =="mainnet" ? process.env.SOCIAL_NEAR_MAINNET : process.env.SOCIAL_NEAR_TESTNET,
       });
       return delegate;
-  }
+}
+
+async function transferNFT(privateKey, accountId ,receiverId , tokenId ,nftContractId){
+  const keyStore = new InMemoryKeyStore();
+
+  await keyStore.setKey(process.env.NEXT_PUBLIC_NETWORK_ID, accountId, KeyPair.fromString(privateKey));
+  const signerAccount = await connects(accountId, keyStore, process.env.NEXT_PUBLIC_NETWORK_ID);
   
+
+  const gas = "200000000000000";
+  const deposit = "1";
+
+   const args  = {
+        token_id: tokenId,
+        receiver_id: receiverId,
+      }
+  const action = actionCreators.functionCall(
+      "nft_transfer",
+      args,
+      new BN(gas),
+      new BN(deposit)
+    );
+
+    const delegate = await signerAccount.signedDelegate({
+      actions: [action],
+      blockHeightTtl: 60,
+      receiverId: nftContractId,
+    });
+
+  return delegate;
+}
 
 module.exports={
     CreateAccount,
@@ -818,5 +854,6 @@ module.exports={
     mintBlunt,
     addBlunt,
     submitTransaction,
-    followBlunt
+    followBlunt,
+    transferNFT
 }
