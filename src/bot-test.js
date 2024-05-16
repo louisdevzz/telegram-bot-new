@@ -101,7 +101,7 @@ class BotTest{
 			['action_logout',this.actionLogout],
 			['helper', this.helper],
             ['setting', this.setting],
-            ['export', this.export]
+            ['verify', this.verify]
         ]
         commands.forEach(([command, fn]) => this.bot.command(command, this.wrapAction(fn)));
         actions.forEach(([action, fn]) => this.bot.action(action, this.wrapAction(fn)));
@@ -209,6 +209,10 @@ class BotTest{
 							this.transferNFTSuccess(ctx);
 							this.setSession("action",null,ctx);
 							break;			
+						case 'verify':
+							this.export(ctx);
+							this.setSession("action",null,ctx);
+							break;	
 						default:
 							this.setSession("action",null,ctx);
 					}
@@ -233,7 +237,7 @@ class BotTest{
 						case 'proofofsesh':
 							this.proofOfSeshFinal(ctx);
 							this.setSession("action",null,ctx);
-							break;	
+							break;
 						default:
 							this.setSession("action",null,ctx);
 					}
@@ -1074,7 +1078,7 @@ class BotTest{
 				inline_keyboard: [
 					[{
 						text: "🔑 Export your keys",
-						callback_data: "export",
+						callback_data: "verify",
 					},],
 					[{
 						text: "🔐 Logout",
@@ -1089,17 +1093,28 @@ class BotTest{
 		}
 		);
 	}
+	async verify(ctx){
+		await ctx.replyWithHTML('Enter your account address to view your key')
+		this.setSession("action","verify",ctx);
+	}
 	async export(ctx){
 		const privateKey = await redissession.getSession("privatekey");
-		const {
-			message_id
-		} = await ctx.replyWithHTML(
-			`<b>🔑 Keys: ${privateKey}</b>`
-		);
-		const clearchat = setInterval(function () {
-			ctx.deleteMessage(message_id)
-			clearInterval(clearchat); 
-		}, 5000);	
+		const accountId = await redissession.getSession("accountId");
+		const user = ctx.update?.message?.text.toLowerCase();
+		if(user == accountId){
+			const {
+				message_id
+			} = await ctx.replyWithHTML(
+				`<b>${privateKey}</b>`
+			);
+			const clearchat = setInterval(function () {
+				ctx.deleteMessage(message_id)
+				clearInterval(clearchat); 
+			}, 5000);
+		}else{
+			await ctx.replyWithHTML("Account address error! Please enter your account address again!");
+			this.setSession("action","verify",ctx);
+		}
 	}
 	async mintvibe(ctx){
 		try {
