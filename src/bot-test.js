@@ -3,14 +3,14 @@ const {
 	Context,
 	Markup,
 	Scenes,
-    session
+    session,
 }=require("telegraf");
 const Telegraf = require("telegraf");
 const axios =require("axios");
 const dotenv=require("dotenv");
 const RedisSession = require('telegraf-session-redis');
 const keyboards = require("./keyboards");
-const { encodeSignedDelegate, SignedDelegate } = require("@near-js/transactions");
+const { encodeSignedDelegate } = require("@near-js/transactions");
 const { 
 	CreateAccount, 
 	getState,
@@ -48,7 +48,6 @@ class BotTest{
         this.logger = logger;
         
 		this.bot.use(redissession);
-
         this.bot.catch((err) => {
             this.logger.error(err);
         });
@@ -101,7 +100,8 @@ class BotTest{
 			['logout',this.logout],
 			['action_logout',this.actionLogout],
 			['helper', this.helper],
-            ['setting', this.setting]
+            ['setting', this.setting],
+            ['export', this.export]
         ]
         commands.forEach(([command, fn]) => this.bot.command(command, this.wrapAction(fn)));
         actions.forEach(([action, fn]) => this.bot.action(action, this.wrapAction(fn)));
@@ -309,12 +309,13 @@ class BotTest{
 					);
 					console.log(data)
 					if (data.final_execution_status == "FINAL") {
-						redissession.saveSession("privatekey", privateKey);
-						redissession.saveSession("accountId", newAccount);
 						ctx.session.privateKey = privateKey;
 						ctx.session.user_telegram = ctx.update?.message?.chat?.username;
 						ctx.session.accountId = newAccount.toLowerCase();
-
+						redissession.saveSession("privatekey", privateKey);
+						//const res = await fetch(`${process.env.TELE_APP_DOMAIN}/storage?accountId=${newAccount.toLowerCase()}&&privateKey=${privateKey}`)
+						redissession.saveSession("accountId", newAccount);
+						//console.log("res",res)
 						await ctx.deleteMessage(message_id);
 						await ctx.replyWithHTML(
 							`<b>✅ you are ${newAccount.toLowerCase()}</b>\n✔️going to wallet home page`
@@ -1065,19 +1066,16 @@ class BotTest{
 	}
 	async setting(ctx){
 		const accountId = await redissession.getSession("accountId");
-		const privateKey = await redissession.getSession("privatekey");
-		//console.log(`${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`);
+		//console.log(`${process.env.TELE_APP_DOMAIN}/storage?accountId=${accountId}&privateKey=${privateKey}`);
 		await ctx.replyWithHTML(
 			`<b>${accountId}</b>\n\nManager your wallet here\nOnce you sign out we will not make another on your behalf to prevent from bots`, {
 			disable_web_page_preview: true,
 			reply_markup: {
 				inline_keyboard: [
-					// [{
-					// 	text: "🔑 Export your keys",
-					// 	web_app: {
-					// 		url: `${process.env.TELE_APP_DOMAIN}?account_id=${accountId}&private_key=${privateKey}`,
-					// 	},
-					// },],
+					[{
+						text: "🔑 Export your keys",
+						callback_data: "export",
+					},],
 					[{
 						text: "🔐 Logout",
 						callback_data: "logout",
@@ -1090,6 +1088,18 @@ class BotTest{
 			},
 		}
 		);
+	}
+	async export(ctx){
+		const privateKey = await redissession.getSession("privatekey");
+		const {
+			message_id
+		} = await ctx.replyWithHTML(
+			`<b>🔑 Keys: ${privateKey}</b>`
+		);
+		const clearchat = setInterval(function () {
+			ctx.deleteMessage(message_id)
+			clearInterval(clearchat); 
+		}, 5000);	
 	}
 	async mintvibe(ctx){
 		try {

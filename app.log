@@ -1648,3 +1648,369 @@
 2024-05-15T22:18:23.065Z | info | Worker initializing
 2024-05-15T22:18:23.067Z | info | Bot listen
 2024-05-15T22:18:23.067Z | info | Worker ready
+2024-05-16T14:40:47.041Z | info | Start cluster with 1 workers
+2024-05-16T14:40:47.045Z | info | Worker 8912 started.
+2024-05-16T14:40:47.277Z | info | Worker initializing
+2024-05-16T14:40:47.279Z | info | Bot listen
+2024-05-16T14:40:47.279Z | info | Worker ready
+2024-05-16T16:29:42.880Z | info | Start cluster with 1 workers
+2024-05-16T16:29:42.884Z | info | Worker 24488 started.
+2024-05-16T16:29:43.087Z | info | Worker initializing
+2024-05-16T16:29:43.089Z | info | Bot listen
+2024-05-16T16:29:43.089Z | info | Worker ready
+2024-05-16T16:30:04.952Z | error | TypeError: Cannot redefine property: session
+2024-05-16T16:31:31.004Z | info | Start cluster with 1 workers
+2024-05-16T16:31:31.008Z | info | Worker 24886 started.
+2024-05-16T16:31:31.279Z | info | Worker initializing
+2024-05-16T16:31:31.281Z | info | Bot listen
+2024-05-16T16:31:31.281Z | info | Worker ready
+2024-05-16T16:31:40.154Z | info | Start cluster with 1 workers
+2024-05-16T16:31:40.158Z | info | Worker 24920 started.
+2024-05-16T16:31:40.392Z | info | Worker initializing
+2024-05-16T16:31:40.394Z | error | unhandledRejection: memorySession is not a function
+2024-05-16T16:31:40.395Z | error | TypeError: memorySession is not a function
+    at new BotTest (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:56:16)
+    at run (/home/louisdevzz/Documents/telegram-bot-refactor/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/telegram-bot-refactor/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:142:12)
+    at node:internal/main/run_main_module:28:49
+2024-05-16T16:32:13.216Z | info | Start cluster with 1 workers
+2024-05-16T16:32:13.219Z | info | Worker 24956 started.
+2024-05-16T16:32:13.504Z | info | Worker initializing
+2024-05-16T16:32:13.507Z | info | Bot listen
+2024-05-16T16:32:13.507Z | info | Worker ready
+2024-05-16T16:32:31.885Z | info | Start cluster with 1 workers
+2024-05-16T16:32:31.890Z | info | Worker 24990 started.
+2024-05-16T16:32:32.116Z | info | Worker initializing
+2024-05-16T16:32:32.118Z | info | Bot listen
+2024-05-16T16:32:32.118Z | info | Worker ready
+2024-05-16T16:32:58.743Z | info | Start cluster with 1 workers
+2024-05-16T16:32:58.748Z | info | Worker 25044 started.
+2024-05-16T16:32:58.987Z | info | Worker initializing
+2024-05-16T16:32:58.989Z | info | Bot listen
+2024-05-16T16:32:58.989Z | info | Worker ready
+2024-05-16T18:30:50.039Z | info | Start cluster with 1 workers
+2024-05-16T18:30:50.043Z | info | Worker 11190 started.
+2024-05-16T18:30:50.252Z | info | Worker initializing
+2024-05-16T18:30:50.254Z | info | Bot listen
+2024-05-16T18:30:50.254Z | info | Worker ready
+2024-05-16T18:32:55.900Z | info | Start cluster with 1 workers
+2024-05-16T18:32:55.906Z | info | Worker 11649 started.
+2024-05-16T18:32:56.170Z | info | Worker initializing
+2024-05-16T18:32:56.172Z | info | Bot listen
+2024-05-16T18:32:56.172Z | info | Worker ready
+2024-05-16T19:36:43.604Z | info | Start cluster with 1 workers
+2024-05-16T19:36:43.608Z | info | Worker 15556 started.
+2024-05-16T19:36:43.992Z | info | Worker initializing
+2024-05-16T19:36:43.994Z | info | Bot listen
+2024-05-16T19:36:43.994Z | info | Worker ready
+2024-05-16T20:02:42.725Z | info | Start cluster with 1 workers
+2024-05-16T20:02:42.729Z | info | Worker 18620 started.
+2024-05-16T20:02:43.029Z | info | Worker initializing
+2024-05-16T20:02:43.032Z | info | Bot listen
+2024-05-16T20:02:43.032Z | info | Worker ready
+2024-05-16T20:03:13.657Z | info | Start cluster with 1 workers
+2024-05-16T20:03:13.660Z | info | Worker 18670 started.
+2024-05-16T20:03:13.905Z | info | Worker initializing
+2024-05-16T20:03:13.906Z | info | Bot listen
+2024-05-16T20:03:13.906Z | info | Worker ready
+2024-05-16T20:03:50.112Z | info | Start cluster with 1 workers
+2024-05-16T20:03:50.115Z | info | Worker 18744 started.
+2024-05-16T20:03:50.357Z | info | Worker initializing
+2024-05-16T20:03:50.359Z | info | Bot listen
+2024-05-16T20:03:50.360Z | info | Worker ready
+2024-05-16T20:12:26.291Z | info | Start cluster with 1 workers
+2024-05-16T20:12:26.298Z | info | Worker 20367 started.
+2024-05-16T20:12:26.567Z | info | Worker initializing
+2024-05-16T20:12:26.570Z | info | Bot listen
+2024-05-16T20:12:26.570Z | info | Worker ready
+2024-05-16T20:21:10.568Z | info | Start cluster with 1 workers
+2024-05-16T20:21:10.572Z | info | Worker 22186 started.
+2024-05-16T20:21:10.845Z | info | Worker initializing
+2024-05-16T20:21:10.849Z | info | Bot listen
+2024-05-16T20:21:10.850Z | info | Worker ready
+2024-05-16T20:24:51.839Z | info | Start cluster with 1 workers
+2024-05-16T20:24:51.845Z | info | Worker 22668 started.
+2024-05-16T20:24:52.271Z | info | Worker initializing
+2024-05-16T20:24:52.274Z | info | Bot listen
+2024-05-16T20:24:52.274Z | info | Worker ready
+2024-05-16T20:25:15.556Z | info | Start cluster with 1 workers
+2024-05-16T20:25:15.559Z | info | Worker 22835 started.
+2024-05-16T20:25:15.887Z | info | Worker initializing
+2024-05-16T20:25:15.889Z | info | Bot listen
+2024-05-16T20:25:15.889Z | info | Worker ready
+2024-05-16T20:25:25.512Z | info | Start cluster with 1 workers
+2024-05-16T20:25:25.515Z | info | Worker 22910 started.
+2024-05-16T20:25:25.870Z | info | Worker initializing
+2024-05-16T20:25:25.873Z | info | Bot listen
+2024-05-16T20:25:25.873Z | info | Worker ready
+2024-05-16T20:36:37.574Z | info | Start cluster with 1 workers
+2024-05-16T20:36:37.577Z | info | Worker 24126 started.
+2024-05-16T20:36:38.034Z | info | Worker initializing
+2024-05-16T20:36:38.040Z | info | Bot listen
+2024-05-16T20:36:38.040Z | info | Worker ready
+2024-05-16T21:08:44.752Z | info | Start cluster with 1 workers
+2024-05-16T21:08:44.755Z | info | Worker 30421 started.
+2024-05-16T21:08:45.007Z | info | Worker initializing
+2024-05-16T21:08:45.009Z | info | Bot listen
+2024-05-16T21:08:45.009Z | info | Worker ready
+2024-05-16T21:34:30.154Z | info | Start cluster with 1 workers
+2024-05-16T21:34:30.162Z | info | Worker 35013 started.
+2024-05-16T21:34:30.409Z | info | Worker initializing
+2024-05-16T21:34:30.412Z | info | Bot listen
+2024-05-16T21:34:30.413Z | info | Worker ready
+2024-05-16T21:35:09.860Z | info | Start cluster with 1 workers
+2024-05-16T21:35:09.864Z | info | Worker 35590 started.
+2024-05-16T21:35:10.106Z | info | Worker initializing
+2024-05-16T21:35:10.108Z | info | Bot listen
+2024-05-16T21:35:10.108Z | info | Worker ready
+2024-05-16T21:35:24.337Z | info | Start cluster with 1 workers
+2024-05-16T21:35:24.342Z | info | Worker 35643 started.
+2024-05-16T21:35:24.575Z | info | Worker initializing
+2024-05-16T21:35:24.605Z | error | unhandledRejection: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+2024-05-16T21:35:24.606Z | error | TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+    at /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:107:25
+    at Array.forEach (<anonymous>)
+    at BotTest.listen (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:107:17)
+    at new BotTest (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:57:14)
+    at run (/home/louisdevzz/Documents/telegram-bot-refactor/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/telegram-bot-refactor/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+2024-05-16T21:35:44.468Z | info | Start cluster with 1 workers
+2024-05-16T21:35:44.472Z | info | Worker 35718 started.
+2024-05-16T21:35:44.769Z | info | Worker initializing
+2024-05-16T21:35:44.812Z | error | unhandledRejection: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+2024-05-16T21:35:44.813Z | error | TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+    at /home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:107:25
+    at Array.forEach (<anonymous>)
+    at BotTest.listen (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:107:17)
+    at new BotTest (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:57:14)
+    at run (/home/louisdevzz/Documents/telegram-bot-refactor/src/index-test.js:24:17)
+    at Object.<anonymous> (/home/louisdevzz/Documents/telegram-bot-refactor/src/index-test.js:52:5)
+    at Module._compile (node:internal/modules/cjs/loader:1368:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1426:10)
+    at Module.load (node:internal/modules/cjs/loader:1205:32)
+    at Module._load (node:internal/modules/cjs/loader:1021:12)
+2024-05-16T21:36:16.799Z | info | Start cluster with 1 workers
+2024-05-16T21:36:16.803Z | info | Worker 35782 started.
+2024-05-16T21:36:17.079Z | info | Worker initializing
+2024-05-16T21:36:17.081Z | info | Bot listen
+2024-05-16T21:36:17.081Z | info | Worker ready
+2024-05-16T21:36:34.499Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:36:34.499Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:36:39.436Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:36:39.436Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:36:44.431Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:36:44.432Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:36:49.448Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:36:49.449Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:36:54.459Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:36:54.459Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:36:59.404Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:36:59.404Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:04.501Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:04.502Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:09.520Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:09.520Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:10.952Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:10.953Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:14.435Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:14.435Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:15.843Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:15.844Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:19.453Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:19.453Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:20.846Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:20.847Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:24.469Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:24.470Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:25.903Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:25.903Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:29.487Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:29.488Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:30.901Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:30.901Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:34.430Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:34.431Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:35.939Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:35.939Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:39.423Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:39.423Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:40.956Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:40.957Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:44.540Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:44.540Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:45.975Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:45.976Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:49.456Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:49.456Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:50.890Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:50.890Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:54.473Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:54.473Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:55.853Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:55.853Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:37:59.492Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:37:59.492Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:00.926Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:00.926Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:04.508Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:04.508Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:05.942Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:05.943Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:09.527Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:09.527Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:10.960Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:10.960Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:14.544Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:14.544Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:15.977Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:15.977Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:19.452Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:19.453Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:20.895Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:20.895Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:24.477Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:24.478Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:25.910Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:25.911Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:29.517Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:29.517Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:30.928Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:30.928Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:34.462Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:34.463Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:35.946Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:35.947Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:39.530Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:39.531Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:40.964Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:40.964Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:44.547Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:44.548Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:45.981Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:45.981Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:49.462Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:49.463Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:50.863Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-16T21:38:50.864Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-16T21:38:51.997Z | info | Start cluster with 1 workers
+2024-05-16T21:38:52.002Z | info | Worker 36251 started.
+2024-05-16T21:38:52.261Z | info | Worker initializing
+2024-05-16T21:38:52.263Z | info | Bot listen
+2024-05-16T21:38:52.263Z | info | Worker ready
+2024-05-16T21:39:03.108Z | info | Start cluster with 1 workers
+2024-05-16T21:39:03.115Z | info | Worker 36291 started.
+2024-05-16T21:39:03.488Z | info | Worker initializing
+2024-05-16T21:39:03.491Z | info | Bot listen
+2024-05-16T21:39:03.491Z | info | Worker ready
+2024-05-16T21:41:11.816Z | info | Start cluster with 1 workers
+2024-05-16T21:41:11.819Z | info | Worker 36696 started.
+2024-05-16T21:41:12.167Z | info | Worker initializing
+2024-05-16T21:41:12.171Z | info | Bot listen
+2024-05-16T21:41:12.172Z | info | Worker ready

@@ -3,10 +3,7 @@ const {Extra, Markup, memorySession} = require('telegraf');
 const SocksProxyAgent = require('socks-proxy-agent');
 
 const keyboards = require('./keyboards');
-const config = require('../config.json');
-const {about, greeting, stats} = require('./texts');
-const {getUser, parseRepo, getLastReleasesInRepos, getReleaseMessages} = require('./utils');
-const {getVersions} = require('./github-client');
+
 
 
 const API_TOKEN = config.telegram.token || '';
