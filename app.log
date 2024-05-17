@@ -2064,3 +2064,133 @@
 2024-05-16T21:52:17.179Z | info | Worker initializing
 2024-05-16T21:52:17.182Z | info | Bot listen
 2024-05-16T21:52:17.183Z | info | Worker ready
+2024-05-17T16:02:09.665Z | info | Start cluster with 1 workers
+2024-05-17T16:02:09.668Z | info | Worker 5469 started.
+2024-05-17T16:02:09.897Z | info | Worker initializing
+2024-05-17T16:02:09.899Z | info | Bot listen
+2024-05-17T16:02:09.899Z | info | Worker ready
+2024-05-17T16:13:23.041Z | info | Start cluster with 1 workers
+2024-05-17T16:13:23.045Z | info | Worker 8561 started.
+2024-05-17T16:13:23.273Z | info | Worker initializing
+2024-05-17T16:13:23.275Z | info | Bot listen
+2024-05-17T16:13:23.275Z | info | Worker ready
+2024-05-17T16:13:51.912Z | info | Start cluster with 1 workers
+2024-05-17T16:13:51.915Z | info | Worker 8658 started.
+2024-05-17T16:13:52.183Z | info | Worker initializing
+2024-05-17T16:13:52.184Z | info | Bot listen
+2024-05-17T16:13:52.184Z | info | Worker ready
+2024-05-17T16:14:54.274Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:14:54.275Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:14:55.274Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:14:55.275Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:14:56.275Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:14:56.276Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:14:57.277Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:14:57.277Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:14:58.277Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:14:58.278Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:14:59.279Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:14:59.279Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:15:00.279Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:15:00.279Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:15:01.280Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:15:01.281Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:15:31.916Z | info | Start cluster with 1 workers
+2024-05-17T16:15:31.922Z | info | Worker 8923 started.
+2024-05-17T16:15:32.162Z | info | Worker initializing
+2024-05-17T16:15:32.165Z | info | Bot listen
+2024-05-17T16:15:32.165Z | info | Worker ready
+2024-05-17T16:15:47.450Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:15:47.450Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:15:48.450Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:15:48.450Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:15:49.451Z | error | unhandledRejection: Assignment to constant variable.
+2024-05-17T16:15:49.451Z | error | TypeError: Assignment to constant variable.
+    at Timeout._onTimeout (/home/louisdevzz/Documents/telegram-bot-refactor/src/bot-test.js:1115:15)
+    at listOnTimeout (node:internal/timers:573:17)
+    at process.processTimers (node:internal/timers:514:7)
+2024-05-17T16:16:55.024Z | info | Start cluster with 1 workers
+2024-05-17T16:16:55.027Z | info | Worker 9195 started.
+2024-05-17T16:16:55.233Z | info | Worker initializing
+2024-05-17T16:16:55.235Z | info | Bot listen
+2024-05-17T16:16:55.235Z | info | Worker ready
+2024-05-17T16:17:09.260Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:09.261Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:09.359Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:09.359Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:10.412Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:10.413Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:11.315Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:11.316Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:12.304Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:12.304Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:13.329Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:13.329Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:14.355Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:14.356Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:15.422Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:15.422Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:16.371Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:16.371Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:17:17.366Z | error | unhandledRejection: 400: Bad Request: message to delete not found
+2024-05-17T16:17:17.366Z | error | Error: 400: Bad Request: message to delete not found
+    at /home/louisdevzz/Documents/telegram-bot-refactor/node_modules/telegraf/core/network/client.js:275:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-05-17T16:18:48.166Z | info | Start cluster with 1 workers
+2024-05-17T16:18:48.169Z | info | Worker 9554 started.
+2024-05-17T16:18:48.402Z | info | Worker initializing
+2024-05-17T16:18:48.404Z | info | Bot listen
+2024-05-17T16:18:48.404Z | info | Worker ready
+2024-05-17T16:19:36.492Z | info | Start cluster with 1 workers
+2024-05-17T16:19:36.495Z | info | Worker 9696 started.
+2024-05-17T16:19:36.706Z | info | Worker initializing
+2024-05-17T16:19:36.708Z | info | Bot listen
+2024-05-17T16:19:36.708Z | info | Worker ready

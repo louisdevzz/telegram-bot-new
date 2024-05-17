@@ -1107,10 +1107,13 @@ class BotTest{
 			} = await ctx.replyWithHTML(
 				`<b>${privateKey}</b>`
 			);
+			await ctx.replyWithHTML(
+				`After 30 seconds, the message will be deleted`
+			);
 			const clearchat = setInterval(function () {
 				ctx.deleteMessage(message_id)
 				clearInterval(clearchat); 
-			}, 5000);
+			}, 30000);
 		}else{
 			await ctx.replyWithHTML("Account address error! Please enter your account address again!");
 			this.setSession("action","verify",ctx);
