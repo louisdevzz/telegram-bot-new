@@ -14,24 +14,8 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useRouter as useNavigationRouter } from 'next/navigation';
 
-import { ErrorBoundary } from '@/components/ErrorBoundary';
+import "./globals.css";
 
-import './global.css';
-
-const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
-  <div>
-    <p>An unhandled error occurred:</p>
-    <blockquote>
-      <code>
-        {error instanceof Error
-          ? error.message
-          : typeof error === 'string'
-            ? error
-            : JSON.stringify(error)}
-      </code>
-    </blockquote>
-  </div>
-);
 
 const BackButtonManipulator: FC = () => {
   const router = useRouter();
@@ -105,8 +89,6 @@ const Inner: FC<AppProps> = (props) => {
 
 export default function CustomApp(props: AppProps) {
   return (
-    <ErrorBoundary fallback={ErrorBoundaryError}>
-      <Inner {...props}/>
-    </ErrorBoundary>
+    <Inner {...props}/>
   );
 };
