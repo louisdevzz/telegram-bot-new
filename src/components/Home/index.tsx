@@ -5,7 +5,7 @@ export default function Home(){
         <div className="w-full min-h-screen bg-[#180E35]">
             <div className="">
                 {/* Top Header */}
-                <div className="flex w-full items-center bg-[#180E35] py-5 px-4 border-b border-[#20114f] justify-center sticky top-0 z-50">
+                <div className="flex w-full items-center bg-[#180E35] py-3 px-4 border-b border-[#20114f] justify-center sticky top-0 z-50">
                     <h1 className="text-xl text-center text-[#bdbdbd]">huunhanz.near</h1>
                 </div>
                 {/* Container Top */}
